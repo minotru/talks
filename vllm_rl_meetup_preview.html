@@ -1,0 +1,1100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Closing the Loop: vLLM in RL Training Systems Preview</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Arimo:wght@400;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      /* ===========================================
+         VIEWPORT FITTING: MANDATORY BASE STYLES
+         Include this ENTIRE file in every presentation.
+         These styles ensure slides fit exactly in the viewport.
+         =========================================== */
+
+      /* 1. Lock html/body to viewport */
+      html, body {
+          height: 100%;
+          overflow-x: hidden;
+      }
+
+      html {
+          scroll-snap-type: y mandatory;
+          scroll-behavior: smooth;
+      }
+
+      /* 2. Each slide = exact viewport height */
+      .slide {
+          width: 100vw;
+          height: 100vh;
+          height: 100dvh; /* Dynamic viewport height for mobile browsers */
+          overflow: hidden; /* CRITICAL: Prevent ANY overflow */
+          scroll-snap-align: start;
+          display: flex;
+          flex-direction: column;
+          position: relative;
+      }
+
+      /* 3. Content container with flex for centering */
+      .slide-content {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          max-height: 100%;
+          overflow: hidden; /* Double-protection against overflow */
+          padding: var(--slide-padding);
+      }
+
+      /* 4. ALL typography uses clamp() for responsive scaling */
+      :root {
+          /* Titles scale from mobile to desktop */
+          --title-size: clamp(1.5rem, 5vw, 4rem);
+          --h2-size: clamp(1.25rem, 3.5vw, 2.5rem);
+          --h3-size: clamp(1rem, 2.5vw, 1.75rem);
+
+          /* Body text */
+          --body-size: clamp(0.75rem, 1.5vw, 1.125rem);
+          --small-size: clamp(0.65rem, 1vw, 0.875rem);
+
+          /* Spacing scales with viewport */
+          --slide-padding: clamp(1rem, 4vw, 4rem);
+          --content-gap: clamp(0.5rem, 2vw, 2rem);
+          --element-gap: clamp(0.25rem, 1vw, 1rem);
+      }
+
+      /* 5. Cards/containers use viewport-relative max sizes */
+      .card, .container, .content-box {
+          max-width: min(90vw, 1000px);
+          max-height: min(80vh, 700px);
+      }
+
+      /* 6. Lists auto-scale with viewport */
+      .feature-list, .bullet-list {
+          gap: clamp(0.4rem, 1vh, 1rem);
+      }
+
+      .feature-list li, .bullet-list li {
+          font-size: var(--body-size);
+          line-height: 1.4;
+      }
+
+      /* 7. Grids adapt to available space */
+      .grid {
+          display: grid;
+          grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr));
+          gap: clamp(0.5rem, 1.5vw, 1rem);
+      }
+
+      /* 8. Images constrained to viewport */
+      img, .image-container {
+          max-width: 100%;
+          max-height: min(50vh, 400px);
+          object-fit: contain;
+      }
+
+      /* ===========================================
+         RESPONSIVE BREAKPOINTS
+         Aggressive scaling for smaller viewports
+         =========================================== */
+
+      /* Short viewports (< 700px height) */
+      @media (max-height: 700px) {
+          :root {
+              --slide-padding: clamp(0.75rem, 3vw, 2rem);
+              --content-gap: clamp(0.4rem, 1.5vw, 1rem);
+              --title-size: clamp(1.25rem, 4.5vw, 2.5rem);
+              --h2-size: clamp(1rem, 3vw, 1.75rem);
+          }
+      }
+
+      /* Very short viewports (< 600px height) */
+      @media (max-height: 600px) {
+          :root {
+              --slide-padding: clamp(0.5rem, 2.5vw, 1.5rem);
+              --content-gap: clamp(0.3rem, 1vw, 0.75rem);
+              --title-size: clamp(1.1rem, 4vw, 2rem);
+              --body-size: clamp(0.7rem, 1.2vw, 0.95rem);
+          }
+
+          /* Hide non-essential elements */
+          .nav-dots, .keyboard-hint, .decorative {
+              display: none;
+          }
+      }
+
+      /* Extremely short (landscape phones, < 500px height) */
+      @media (max-height: 500px) {
+          :root {
+              --slide-padding: clamp(0.4rem, 2vw, 1rem);
+              --title-size: clamp(1rem, 3.5vw, 1.5rem);
+              --h2-size: clamp(0.9rem, 2.5vw, 1.25rem);
+              --body-size: clamp(0.65rem, 1vw, 0.85rem);
+          }
+      }
+
+      /* Narrow viewports (< 600px width) */
+      @media (max-width: 600px) {
+          :root {
+              --title-size: clamp(1.25rem, 7vw, 2.5rem);
+          }
+
+          /* Stack grids vertically */
+          .grid {
+              grid-template-columns: 1fr;
+          }
+      }
+
+      /* ===========================================
+         REDUCED MOTION
+         Respect user preferences
+         =========================================== */
+      @media (prefers-reduced-motion: reduce) {
+          *, *::before, *::after {
+              animation-duration: 0.01ms !important;
+              transition-duration: 0.2s !important;
+          }
+
+          html {
+              scroll-behavior: auto;
+          }
+      }
+
+      /* ===========================================
+         NEBIUS-ADJACENT PREVIEW THEME
+         Derived from the previous PPTX: navy, lime,
+         cyan, lavender, orange. Lime is an accent.
+         =========================================== */
+      :root {
+        --lime: #e0ff4f;
+        --lime-soft: #f1ffb5;
+        --navy: #011327;
+        --navy-soft: #052b41;
+        --ink: #021522;
+        --paper: #f4f8ee;
+        --paper-cool: #e5f3ff;
+        --cyan: #79bfc5;
+        --lavender: #c1c1ff;
+        --orange: #ffac3c;
+        --red: #ff5958;
+        --muted: rgba(1, 19, 39, 0.64);
+        --muted-light: rgba(245, 255, 209, 0.72);
+        --line: rgba(1, 19, 39, 0.18);
+        --line-on-dark: rgba(245, 255, 209, 0.18);
+        --font-display: "Arimo", sans-serif;
+        --font-body: "Arimo", sans-serif;
+        --radius-sm: clamp(0.4rem, 0.8vw, 0.75rem);
+        --radius-md: clamp(0.75rem, 1.2vw, 1.35rem);
+        --radius-lg: clamp(1rem, 2vw, 2rem);
+        --shadow: 0 1.2rem 3.4rem rgba(1, 19, 39, 0.16);
+        --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        background: var(--paper);
+        color: var(--ink);
+        font-family: var(--font-body);
+        overflow: hidden;
+      }
+
+      html {
+        scroll-snap-type: none;
+        overflow: hidden;
+      }
+
+      main {
+        position: relative;
+        height: 100vh;
+        height: 100dvh;
+        transition: transform 420ms var(--ease-out);
+        will-change: transform;
+      }
+
+      .slide {
+        background:
+          linear-gradient(90deg, rgba(1, 19, 39, 0.035) 1px, transparent 1px),
+          linear-gradient(0deg, rgba(1, 19, 39, 0.035) 1px, transparent 1px),
+          var(--paper);
+        background-size: clamp(2.6rem, 6vw, 5.6rem) clamp(2.6rem, 6vw, 5.6rem);
+      }
+
+      .slide.dark {
+        background:
+          radial-gradient(circle at 12% 18%, rgba(121, 191, 197, 0.2), transparent 28%),
+          radial-gradient(circle at 88% 84%, rgba(224, 255, 79, 0.18), transparent 24%),
+          var(--navy);
+        color: var(--lime-soft);
+      }
+
+      .slide.lime-cut {
+        background:
+          linear-gradient(118deg, var(--lime) 0 28%, transparent 28.2%),
+          linear-gradient(90deg, rgba(1, 19, 39, 0.04) 1px, transparent 1px),
+          linear-gradient(0deg, rgba(1, 19, 39, 0.04) 1px, transparent 1px),
+          var(--paper);
+        background-size: auto, clamp(3rem, 6vw, 6rem) clamp(3rem, 6vw, 6rem), clamp(3rem, 6vw, 6rem) clamp(3rem, 6vw, 6rem), auto;
+      }
+
+      .slide-content {
+        gap: var(--content-gap);
+      }
+
+      .brand {
+        position: absolute;
+        top: clamp(1rem, 3vw, 2.2rem);
+        left: clamp(1rem, 4vw, 4rem);
+        z-index: 2;
+        color: currentColor;
+        font-size: clamp(0.55rem, 0.78vw, 0.76rem);
+        font-weight: 700;
+        letter-spacing: 0;
+      }
+
+      .page-num {
+        position: absolute;
+        right: clamp(1rem, 3vw, 2.4rem);
+        bottom: clamp(0.8rem, 2.5vw, 2rem);
+        color: currentColor;
+        font-size: var(--small-size);
+        font-weight: 700;
+        opacity: 0.58;
+      }
+
+      .kicker {
+        color: var(--muted);
+        font-size: clamp(0.64rem, 1vw, 0.92rem);
+        font-weight: 700;
+      }
+
+      .dark .kicker {
+        color: var(--cyan);
+      }
+
+      .section-heading {
+        color: var(--ink);
+        font-size: clamp(2.2rem, 5vw, 5.2rem);
+        line-height: 0.96;
+      }
+
+      .section-heading.compact {
+        font-size: clamp(2rem, 4.4vw, 4.45rem);
+      }
+
+      h1,
+      h2 {
+        max-width: min(90vw, 68rem);
+        font-family: var(--font-display);
+        font-weight: 700;
+        letter-spacing: 0;
+        line-height: 0.95;
+      }
+
+      h1 {
+        font-size: clamp(2.4rem, 8vw, 7.1rem);
+      }
+
+      h2 {
+        font-size: clamp(2rem, 5.4vw, 5.1rem);
+      }
+
+      p {
+        font-size: var(--body-size);
+        line-height: 1.42;
+      }
+
+      .subhead {
+        max-width: min(72vw, 46rem);
+        color: var(--muted);
+        font-size: clamp(1rem, 2vw, 1.55rem);
+        line-height: 1.2;
+      }
+
+      .dark .subhead {
+        color: var(--muted-light);
+      }
+
+      .title-grid,
+      .two-col {
+        display: grid;
+        grid-template-columns: minmax(0, 1.05fr) minmax(18rem, 0.95fr);
+        gap: clamp(1.2rem, 5vw, 5rem);
+        align-items: center;
+      }
+
+      .stack {
+        display: flex;
+        flex-direction: column;
+        gap: clamp(0.8rem, 2vw, 1.6rem);
+      }
+
+      .speaker {
+        display: flex;
+        flex-direction: column;
+        gap: clamp(0.2rem, 0.6vw, 0.5rem);
+        margin-top: clamp(1.2rem, 4vw, 3.5rem);
+        color: var(--muted);
+        font-size: clamp(0.72rem, 1vw, 0.98rem);
+      }
+
+      .diagram-panel {
+        position: relative;
+        min-height: clamp(17rem, 48vh, 30rem);
+        border: 0.18rem solid currentColor;
+        border-radius: var(--radius-lg);
+        background: rgba(255, 255, 255, 0.42);
+        box-shadow: var(--shadow);
+        overflow: hidden;
+      }
+
+      .dark .diagram-panel {
+        border-color: var(--line-on-dark);
+        background: rgba(245, 255, 209, 0.04);
+        box-shadow: none;
+      }
+
+      .diagram-panel svg {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+
+      .thesis-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: clamp(1rem, 2.4vw, 2rem);
+        margin-top: clamp(1rem, 3vw, 2rem);
+      }
+
+      .comparison-card,
+      .stage-card,
+      .completion-card {
+        border: 0.16rem solid var(--navy);
+        border-radius: var(--radius-md);
+        padding: clamp(0.9rem, 2vw, 1.6rem);
+        background: rgba(255, 255, 255, 0.52);
+        min-height: clamp(8rem, 20vh, 12rem);
+      }
+
+      .dark .comparison-card {
+        border-color: var(--line-on-dark);
+        background: rgba(245, 255, 209, 0.05);
+      }
+
+      .comparison-card strong,
+      .stage-card strong,
+      .completion-card strong {
+        display: block;
+        margin-bottom: clamp(0.5rem, 1vw, 0.9rem);
+        font-size: clamp(1rem, 1.8vw, 1.55rem);
+      }
+
+      .stage-card strong {
+        font-size: clamp(1.45rem, 2.6vw, 2.25rem);
+        line-height: 1.05;
+      }
+
+      .label-pill {
+        display: inline-flex;
+        width: fit-content;
+        align-items: center;
+        justify-content: center;
+        border: 0.14rem solid currentColor;
+        border-radius: 999px;
+        padding: clamp(0.22rem, 0.5vw, 0.4rem) clamp(0.55rem, 1.2vw, 1rem);
+        color: currentColor;
+        font-size: clamp(0.56rem, 0.86vw, 0.78rem);
+        font-weight: 700;
+      }
+
+      .accent-pill {
+        background: var(--lime);
+        color: var(--navy);
+      }
+
+      .stage-row {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: clamp(0.8rem, 2vw, 1.5rem);
+      }
+
+      .stage-card {
+        position: relative;
+        min-height: clamp(11rem, 32vh, 18rem);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      .stage-card:nth-child(1) {
+        background: var(--paper-cool);
+      }
+
+      .stage-card:nth-child(2) {
+        background: var(--lavender);
+      }
+
+      .stage-card:nth-child(3) {
+        background: var(--navy);
+        color: var(--lime-soft);
+      }
+
+      .stage-card p {
+        color: inherit;
+        opacity: 0.78;
+        font-size: clamp(0.95rem, 1.45vw, 1.18rem);
+        line-height: 1.26;
+      }
+
+      .stage-card::after {
+        content: "";
+        position: absolute;
+        right: clamp(0.8rem, 1.6vw, 1.2rem);
+        top: clamp(0.8rem, 1.6vw, 1.2rem);
+        width: clamp(0.65rem, 1vw, 0.95rem);
+        aspect-ratio: 1;
+        border-radius: 50%;
+        background: var(--orange);
+      }
+
+      .stage-card:nth-child(3)::after {
+        background: var(--lime);
+      }
+
+      .overview-grid {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+        gap: clamp(0.9rem, 2vw, 1.6rem);
+        align-items: stretch;
+      }
+
+      .overview-card {
+        position: relative;
+        min-height: clamp(8.5rem, 22vh, 13rem);
+        border: 0.16rem solid var(--navy);
+        border-radius: var(--radius-md);
+        padding: clamp(0.9rem, 2vw, 1.6rem);
+        background: rgba(255, 255, 255, 0.58);
+        overflow: hidden;
+      }
+
+      .overview-card.featured {
+        background: var(--navy);
+        color: var(--lime-soft);
+      }
+
+      .overview-card.accent {
+        background: var(--lavender);
+      }
+
+      .overview-card strong {
+        display: block;
+        margin-top: clamp(0.55rem, 1vw, 0.8rem);
+        font-size: clamp(1.08rem, 2vw, 1.72rem);
+        line-height: 1.05;
+      }
+
+      .overview-card p {
+        margin-top: clamp(0.55rem, 1vw, 0.9rem);
+        color: inherit;
+        opacity: 0.76;
+      }
+
+      .overview-card.wide {
+        grid-column: span 2;
+        min-height: clamp(6.5rem, 16vh, 9rem);
+      }
+
+      .spec-line {
+        display: flex;
+        flex-wrap: wrap;
+        gap: clamp(0.45rem, 1vw, 0.8rem);
+        margin-top: clamp(0.8rem, 1.5vw, 1.15rem);
+      }
+
+      .spec-line span {
+        border: 0.12rem solid currentColor;
+        border-radius: 999px;
+        padding: clamp(0.2rem, 0.5vw, 0.36rem) clamp(0.48rem, 0.9vw, 0.75rem);
+        font-size: clamp(0.6rem, 0.86vw, 0.8rem);
+        font-weight: 700;
+      }
+
+      .topic-track {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: clamp(0.6rem, 1.5vw, 1rem);
+        margin-top: clamp(0.8rem, 2vw, 1.6rem);
+      }
+
+      .topic-step {
+        min-height: clamp(10rem, 31vh, 16rem);
+        border: 0.16rem solid var(--navy);
+        border-radius: var(--radius-md);
+        padding: clamp(0.75rem, 1.5vw, 1.25rem);
+        background: rgba(255, 255, 255, 0.54);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      .topic-step:nth-child(2) {
+        background: var(--paper-cool);
+      }
+
+      .topic-step:nth-child(3) {
+        background: var(--lavender);
+      }
+
+      .topic-step:nth-child(4) {
+        background: var(--navy);
+        color: var(--lime-soft);
+      }
+
+      .topic-step:nth-child(5) {
+        background: var(--lime-soft);
+      }
+
+      .topic-index {
+        width: clamp(1.65rem, 3vw, 2.4rem);
+        aspect-ratio: 1;
+        display: grid;
+        place-items: center;
+        border-radius: 50%;
+        background: var(--navy);
+        color: var(--lime-soft);
+        font-weight: 700;
+        font-size: clamp(0.78rem, 1.2vw, 1rem);
+      }
+
+      .topic-step:nth-child(4) .topic-index {
+        background: var(--lime);
+        color: var(--navy);
+      }
+
+      .topic-step strong {
+        display: block;
+        margin-top: clamp(0.7rem, 1.3vw, 1rem);
+        font-size: clamp(0.95rem, 1.65vw, 1.35rem);
+        line-height: 1.08;
+      }
+
+      .topic-step p {
+        color: inherit;
+        opacity: 0.74;
+        font-size: clamp(0.7rem, 1.05vw, 0.94rem);
+      }
+
+      .flow-caption {
+        color: var(--muted);
+        font-size: clamp(0.75rem, 1.2vw, 0.96rem);
+        font-weight: 700;
+      }
+
+      .node {
+        fill: var(--navy);
+      }
+
+      .node-soft {
+        fill: var(--navy-soft);
+      }
+
+      .node-accent {
+        fill: var(--lime);
+        stroke: var(--navy);
+        stroke-width: 4;
+      }
+
+      .node-cyan {
+        fill: var(--cyan);
+        stroke: var(--navy);
+        stroke-width: 4;
+      }
+
+      .diagram-label {
+        font: 700 22px Arimo, sans-serif;
+      }
+
+      .diagram-small {
+        font: 700 15px Arimo, sans-serif;
+      }
+
+      .grpo-grid {
+        display: grid;
+        grid-template-columns: 0.75fr 1.7fr 0.85fr;
+        gap: clamp(0.8rem, 2vw, 1.4rem);
+        align-items: center;
+      }
+
+      .completion-stack {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: clamp(0.7rem, 1.6vw, 1rem);
+      }
+
+      .completion-card {
+        min-height: clamp(7rem, 18vh, 10rem);
+        background: rgba(255, 255, 255, 0.6);
+      }
+
+      .completion-card.good {
+        background: var(--lime-soft);
+        box-shadow: inset 0 0 0 0.28rem rgba(224, 255, 79, 0.8);
+      }
+
+      .comparison-badge {
+        display: grid;
+        place-items: center;
+        min-height: clamp(9rem, 25vh, 15rem);
+        border-radius: 50%;
+        background: var(--navy);
+        color: var(--lime-soft);
+        text-align: center;
+        font-weight: 700;
+        line-height: 1.05;
+        padding: clamp(1rem, 2vw, 1.8rem);
+      }
+
+      .progress {
+        position: fixed;
+        top: 0;
+        left: 0;
+        z-index: 10;
+        height: clamp(0.22rem, 0.4vw, 0.36rem);
+        width: 0;
+        background: var(--lime);
+      }
+
+      .slide:not(.dark) .progress {
+        background: var(--navy);
+      }
+
+      .keyboard-hint {
+        position: fixed;
+        left: clamp(1rem, 3vw, 2.2rem);
+        bottom: clamp(0.8rem, 2vw, 1.4rem);
+        z-index: 20;
+        color: rgba(1, 19, 39, 0.56);
+        font-size: var(--small-size);
+        font-weight: 700;
+      }
+
+      .dark ~ .keyboard-hint {
+        color: var(--muted-light);
+      }
+
+      .reveal {
+        opacity: 0;
+        transform: translateY(clamp(0.7rem, 2vw, 1.4rem));
+        animation: rise 0.7s var(--ease-out) forwards;
+      }
+
+      .delay-1 {
+        animation-delay: 0.08s;
+      }
+
+      .delay-2 {
+        animation-delay: 0.16s;
+      }
+
+      .delay-3 {
+        animation-delay: 0.24s;
+      }
+
+      @keyframes rise {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      @media (max-width: 860px) {
+        .title-grid,
+        .two-col,
+        .grpo-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .diagram-panel {
+          min-height: clamp(14rem, 42vh, 22rem);
+        }
+
+        .stage-row {
+          grid-template-columns: 1fr;
+        }
+
+        .overview-grid,
+        .topic-track {
+          grid-template-columns: 1fr;
+        }
+
+        .overview-card.wide {
+          grid-column: auto;
+        }
+
+        .stage-card {
+          min-height: auto;
+        }
+
+        .completion-stack {
+          grid-template-columns: 1fr;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="progress" id="progress"></div>
+    <main id="deck">
+      <section class="slide lime-cut" id="slide-1">
+        <div class="brand">NEBIUS</div>
+        <div class="slide-content title-grid">
+          <div class="stack">
+            <span class="kicker reveal">Israel vLLM Meetup #2</span>
+            <h1 class="reveal delay-1">
+              Closing the Loop:<br />
+              vLLM in RL<br />
+              Training Systems
+            </h1>
+            <div class="speaker reveal delay-2">
+              <strong>Simon Karasik</strong>
+              <span>Senior ML Engineer / Research Infrastructure Lead</span>
+              <span>Nebius</span>
+            </div>
+          </div>
+          <div class="diagram-panel reveal delay-2" aria-label="Training and inference loop motif">
+            <svg viewBox="0 0 720 520" role="img">
+              <defs>
+                <marker id="arrow-title" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto">
+                  <path d="M0,0 L5,2.5 L0,5 Z" fill="#011327"></path>
+                </marker>
+              </defs>
+              <rect x="74" y="174" width="206" height="120" rx="34" class="node"></rect>
+              <rect x="440" y="174" width="206" height="120" rx="34" class="node-soft"></rect>
+              <circle cx="360" cy="234" r="54" class="node-accent"></circle>
+              <text x="177" y="226" text-anchor="middle" fill="#f5ffd1" class="diagram-label">Trainer</text>
+              <text x="177" y="255" text-anchor="middle" fill="#f5ffd1" class="diagram-small">updates policy</text>
+              <text x="543" y="226" text-anchor="middle" fill="#f5ffd1" class="diagram-label">vLLM</text>
+              <text x="543" y="255" text-anchor="middle" fill="#f5ffd1" class="diagram-small">generates rollouts</text>
+              <text x="360" y="228" text-anchor="middle" fill="#011327" class="diagram-label">loop</text>
+              <text x="360" y="258" text-anchor="middle" fill="#011327" class="diagram-small">fresh weights</text>
+              <path d="M280 215 C330 154 392 154 440 215" fill="none" stroke="#011327" stroke-width="4" marker-end="url(#arrow-title)"></path>
+              <path d="M440 260 C388 330 326 330 280 260" fill="none" stroke="#011327" stroke-width="4" marker-end="url(#arrow-title)"></path>
+              <rect x="108" y="345" width="504" height="38" rx="19" fill="#c1c1ff" stroke="#011327" stroke-width="4"></rect>
+              <text x="360" y="371" text-anchor="middle" fill="#011327" class="diagram-small">inference is now on the training critical path</text>
+            </svg>
+          </div>
+        </div>
+        <div class="page-num">1</div>
+      </section>
+
+      <section class="slide" id="slide-2">
+        <div class="brand">NEBIUS</div>
+        <div class="slide-content two-col">
+          <div class="stack">
+            <h2 class="reveal delay-1">
+              Nebius:<br />
+              the vertical<br />
+              AI company
+            </h2>
+            <p class="subhead reveal delay-2">
+              Infrastructure, fine-tuning, and applied AI R&D under one roof.
+            </p>
+          </div>
+          <div class="overview-grid reveal delay-2">
+            <div class="overview-card featured">
+              <span class="label-pill">GPU cloud</span>
+              <strong>Global AI infrastructure provider</strong>
+              <p>7+ data centers around the globe.</p>
+              <div class="spec-line">
+                <span>H100</span>
+                <span>H200</span>
+                <span>B200</span>
+                <span>GB200</span>
+                <span>GB300</span>
+              </div>
+            </div>
+            <div class="overview-card accent">
+              <span class="label-pill">Token Factory</span>
+              <strong>Inference and fine-tuning</strong>
+              <p>The platform layer where model adaptation becomes a product workflow.</p>
+            </div>
+            <div class="overview-card wide">
+              <span class="label-pill accent-pill">AI R&D</span>
+              <strong>In-house research lab</strong>
+              <p>Open applied research: papers, code, data, and systems work that feeds the platform.</p>
+            </div>
+          </div>
+        </div>
+        <div class="page-num">2</div>
+      </section>
+
+      <section class="slide" id="slide-3">
+        <div class="brand">NEBIUS</div>
+        <div class="slide-content stack">
+          <span class="kicker reveal">Topics</span>
+          <h2 class="reveal delay-1">A systems ladder for RL post-training.</h2>
+          <div class="topic-track reveal delay-2">
+            <div class="topic-step">
+              <div>
+                <span class="topic-index">1</span>
+                <strong>RLVR and GRPO</strong>
+              </div>
+              <p>Enough algorithmic context to understand the system.</p>
+            </div>
+            <div class="topic-step">
+              <div>
+                <span class="topic-index">2</span>
+                <strong>Naive rollout loop</strong>
+              </div>
+              <p>Why checkpoint reloads and startup dominate iteration time.</p>
+            </div>
+            <div class="topic-step">
+              <div>
+                <span class="topic-index">3</span>
+                <strong>Sync loop</strong>
+              </div>
+              <p>Live vLLM, InfiniBand weight transfer, and cache correctness.</p>
+            </div>
+            <div class="topic-step">
+              <div>
+                <span class="topic-index">4</span>
+                <strong>Async loop</strong>
+              </div>
+              <p>Overlap training and inference, then manage bounded staleness.</p>
+            </div>
+            <div class="topic-step">
+              <div>
+                <span class="topic-index">5</span>
+                <strong>Where this lands</strong>
+              </div>
+              <p>Nebius AI R&D, vLLM direction, and Token Factory RL FT.</p>
+            </div>
+          </div>
+        </div>
+        <div class="page-num">3</div>
+      </section>
+
+      <section class="slide dark" id="slide-4">
+        <div class="brand">NEBIUS</div>
+        <div class="slide-content">
+          <div class="stack">
+            <h2 class="reveal delay-1">
+              In RL post-training,<br />
+              inference becomes part<br />
+              of the training loop.
+            </h2>
+            <p class="subhead reveal delay-2">
+              vLLM stops being only a serving engine. It becomes a rollout engine
+              for continuously changing models.
+            </p>
+          </div>
+          <div class="thesis-grid">
+            <div class="comparison-card reveal delay-2">
+              <span class="label-pill">Classic serving</span>
+              <strong>Load once, answer requests</strong>
+              <p>Stable model weights, request/response lifecycle, production-facing latency.</p>
+            </div>
+            <div class="comparison-card reveal delay-3">
+              <span class="label-pill accent-pill">RL rollout engine</span>
+              <strong>Update often, generate training data</strong>
+              <p>Fresh weights, rollout metadata, cache correctness, orchestration with trainers.</p>
+            </div>
+          </div>
+        </div>
+        <div class="page-num">4</div>
+      </section>
+
+      <section class="slide" id="slide-5">
+        <div class="brand">NEBIUS</div>
+        <div class="slide-content stack">
+          <h2 class="section-heading reveal">From SFT to RLVR</h2>
+          <p class="subhead reveal delay-1">The reward signal gets more operational.</p>
+          <div class="stage-row reveal delay-2">
+            <div class="stage-card">
+              <span class="label-pill">SFT</span>
+              <div>
+                <strong>Imitate examples</strong>
+                <p>Train on curated demonstrations and target outputs.</p>
+              </div>
+            </div>
+            <div class="stage-card">
+              <span class="label-pill">RLHF</span>
+              <div>
+                <strong>Optimize preferences</strong>
+                <p>Use preference signals to push behavior toward human judgment.</p>
+              </div>
+            </div>
+            <div class="stage-card">
+              <span class="label-pill">RLVR</span>
+              <div>
+                <strong>Optimize verifiable rewards</strong>
+                <p>Math, code, and reasoning tasks expose scalable feedback through checks.</p>
+              </div>
+            </div>
+          </div>
+          <p class="flow-caption reveal delay-3">
+            This is the bridge from model training to systems work: the training
+            loop now needs a lot of generated behavior.
+          </p>
+        </div>
+        <div class="page-num">5</div>
+      </section>
+
+      <section class="slide" id="slide-6">
+        <div class="brand">NEBIUS</div>
+        <div class="slide-content two-col">
+          <div class="stack">
+            <h2 class="section-heading compact reveal">RLVR Training Loop</h2>
+            <p class="subhead reveal delay-1">Generate, score, train, repeat.</p>
+            <p class="subhead reveal delay-2">
+              The rollout comes from the current-ish model, then becomes training
+              data for the next update.
+            </p>
+          </div>
+          <div class="diagram-panel reveal delay-2">
+            <svg viewBox="0 0 760 520" aria-label="RLVR training loop">
+              <defs>
+                <marker id="arrow-loop" markerWidth="12" markerHeight="12" refX="9" refY="6" orient="auto">
+                  <path d="M0,0 L12,6 L0,12 Z" fill="#011327"></path>
+                </marker>
+              </defs>
+              <rect x="78" y="78" width="178" height="90" rx="26" class="node"></rect>
+              <rect x="500" y="78" width="178" height="90" rx="26" class="node-soft"></rect>
+              <rect x="500" y="346" width="178" height="90" rx="26" class="node"></rect>
+              <rect x="78" y="346" width="178" height="90" rx="26" class="node-cyan"></rect>
+              <circle cx="378" cy="257" r="66" class="node-accent"></circle>
+              <text x="167" y="116" text-anchor="middle" fill="#f5ffd1" class="diagram-label">Prompts</text>
+              <text x="167" y="145" text-anchor="middle" fill="#f5ffd1" class="diagram-small">tasks</text>
+              <text x="589" y="116" text-anchor="middle" fill="#f5ffd1" class="diagram-label">vLLM</text>
+              <text x="589" y="145" text-anchor="middle" fill="#f5ffd1" class="diagram-small">rollouts</text>
+              <text x="589" y="384" text-anchor="middle" fill="#f5ffd1" class="diagram-label">Reward</text>
+              <text x="589" y="413" text-anchor="middle" fill="#f5ffd1" class="diagram-small">tests / checks</text>
+              <text x="167" y="384" text-anchor="middle" fill="#011327" class="diagram-label">Trainer</text>
+              <text x="167" y="413" text-anchor="middle" fill="#011327" class="diagram-small">updates model</text>
+              <text x="378" y="252" text-anchor="middle" fill="#011327" class="diagram-label">Loop</text>
+              <text x="378" y="282" text-anchor="middle" fill="#011327" class="diagram-small">new weights</text>
+              <path d="M256 123 H490" fill="none" stroke="#011327" stroke-width="6" marker-end="url(#arrow-loop)"></path>
+              <path d="M589 168 V336" fill="none" stroke="#011327" stroke-width="6" marker-end="url(#arrow-loop)"></path>
+              <path d="M500 391 H266" fill="none" stroke="#011327" stroke-width="6" marker-end="url(#arrow-loop)"></path>
+              <path d="M167 346 V178" fill="none" stroke="#011327" stroke-width="6" marker-end="url(#arrow-loop)"></path>
+            </svg>
+          </div>
+        </div>
+        <div class="page-num">6</div>
+      </section>
+
+      <section class="slide" id="slide-7">
+        <div class="brand">NEBIUS</div>
+        <div class="slide-content stack">
+          <span class="kicker reveal">GRPO Intuition, No Formula</span>
+          <h2 class="reveal delay-1">Learn from the group, not one answer.</h2>
+          <div class="grpo-grid reveal delay-2">
+            <div class="comparison-card">
+              <span class="label-pill accent-pill">Prompt</span>
+              <strong>One task</strong>
+              <p>Ask the current model for multiple completions.</p>
+            </div>
+            <div class="completion-stack">
+              <div class="completion-card">
+                <strong>Sample A</strong>
+                <p>reward: 0.2</p>
+              </div>
+              <div class="completion-card good">
+                <strong>Sample B</strong>
+                <p>reward: 1.0</p>
+              </div>
+              <div class="completion-card">
+                <strong>Sample C</strong>
+                <p>reward: 0.4</p>
+              </div>
+              <div class="completion-card good">
+                <strong>Sample D</strong>
+                <p>reward: 0.9</p>
+              </div>
+            </div>
+            <div class="comparison-badge">
+              compare<br />
+              within<br />
+              group
+            </div>
+          </div>
+          <p class="flow-caption reveal delay-3">
+            The systems consequence: each step needs fresh rollouts, rewards,
+            token IDs, logprobs, and grouping metadata.
+          </p>
+        </div>
+        <div class="page-num">7</div>
+      </section>
+    </main>
+    <div class="keyboard-hint">Arrow keys, Space, or scroll</div>
+
+    <script>
+      const deck = document.getElementById("deck");
+      const slides = Array.from(document.querySelectorAll(".slide"));
+      const progress = document.getElementById("progress");
+      let activeIndex = 0;
+      let wheelLock = false;
+
+      function render() {
+        deck.style.transform = `translate3d(0, ${activeIndex * -window.innerHeight}px, 0)`;
+        const max = slides.length - 1 || 1;
+        progress.style.width = `${(activeIndex / max) * 100}%`;
+        slides.forEach((slide, index) => {
+          slide.setAttribute("aria-hidden", index === activeIndex ? "false" : "true");
+        });
+      }
+
+      function goTo(index) {
+        activeIndex = Math.max(0, Math.min(index, slides.length - 1));
+        render();
+      }
+
+      window.addEventListener("keydown", (event) => {
+        const key = event.key;
+        const nextKeys = ["ArrowDown", "ArrowRight", "PageDown", " ", "Spacebar"];
+        const prevKeys = ["ArrowUp", "ArrowLeft", "PageUp"];
+
+        if (nextKeys.includes(key) || event.code === "Space") {
+          event.preventDefault();
+          goTo(activeIndex + 1);
+        } else if (prevKeys.includes(key)) {
+          event.preventDefault();
+          goTo(activeIndex - 1);
+        } else if (key === "Home") {
+          event.preventDefault();
+          goTo(0);
+        } else if (key === "End") {
+          event.preventDefault();
+          goTo(slides.length - 1);
+        }
+      });
+
+      window.addEventListener(
+        "wheel",
+        (event) => {
+          event.preventDefault();
+          if (wheelLock || Math.abs(event.deltaY) < 20) return;
+          wheelLock = true;
+          goTo(activeIndex + (event.deltaY > 0 ? 1 : -1));
+          window.setTimeout(() => {
+            wheelLock = false;
+          }, 460);
+        },
+        { passive: false }
+      );
+      window.addEventListener("resize", render);
+
+      render();
+    </script>
+  </body>
+</html>
