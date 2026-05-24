@@ -70,6 +70,7 @@ Controls:
 
 - next: `ArrowRight`, `ArrowDown`, `PageDown`, `Space`, mouse wheel down
 - previous: `ArrowLeft`, `ArrowUp`, `PageUp`, mouse wheel up
+- iPad/touch: swipe up or left for next; swipe down or right for previous
 - `Home`, `End`
 
 For future in-slide transitions:

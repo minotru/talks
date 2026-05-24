@@ -206,6 +206,7 @@
         color: var(--ink);
         font-family: var(--font-body);
         overflow: hidden;
+        touch-action: none;
       }
 
       html {
@@ -484,7 +485,7 @@
 
       .overview-card {
         position: relative;
-        min-height: clamp(8.5rem, 22vh, 13rem);
+        min-height: clamp(7.4rem, 18vh, 10.8rem);
         border: 0.16rem solid var(--navy);
         border-radius: var(--radius-md);
         padding: clamp(0.9rem, 2vw, 1.6rem);
@@ -498,13 +499,24 @@
       }
 
       .overview-card.accent {
-        background: var(--lavender);
+        background: var(--cyan);
+        color: var(--navy);
+      }
+
+      .overview-card.cloud {
+        background: var(--paper-cool);
+      }
+
+      .overview-card .label-pill {
+        padding: clamp(0.3rem, 0.65vw, 0.48rem) clamp(0.7rem, 1.25vw, 1.05rem);
+        font-size: clamp(1rem, 1.55vw, 1.32rem);
+        line-height: 1;
       }
 
       .overview-card strong {
         display: block;
         margin-top: clamp(0.55rem, 1vw, 0.8rem);
-        font-size: clamp(1.08rem, 2vw, 1.72rem);
+        font-size: clamp(1.24rem, 2.25vw, 1.92rem);
         line-height: 1.05;
       }
 
@@ -1465,7 +1477,7 @@
 
       .throughput-row {
         display: grid;
-        grid-template-columns: minmax(8rem, 0.55fr) minmax(0, 1fr) minmax(6.5rem, 0.35fr);
+        grid-template-columns: minmax(8rem, 0.55fr) minmax(0, 1fr) minmax(8rem, 0.38fr);
         gap: clamp(0.65rem, 1.4vw, 1rem);
         align-items: center;
       }
@@ -1518,6 +1530,7 @@
         font-weight: 700;
         line-height: 1;
         text-align: right;
+        white-space: nowrap;
       }
 
       .chart-note {
@@ -2120,14 +2133,19 @@
               AI company
             </h2>
             <p class="subhead reveal delay-2">
-              Infrastructure, fine-tuning, and applied AI R&D under one roof.
+              Datacenters, cloud, AI platform, and applied AI R&amp;D under one roof.
             </p>
           </div>
           <div class="overview-grid reveal delay-2">
             <div class="overview-card featured">
-              <span class="label-pill">GPU cloud</span>
-              <strong>Global AI infrastructure provider</strong>
+              <span class="label-pill">Datacenters</span>
+              <strong>Global physical footprint</strong>
               <p>7+ data centers around the globe.</p>
+            </div>
+            <div class="overview-card cloud">
+              <span class="label-pill accent-pill">Cloud</span>
+              <strong>GPU cloud on top</strong>
+              <p>Elastic access to the latest accelerators.</p>
               <div class="spec-line">
                 <span>H100</span>
                 <span>H200</span>
@@ -2139,9 +2157,9 @@
             <div class="overview-card accent">
               <span class="label-pill">Token Factory</span>
               <strong>Inference and fine-tuning</strong>
-              <p>The platform layer where model adaptation becomes a product workflow.</p>
+              <p>Build, fine-tune, and run open models at production scale.</p>
             </div>
-            <div class="overview-card wide">
+            <div class="overview-card">
               <span class="label-pill accent-pill">AI R&D</span>
               <strong>In-house research lab</strong>
               <p>Open applied research: papers, code, data, and systems work that feeds the platform.</p>
@@ -2737,7 +2755,7 @@
               <div class="throughput-track">
                 <div class="throughput-fill sync-bar" style="--bar: 32%"></div>
               </div>
-              <strong class="throughput-value">1200</strong>
+              <strong class="throughput-value">1200 tok/sec</strong>
             </div>
             <div class="throughput-row">
               <div class="throughput-label">
@@ -2747,7 +2765,7 @@
               <div class="throughput-track">
                 <div class="throughput-fill" style="--bar: 68%"></div>
               </div>
-              <strong class="throughput-value">2500</strong>
+              <strong class="throughput-value">2500 tok/sec</strong>
             </div>
             <div class="throughput-row">
               <div class="throughput-label">
@@ -2757,7 +2775,7 @@
               <div class="throughput-track">
                 <div class="throughput-fill k3-bar" style="--bar: 89%"></div>
               </div>
-              <strong class="throughput-value">3300</strong>
+              <strong class="throughput-value">3300 tok/sec</strong>
             </div>
             <div class="throughput-row">
               <div class="throughput-label">
@@ -2767,7 +2785,7 @@
               <div class="throughput-track">
                 <div class="throughput-fill k6-bar" style="--bar: 100%"></div>
               </div>
-              <strong class="throughput-value">3700</strong>
+              <strong class="throughput-value">3700 tok/sec</strong>
             </div>
             <p class="chart-note">Throughput shown as generated tokens/sec for this setup.</p>
           </div>
@@ -2779,7 +2797,7 @@
         <div class="brand">NEBIUS</div>
         <div class="slide-content nebius-rl-layout">
           <div class="stack">
-            <h2 class="section-heading compact reveal">How We Do RL at Nebius AI R&amp;D</h2>
+            <h2 class="section-heading compact reveal">How We Do RL at Nebius&nbsp;AI&nbsp;R&amp;D</h2>
             <p class="subhead reveal delay-1">
               Training, rollout inference, and orchestration are separate jobs with a shared contract.
             </p>
@@ -2909,7 +2927,7 @@
         <div class="page-num">19</div>
       </section>
     </main>
-    <div class="keyboard-hint">Arrow keys, Space, or scroll</div>
+    <div class="keyboard-hint">Arrow keys, Space, scroll, or swipe</div>
 
     <script>
       const deck = document.getElementById("deck");
@@ -2918,6 +2936,9 @@
       let activeIndex = 0;
       let activeFragment = 0;
       let wheelLock = false;
+      let touchStartX = 0;
+      let touchStartY = 0;
+      let touchStartTime = 0;
 
       function fragmentCount(index) {
         return Number(slides[index]?.dataset.fragments || 0);
@@ -3014,6 +3035,38 @@
           }, 460);
         },
         { passive: false }
+      );
+
+      window.addEventListener(
+        "touchstart",
+        (event) => {
+          if (event.touches.length !== 1) return;
+          touchStartX = event.touches[0].clientX;
+          touchStartY = event.touches[0].clientY;
+          touchStartTime = Date.now();
+        },
+        { passive: true }
+      );
+
+      window.addEventListener(
+        "touchend",
+        (event) => {
+          if (!touchStartTime || event.changedTouches.length !== 1) return;
+          const deltaX = event.changedTouches[0].clientX - touchStartX;
+          const deltaY = event.changedTouches[0].clientY - touchStartY;
+          const absX = Math.abs(deltaX);
+          const absY = Math.abs(deltaY);
+          touchStartTime = 0;
+
+          if (Math.max(absX, absY) < 44) return;
+
+          if (absY >= absX) {
+            deltaY < 0 ? next() : previous();
+          } else {
+            deltaX < 0 ? next() : previous();
+          }
+        },
+        { passive: true }
       );
       window.addEventListener("resize", render);
 

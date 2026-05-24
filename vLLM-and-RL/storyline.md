@@ -141,12 +141,13 @@ Target: 30-minute slot including questions. Aim for around 24-25 minutes of prep
 ### Slide 2: Nebius Overview
 
 - **Purpose**: Reuse company context from the previous deck without spending much time on it.
-- **Main point**: Nebius brings together AI infrastructure, Token Factory, and AI R&D.
+- **Main point**: Nebius brings together datacenters, cloud, AI platform, and applied AI R&D.
 - **Content**:
-  - GPU cloud: global AI infrastructure provider, 7+ data centers, H100/H200/B200/GB200/GB300.
-  - Token Factory: inference and fine-tuning.
+  - Datacenters: global physical infrastructure footprint, 7+ data centers.
+  - Cloud: GPU cloud on top of the datacenter layer, H100/H200/B200/GB200/GB300.
+  - Token Factory: build, fine-tune, and run open models at production scale.
   - AI R&D: in-house research lab, open applied research, papers/code/data.
-- **Visual**: Three company blocks in Nebius style; lime as accent, not full-slide overload.
+- **Visual**: Four company blocks in Nebius style; lime as accent, not full-slide overload.
 - **Timing**: 1 min
 
 ### Slide 3: Topics
