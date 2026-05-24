@@ -126,7 +126,7 @@ Scope principle: the backbone is **naive -> sync -> async**. Everything else sho
 ## Slidedeck storyboard
 Based on the storyline above, but slide-by-slide to make the slidedeck generation straightforward. Covers each slide, diagrams to generate are a special work item, where I need to provide sufficient input.
 
-Target: 30-minute slot including questions. Aim for around 24 minutes of prepared material and keep 5-6 minutes for questions and buffer.
+Target: 30-minute slot including questions. Aim for around 24-25 minutes of prepared material and keep 5-6 minutes for questions and buffer.
 
 ### Slide 1: Title
 
@@ -135,20 +135,44 @@ Target: 30-minute slot including questions. Aim for around 24 minutes of prepare
 - **Content**:
   - Simon Karasik
   - Israel vLLM Meetup #2, Nebius
-- **Visual**: Abstract loop motif connecting "training" and "inference"; avoid dense architecture here.
+- **Visual**: Abstract loop motif connecting "training" and "inference"; keep arrow tips modest and avoid extra decoration.
 - **Timing**: 30 sec
 
-### Slide 2: The Talk in One Sentence
+### Slide 2: Nebius Overview
+
+- **Purpose**: Reuse company context from the previous deck without spending much time on it.
+- **Main point**: Nebius brings together AI infrastructure, Token Factory, and AI R&D.
+- **Content**:
+  - GPU cloud: global AI infrastructure provider, 7+ data centers, H100/H200/B200/GB200/GB300.
+  - Token Factory: inference and fine-tuning.
+  - AI R&D: in-house research lab, open applied research, papers/code/data.
+- **Visual**: Three company blocks in Nebius style; lime as accent, not full-slide overload.
+- **Timing**: 1 min
+
+### Slide 3: Topics
+
+- **Purpose**: Give the audience a map before the systems ladder.
+- **Main point**: The talk moves from RL context to naive -> sync -> async and then to Nebius/Token Factory.
+- **Content**:
+  - RLVR and GRPO
+  - Naive rollout loop
+  - Sync loop
+  - Async loop
+  - Where this lands
+- **Visual**: Five-step track.
+- **Timing**: 45 sec
+
+### Slide 4: The Talk in One Sentence
 
 - **Purpose**: Give the audience the memory anchor.
 - **Main point**: In RL post-training, inference becomes part of the training loop.
 - **Content**:
   - vLLM stops being only a serving engine.
   - It becomes a rollout engine for continuously changing models.
-- **Visual**: Before/after: "offline serving" vs "training loop component".
+- **Visual**: Before/after: "classic serving" vs "RL rollout engine".
 - **Timing**: 45 sec
 
-### Slide 3: From SFT to RLVR
+### Slide 5: From SFT to RLVR
 
 - **Purpose**: Place RLVR in the post-training progression without teaching all of RL.
 - **Main point**: RLVR is where the reward signal becomes programmatic/verifiable, which makes scalable rollout generation valuable.
@@ -156,10 +180,10 @@ Target: 30-minute slot including questions. Aim for around 24 minutes of prepare
   - SFT: imitate examples
   - RLHF: optimize preference signals
   - RLVR: optimize verifiable rewards
-- **Visual**: Three-stage horizontal progression: SFT -> RLHF -> RLVR, with the reward signal becoming more explicit/verifiable.
+- **Visual**: Three large cards: SFT -> RLHF -> RLVR, with large text suitable for stage reading.
 - **Timing**: 1.25 min
 
-### Slide 4: RLVR Training Loop
+### Slide 6: RLVR Training Loop
 
 - **Purpose**: Show the basic RL training loop before naming GRPO.
 - **Main point**: RLVR repeatedly generates, scores, and trains on fresh model behavior.
@@ -171,7 +195,7 @@ Target: 30-minute slot including questions. Aim for around 24 minutes of prepare
 - **Visual**: Circular loop: prompts -> vLLM rollouts -> verifiable rewards -> trainer -> updated model -> vLLM.
 - **Timing**: 1.75 min
 
-### Slide 5: GRPO Intuition, No Formula
+### Slide 7: GRPO Intuition, No Formula
 
 - **Purpose**: Explain the algorithmic idea without losing the room.
 - **Main point**: GRPO learns from relative quality inside a generated group.
@@ -179,10 +203,10 @@ Target: 30-minute slot including questions. Aim for around 24 minutes of prepare
   - One prompt produces K completions.
   - Each completion gets a reward.
   - Better-than-group-average samples are reinforced.
-- **Visual**: Diagram: prompt -> K completions -> rewards -> group-relative comparison -> update.
+- **Visual**: Diagram/cards: prompt -> K completions -> rewards -> group-relative comparison -> update.
 - **Timing**: 2 min
 
-### Slide 6: The Rollout Data Contract
+### Slide 8: The Rollout Data Contract
 
 - **Purpose**: Bridge algorithm to systems.
 - **Main point**: In RL training, inference must return training data, not just text.
@@ -192,36 +216,37 @@ Target: 30-minute slot including questions. Aim for around 24 minutes of prepare
   - `token_ids`
   - `logprobs`
   - `reward`
-- **Visual**: Packet/card moving from vLLM to trainer labeled "rollout sample".
+- **Visual**: Packet/card moving from vLLM to trainer labeled "rollout sample", with fields listed separately.
 - **Timing**: 1.25 min
 
-### Slide 7: Naive RL Loop
+### Slide 9: Naive RL Loop
 
 - **Purpose**: Establish the first architecture in the ladder.
-- **Main point**: The naive loop is simple but dominated by checkpoint movement and startup.
+- **Main point**: The naive loop is straightforward, but too slow to be practical once checkpoint movement and startup sit inside every iteration.
 - **Content**:
   - train
   - save checkpoint
   - load/restart inference
   - generate rollouts
   - repeat
-- **Visual**: Sequential timeline with disk checkpoint in the middle.
+- **Visual**: Sequential timeline with five cards.
+- **Transition**: In-slide fragment. First show the full loop; on next click/key press, dim the other cards and emphasize `save checkpoint` and `reload inference` as the problematic parts.
 - **Timing**: 1.75 min
 
-### Slide 8: Why Naive Breaks
+### Slide 10: Why Naive Breaks
 
 - **Purpose**: Make the bottleneck visceral.
 - **Main point**: Checkpoints are too large to route through disk every iteration.
 - **Content**:
   - Huge checkpoint write + read path.
+  - Example: GPT-OSS-120B has 120B parameters, which is about 240 GB of FP16 weights.
+  - Naive refresh means writing about 240 GB and reading about 240 GB before inference can continue.
   - Inference startup/reload is repeated.
   - Rollouts need fresh or near-fresh weights.
-  - Candidate comparison: InfiniBand around 400 GB/s per host vs disk write around 3 GB/s + disk read around 3 GB/s.
-- **Visual**: Bandwidth comparison bar chart plus checkpoint object.
-- **Diagram input needed**: Confirm InfiniBand units and whether the number should be GB/s per host, aggregate host bandwidth, or Gb/s per link.
+- **Visual**: Concrete checkpoint-size card: GPT-OSS-120B, about 240 GB FP16 weights, write + read equals about 480 GB of disk traffic per refresh.
 - **Timing**: 1.75 min
 
-### Slide 9: Sync Loop: Keep vLLM Alive
+### Slide 11: Sync Loop: Keep vLLM Alive
 
 - **Purpose**: Introduce the first practical fix.
 - **Main point**: Instead of restarting inference, push new weights into a live vLLM instance over InfiniBand.
@@ -232,7 +257,7 @@ Target: 30-minute slot including questions. Aim for around 24 minutes of prepare
 - **Visual**: Two persistent blocks, Trainer and vLLM, connected by an InfiniBand/NCCL weight-update path.
 - **Timing**: 2 min
 
-### Slide 10: What vLLM Needs in the Sync World
+### Slide 12: What vLLM Needs in the Sync World
 
 - **Purpose**: Give concrete vLLM adaptation points.
 - **Main point**: Live weight updates require inference-system correctness hooks.
@@ -244,7 +269,7 @@ Target: 30-minute slot including questions. Aim for around 24 minutes of prepare
 - **Visual**: Checklist over a vLLM engine box: update weights, reset cache, coordinate lifecycle.
 - **Timing**: 2 min
 
-### Slide 11: Sync Fixes IO, But Creates Idle GPUs
+### Slide 13: Sync Fixes IO, But Creates Idle GPUs
 
 - **Purpose**: Show why sync is not the end state.
 - **Main point**: Sync keeps weights fresh but still runs training and inference one after another.
@@ -255,7 +280,7 @@ Target: 30-minute slot including questions. Aim for around 24 minutes of prepare
 - **Visual**: Timeline with alternating colored blocks and gray idle bands.
 - **Timing**: 1.5 min
 
-### Slide 12: Async Loop: Keep Both Sides Busy
+### Slide 14: Async Loop: Keep Both Sides Busy
 
 - **Purpose**: Introduce async as the natural next step.
 - **Main point**: Async RL overlaps rollout generation and training with bounded staleness because rollout latency is variable.
@@ -268,7 +293,7 @@ Target: 30-minute slot including questions. Aim for around 24 minutes of prepare
 - **Visual**: Producer-consumer architecture: vLLM Inference <-> Controller queues <-> Trainer, with variable-length rollout bars feeding the queue.
 - **Timing**: 2.25 min
 
-### Slide 13: Sync vs Async Tradeoff
+### Slide 15: Sync vs Async Tradeoff
 
 - **Purpose**: Cement the ladder with concrete throughput.
 - **Main point**: Async improves utilization, but pays with staleness and orchestration complexity.
@@ -281,7 +306,7 @@ Target: 30-minute slot including questions. Aim for around 24 minutes of prepare
 - **Diagram input needed**: Confirm benchmark label: "basic math RLVR, small context".
 - **Timing**: 2 min
 
-### Slide 14: How We Do RL at Nebius AI R&D
+### Slide 16: How We Do RL at Nebius AI R&D
 
 - **Purpose**: Ground the architecture in the platform without turning into an internal deep dive.
 - **Main point**: Nebius combines training, vLLM inference, and controller orchestration.
@@ -289,11 +314,10 @@ Target: 30-minute slot including questions. Aim for around 24 minutes of prepare
   - Papyrax: in-house JAX-based large-scale training framework.
   - vLLM: rollout inference.
   - Controller: scheduling, queues, actor-based orchestration.
-  - Blog reference: https://nebius.com/blog/posts/post-training-in-token-factory
 - **Visual**: Three-box architecture map: Papyrax <-> Controller <-> vLLM.
 - **Timing**: 1.5 min
 
-### Slide 15: Where to Continue Learning
+### Slide 17: Where to Continue Learning
 
 - **Purpose**: Give audience practical next steps.
 - **Main point**: There are now real open-source and vLLM paths to study this.
@@ -302,19 +326,35 @@ Target: 30-minute slot including questions. Aim for around 24 minutes of prepare
   - veRL: https://github.com/verl-project/verl
   - vLLM TRL: https://docs.vllm.ai/en/stable/training/trl/
   - vLLM weight transfer: https://docs.vllm.ai/en/stable/training/weight_transfer/
-  - Optional: QR code to a gist with links and references.
-- **Visual**: QR code + compact link list.
+  - Nebius post-training blog: https://nebius.com/blog/posts/post-training-in-token-factory
+  - QR code with links: https://gist.github.com/minotru/8bd5aebf1e1aec5a32f463553072a563.
+- **Visual**: Compact clickable link grid plus QR code to the gist.
 - **Timing**: 45 sec
 
-### Slide 16: Token Factory RL FT Beta
+### Slide 18: Token Factory RL FT Beta
 
 - **Purpose**: Close with the product option.
 - **Main point**: Research-proven RL fine-tuning as a service.
 - **Content**:
   - Token Factory RL FT beta.
   - For teams that want the RL post-training loop without building the whole system stack.
+  - Training, rollout inference, controller orchestration, and product workflow are packaged together.
 - **Visual**: Clean closing slide with the phrase "Research-proven RL fine-tuning as a service."
+- **Deck note**: "Token Factory RL FT Beta" is the large headline; the service phrase is the supporting statement.
 - **Timing**: 45 sec
+
+### Slide 19: Questions
+
+- **Purpose**: Leave a clean final screen for discussion.
+- **Main point**: Open the floor for questions.
+- **Content**:
+  - Thank you!
+  - Questions?
+  - Simon Karasik
+  - Infrastructure Lead | Nebius AI R&D
+  - sbkarasik@nebius.com
+- **Visual**: Large "Thank you!" wordmark, smaller "Questions?", speaker/contact panel at the lower bottom, and QR code to the useful-links gist.
+- **Timing**: discussion
 
 ### Optional Appendix Slides
 

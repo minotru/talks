@@ -59,8 +59,8 @@
           --h3-size: clamp(1rem, 2.5vw, 1.75rem);
 
           /* Body text */
-          --body-size: clamp(0.75rem, 1.5vw, 1.125rem);
-          --small-size: clamp(0.65rem, 1vw, 0.875rem);
+          --body-size: clamp(0.95rem, 1.55vw, 1.25rem);
+          --small-size: clamp(0.78rem, 1.08vw, 0.98rem);
 
           /* Spacing scales with viewport */
           --slide-padding: clamp(1rem, 4vw, 4rem);
@@ -291,6 +291,10 @@
         font-size: clamp(2rem, 4.4vw, 4.45rem);
       }
 
+      .dark .section-heading {
+        color: var(--lime-soft);
+      }
+
       h1,
       h2 {
         max-width: min(90vw, 68rem);
@@ -413,7 +417,7 @@
         border-radius: 999px;
         padding: clamp(0.22rem, 0.5vw, 0.4rem) clamp(0.55rem, 1.2vw, 1rem);
         color: currentColor;
-        font-size: clamp(0.56rem, 0.86vw, 0.78rem);
+        font-size: clamp(0.78rem, 1.05vw, 0.98rem);
         font-weight: 700;
       }
 
@@ -508,6 +512,8 @@
         margin-top: clamp(0.55rem, 1vw, 0.9rem);
         color: inherit;
         opacity: 0.76;
+        font-size: clamp(1rem, 1.45vw, 1.2rem);
+        line-height: 1.28;
       }
 
       .overview-card.wide {
@@ -526,7 +532,7 @@
         border: 0.12rem solid currentColor;
         border-radius: 999px;
         padding: clamp(0.2rem, 0.5vw, 0.36rem) clamp(0.48rem, 0.9vw, 0.75rem);
-        font-size: clamp(0.6rem, 0.86vw, 0.8rem);
+        font-size: clamp(0.75rem, 1vw, 0.92rem);
         font-weight: 700;
       }
 
@@ -541,7 +547,7 @@
         min-height: clamp(10rem, 31vh, 16rem);
         border: 0.16rem solid var(--navy);
         border-radius: var(--radius-md);
-        padding: clamp(0.75rem, 1.5vw, 1.25rem);
+        padding: clamp(0.85rem, 1.6vw, 1.35rem);
         background: rgba(255, 255, 255, 0.54);
         display: flex;
         flex-direction: column;
@@ -574,7 +580,7 @@
         background: var(--navy);
         color: var(--lime-soft);
         font-weight: 700;
-        font-size: clamp(0.78rem, 1.2vw, 1rem);
+        font-size: clamp(0.9rem, 1.25vw, 1.08rem);
       }
 
       .topic-step:nth-child(4) .topic-index {
@@ -585,20 +591,22 @@
       .topic-step strong {
         display: block;
         margin-top: clamp(0.7rem, 1.3vw, 1rem);
-        font-size: clamp(0.95rem, 1.65vw, 1.35rem);
+        font-size: clamp(1.1rem, 1.8vw, 1.5rem);
         line-height: 1.08;
       }
 
       .topic-step p {
         color: inherit;
         opacity: 0.74;
-        font-size: clamp(0.7rem, 1.05vw, 0.94rem);
+        font-size: clamp(0.9rem, 1.28vw, 1.08rem);
+        line-height: 1.24;
       }
 
       .flow-caption {
         color: var(--muted);
-        font-size: clamp(0.75rem, 1.2vw, 0.96rem);
+        font-size: clamp(1rem, 1.45vw, 1.22rem);
         font-weight: 700;
+        line-height: 1.24;
       }
 
       .node {
@@ -626,7 +634,7 @@
       }
 
       .diagram-small {
-        font: 700 15px Arimo, sans-serif;
+        font: 700 18px Arimo, sans-serif;
       }
 
       .grpo-grid {
@@ -647,9 +655,1254 @@
         background: rgba(255, 255, 255, 0.6);
       }
 
+      .completion-card p,
+      .comparison-card p {
+        font-size: clamp(0.95rem, 1.35vw, 1.14rem);
+        line-height: 1.28;
+      }
+
       .completion-card.good {
         background: var(--lime-soft);
         box-shadow: inset 0 0 0 0.28rem rgba(224, 255, 79, 0.8);
+      }
+
+      .contract-wrap {
+        display: grid;
+        grid-template-columns: minmax(0, 0.86fr) minmax(0, 1.14fr);
+        gap: clamp(1rem, 3vw, 2.4rem);
+        align-items: center;
+      }
+
+      .contract-packet {
+        position: relative;
+        min-height: clamp(18rem, 54vh, 31rem);
+        border: 0.18rem solid var(--navy);
+        border-radius: var(--radius-lg);
+        background: var(--navy);
+        color: var(--lime-soft);
+        padding: clamp(1.1rem, 2.2vw, 1.8rem);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        box-shadow: var(--shadow);
+      }
+
+      .contract-packet::after {
+        content: "";
+        position: absolute;
+        right: clamp(1rem, 2vw, 1.4rem);
+        top: clamp(1rem, 2vw, 1.4rem);
+        width: clamp(2.3rem, 5vw, 4rem);
+        aspect-ratio: 1;
+        border-radius: 50%;
+        background: var(--lime);
+        border: 0.16rem solid var(--lime-soft);
+      }
+
+      .contract-packet strong {
+        max-width: 70%;
+        font-size: clamp(1.4rem, 3vw, 2.6rem);
+        line-height: 1;
+      }
+
+      .contract-packet p {
+        color: var(--muted-light);
+        font-size: clamp(1rem, 1.5vw, 1.24rem);
+        line-height: 1.28;
+      }
+
+      .field-list {
+        display: grid;
+        gap: clamp(0.55rem, 1.1vw, 0.85rem);
+      }
+
+      .field-row {
+        display: grid;
+        grid-template-columns: minmax(8rem, 0.75fr) minmax(0, 1.25fr);
+        gap: clamp(0.7rem, 1.4vw, 1rem);
+        align-items: center;
+        border: 0.14rem solid var(--navy);
+        border-radius: var(--radius-sm);
+        padding: clamp(0.55rem, 1vw, 0.8rem) clamp(0.75rem, 1.4vw, 1rem);
+        background: rgba(255, 255, 255, 0.58);
+      }
+
+      .field-row code {
+        font-family: var(--font-body);
+        font-size: clamp(1rem, 1.45vw, 1.22rem);
+        font-weight: 700;
+      }
+
+      .field-row span {
+        color: var(--muted);
+        font-size: clamp(0.9rem, 1.25vw, 1.06rem);
+        line-height: 1.2;
+      }
+
+      .naive-flow {
+        display: grid;
+        grid-template-columns: repeat(5, minmax(0, 1fr));
+        gap: clamp(0.65rem, 1.3vw, 1rem);
+        align-items: stretch;
+      }
+
+      .naive-step {
+        position: relative;
+        min-height: clamp(11rem, 34vh, 17rem);
+        border: 0.16rem solid var(--navy);
+        border-radius: var(--radius-md);
+        background: rgba(255, 255, 255, 0.58);
+        padding: clamp(0.85rem, 1.6vw, 1.3rem);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        transition:
+          opacity 260ms var(--ease-out),
+          transform 260ms var(--ease-out),
+          box-shadow 260ms var(--ease-out);
+      }
+
+      .naive-step:not(:last-child)::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        right: calc(clamp(0.65rem, 1.3vw, 1rem) * -0.9);
+        width: clamp(0.7rem, 1.3vw, 1rem);
+        height: 0.16rem;
+        background: var(--navy);
+        transform: translateY(-50%);
+      }
+
+      .naive-step.checkpoint {
+        background: var(--navy);
+        color: var(--lime-soft);
+      }
+
+      .naive-step.rollout {
+        background: var(--lavender);
+      }
+
+      .naive-step strong {
+        display: block;
+        font-size: clamp(1.1rem, 1.8vw, 1.5rem);
+        line-height: 1.08;
+      }
+
+      .naive-step p {
+        color: inherit;
+        opacity: 0.76;
+        font-size: clamp(0.9rem, 1.25vw, 1.08rem);
+        line-height: 1.24;
+      }
+
+      .step-num {
+        width: clamp(1.75rem, 3vw, 2.45rem);
+        aspect-ratio: 1;
+        display: grid;
+        place-items: center;
+        border-radius: 50%;
+        background: var(--navy);
+        color: var(--lime-soft);
+        font-weight: 700;
+      }
+
+      .naive-step.checkpoint .step-num {
+        background: var(--lime);
+        color: var(--navy);
+      }
+
+      .pain-label {
+        position: absolute;
+        top: clamp(0.75rem, 1.4vw, 1rem);
+        right: clamp(0.75rem, 1.4vw, 1rem);
+        border: 0.12rem solid currentColor;
+        border-radius: 999px;
+        padding: clamp(0.16rem, 0.4vw, 0.28rem) clamp(0.45rem, 0.8vw, 0.65rem);
+        color: var(--orange);
+        font-size: clamp(0.72rem, 1vw, 0.9rem);
+        font-weight: 700;
+        opacity: 0;
+        transform: translateY(-0.35rem);
+        transition:
+          opacity 260ms var(--ease-out),
+          transform 260ms var(--ease-out);
+      }
+
+      .slide[data-fragment="1"] .naive-step {
+        opacity: 0.38;
+      }
+
+      .slide[data-fragment="1"] .naive-step.problem-step {
+        opacity: 1;
+        transform: translateY(calc(-1 * clamp(0.45rem, 1vw, 0.7rem)));
+        box-shadow: 0 0 0 clamp(0.22rem, 0.5vw, 0.34rem) var(--orange);
+      }
+
+      .slide[data-fragment="1"] .naive-step.problem-step .pain-label {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .bottleneck-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+        gap: clamp(1rem, 3vw, 2.4rem);
+        align-items: center;
+      }
+
+      .bandwidth-card {
+        border: 0.16rem solid var(--line-on-dark);
+        border-radius: var(--radius-lg);
+        padding: clamp(1rem, 2vw, 1.65rem);
+        background: rgba(245, 255, 209, 0.05);
+      }
+
+      .band-row {
+        display: grid;
+        grid-template-columns: minmax(8rem, 0.5fr) minmax(0, 1fr);
+        gap: clamp(0.8rem, 1.8vw, 1.3rem);
+        align-items: center;
+        margin-top: clamp(0.9rem, 1.8vw, 1.3rem);
+      }
+
+      .band-label strong {
+        display: block;
+        font-size: clamp(1rem, 1.6vw, 1.32rem);
+        line-height: 1.05;
+      }
+
+      .band-label span {
+        color: var(--muted-light);
+        font-size: clamp(0.88rem, 1.18vw, 1rem);
+      }
+
+      .band-track {
+        height: clamp(2.4rem, 6vh, 4rem);
+        border: 0.12rem solid var(--line-on-dark);
+        border-radius: 999px;
+        padding: clamp(0.25rem, 0.5vw, 0.35rem);
+        background: rgba(245, 255, 209, 0.08);
+      }
+
+      .band-fill {
+        height: 100%;
+        border-radius: 999px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        padding-right: clamp(0.7rem, 1.4vw, 1rem);
+        color: var(--navy);
+        font-weight: 700;
+        font-size: clamp(0.92rem, 1.25vw, 1.08rem);
+      }
+
+      .band-fill.disk {
+        width: 18%;
+        min-width: 7.4rem;
+        background: var(--orange);
+      }
+
+      .band-fill.ib {
+        width: 100%;
+        background: var(--lime);
+      }
+
+      .checkpoint-size-card {
+        border: 0.16rem solid var(--line-on-dark);
+        border-radius: var(--radius-lg);
+        padding: clamp(1rem, 2vw, 1.65rem);
+        background: rgba(245, 255, 209, 0.05);
+        display: grid;
+        gap: clamp(0.8rem, 1.6vw, 1.2rem);
+      }
+
+      .model-name {
+        display: block;
+        color: var(--lime-soft);
+        font-size: clamp(1.65rem, 3vw, 2.55rem);
+        font-weight: 700;
+        line-height: 0.98;
+      }
+
+      .weight-math {
+        border: 0.12rem solid var(--line-on-dark);
+        border-radius: var(--radius-md);
+        padding: clamp(0.8rem, 1.4vw, 1.05rem);
+        background: rgba(255, 255, 255, 0.06);
+      }
+
+      .weight-math strong {
+        display: block;
+        color: var(--paper);
+        font-size: clamp(1.18rem, 2vw, 1.6rem);
+        line-height: 1.08;
+      }
+
+      .weight-math span {
+        display: block;
+        margin-top: clamp(0.35rem, 0.7vw, 0.5rem);
+        color: var(--muted-light);
+        font-size: clamp(0.96rem, 1.34vw, 1.14rem);
+        line-height: 1.22;
+      }
+
+      .io-stack {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: clamp(0.7rem, 1.4vw, 1rem);
+      }
+
+      .io-chip {
+        border-radius: var(--radius-md);
+        padding: clamp(0.75rem, 1.4vw, 1rem);
+        background: var(--orange);
+        color: var(--navy);
+      }
+
+      .io-chip strong {
+        display: block;
+        font-size: clamp(1.55rem, 2.7vw, 2.25rem);
+        line-height: 0.95;
+      }
+
+      .io-chip span {
+        display: block;
+        margin-top: clamp(0.25rem, 0.6vw, 0.42rem);
+        font-size: clamp(0.9rem, 1.2vw, 1.02rem);
+        font-weight: 700;
+        line-height: 1.15;
+      }
+
+      .io-total {
+        color: var(--muted-light);
+        font-size: clamp(1rem, 1.42vw, 1.2rem);
+        font-weight: 700;
+        line-height: 1.24;
+      }
+
+      .sync-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.05fr) minmax(0, 0.9fr);
+        gap: clamp(0.85rem, 2vw, 1.5rem);
+        align-items: center;
+      }
+
+      .sync-node {
+        min-height: clamp(18rem, 49vh, 28rem);
+        border: 0.16rem solid var(--navy);
+        border-radius: var(--radius-lg);
+        padding: clamp(1rem, 2vw, 1.7rem);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        box-shadow: var(--shadow);
+      }
+
+      .sync-node.trainer {
+        background: var(--paper-cool);
+      }
+
+      .sync-node.inference {
+        background: var(--navy);
+        color: var(--lime-soft);
+      }
+
+      .sync-node strong {
+        display: block;
+        font-size: clamp(2rem, 3.8vw, 3.2rem);
+        line-height: 0.95;
+      }
+
+      .sync-node p {
+        color: inherit;
+        opacity: 0.74;
+        font-size: clamp(1rem, 1.5vw, 1.22rem);
+        line-height: 1.24;
+      }
+
+      .sync-middle {
+        display: grid;
+        gap: clamp(0.8rem, 1.6vw, 1.2rem);
+      }
+
+      .sync-link {
+        position: relative;
+        min-height: clamp(8.4rem, 23vh, 13rem);
+        border: 0.16rem solid var(--navy);
+        border-radius: var(--radius-lg);
+        background: var(--lime-soft);
+        padding: clamp(0.9rem, 1.8vw, 1.35rem);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .sync-link::before,
+      .sync-link::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: var(--navy);
+      }
+
+      .sync-link::before {
+        left: calc(clamp(0.85rem, 2vw, 1.5rem) * -1);
+        right: calc(clamp(0.85rem, 2vw, 1.5rem) * -1);
+        height: 0.16rem;
+      }
+
+      .sync-link::after {
+        right: calc(clamp(0.85rem, 2vw, 1.5rem) * -1.1);
+        width: clamp(0.6rem, 1vw, 0.8rem);
+        aspect-ratio: 1;
+        clip-path: polygon(0 0, 100% 50%, 0 100%);
+      }
+
+      .sync-link strong {
+        display: block;
+        margin-top: clamp(0.5rem, 1vw, 0.8rem);
+        color: var(--navy);
+        font-size: clamp(1.4rem, 2.6vw, 2.2rem);
+        line-height: 1;
+      }
+
+      .disk-bypass {
+        border: 0.14rem dashed var(--navy);
+        border-radius: var(--radius-md);
+        padding: clamp(0.75rem, 1.4vw, 1rem);
+        background:
+          linear-gradient(145deg, transparent 46%, var(--red) 47%, var(--red) 53%, transparent 54%),
+          rgba(255, 255, 255, 0.5);
+      }
+
+      .disk-bypass strong,
+      .disk-bypass span {
+        display: block;
+      }
+
+      .disk-bypass strong {
+        margin-top: clamp(0.3rem, 0.7vw, 0.5rem);
+        font-size: clamp(1.05rem, 1.6vw, 1.32rem);
+      }
+
+      .sync-footer {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: clamp(0.65rem, 1.4vw, 1rem);
+        margin-top: clamp(0.9rem, 1.8vw, 1.25rem);
+      }
+
+      .sync-footer span {
+        border: 0.14rem solid var(--navy);
+        border-radius: 999px;
+        padding: clamp(0.5rem, 1vw, 0.75rem) clamp(0.75rem, 1.4vw, 1rem);
+        background: rgba(255, 255, 255, 0.58);
+        font-size: clamp(0.95rem, 1.28vw, 1.1rem);
+        font-weight: 700;
+        text-align: center;
+      }
+
+      .vllm-sync-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+        gap: clamp(1rem, 3vw, 2.4rem);
+        align-items: center;
+      }
+
+      .engine-box {
+        border: 0.16rem solid var(--line-on-dark);
+        border-radius: var(--radius-lg);
+        padding: clamp(1rem, 2vw, 1.7rem);
+        background: rgba(245, 255, 209, 0.05);
+        min-height: clamp(22rem, 56vh, 32rem);
+        display: grid;
+        grid-template-rows: auto 1fr auto;
+        gap: clamp(0.9rem, 1.8vw, 1.3rem);
+      }
+
+      .engine-title {
+        display: flex;
+        justify-content: space-between;
+        gap: clamp(0.75rem, 1.5vw, 1rem);
+        align-items: flex-start;
+      }
+
+      .engine-title strong {
+        color: var(--lime-soft);
+        font-size: clamp(2rem, 4vw, 3.4rem);
+        line-height: 0.95;
+      }
+
+      .engine-pipeline {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: clamp(0.6rem, 1.2vw, 0.9rem);
+        align-items: stretch;
+      }
+
+      .engine-stage {
+        border: 0.12rem solid var(--line-on-dark);
+        border-radius: var(--radius-md);
+        padding: clamp(0.7rem, 1.3vw, 1rem);
+        background: rgba(255, 255, 255, 0.06);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      .engine-stage strong {
+        color: var(--paper);
+        font-size: clamp(1.05rem, 1.55vw, 1.32rem);
+        line-height: 1.08;
+      }
+
+      .engine-stage span {
+        color: var(--muted-light);
+        font-size: clamp(0.86rem, 1.1vw, 0.98rem);
+        font-weight: 700;
+      }
+
+      .engine-note {
+        color: var(--muted-light);
+        font-size: clamp(0.98rem, 1.35vw, 1.12rem);
+        font-weight: 700;
+        line-height: 1.24;
+      }
+
+      .hook-list {
+        display: grid;
+        gap: clamp(0.7rem, 1.4vw, 1rem);
+      }
+
+      .hook-card {
+        border: 0.14rem solid var(--line-on-dark);
+        border-radius: var(--radius-md);
+        padding: clamp(0.8rem, 1.5vw, 1.12rem);
+        background: rgba(245, 255, 209, 0.05);
+      }
+
+      .hook-card strong {
+        display: block;
+        color: var(--lime-soft);
+        font-size: clamp(1.15rem, 1.75vw, 1.45rem);
+        line-height: 1.08;
+      }
+
+      .hook-card p {
+        margin-top: clamp(0.35rem, 0.7vw, 0.5rem);
+        color: var(--muted-light);
+        font-size: clamp(0.95rem, 1.25vw, 1.06rem);
+        line-height: 1.24;
+      }
+
+      .idle-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.65fr);
+        gap: clamp(1rem, 2.6vw, 2rem);
+        align-items: center;
+      }
+
+      .idle-timeline {
+        border: 0.16rem solid var(--navy);
+        border-radius: var(--radius-lg);
+        background: rgba(255, 255, 255, 0.56);
+        padding: clamp(0.9rem, 1.8vw, 1.35rem);
+        box-shadow: var(--shadow);
+      }
+
+      .timeline-head,
+      .timeline-row {
+        display: grid;
+        grid-template-columns: minmax(8rem, 0.7fr) repeat(4, minmax(0, 1fr));
+        gap: clamp(0.45rem, 0.9vw, 0.7rem);
+        align-items: stretch;
+      }
+
+      .timeline-head {
+        margin-bottom: clamp(0.55rem, 1.1vw, 0.85rem);
+      }
+
+      .timeline-head span {
+        color: var(--muted);
+        font-size: clamp(0.78rem, 1.05vw, 0.92rem);
+        font-weight: 700;
+        text-align: center;
+      }
+
+      .timeline-row + .timeline-row {
+        margin-top: clamp(0.55rem, 1.1vw, 0.85rem);
+      }
+
+      .lane-label {
+        border: 0.14rem solid var(--navy);
+        border-radius: var(--radius-sm);
+        padding: clamp(0.7rem, 1.3vw, 1rem);
+        background: var(--navy);
+        color: var(--lime-soft);
+        font-size: clamp(1rem, 1.35vw, 1.18rem);
+        font-weight: 700;
+        line-height: 1.08;
+        display: flex;
+        align-items: center;
+      }
+
+      .work-block,
+      .idle-block {
+        min-height: clamp(5rem, 14vh, 7.5rem);
+        border-radius: var(--radius-sm);
+        padding: clamp(0.65rem, 1.25vw, 0.95rem);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        border: 0.12rem solid var(--navy);
+      }
+
+      .work-block {
+        background: var(--cyan);
+      }
+
+      .work-block.train {
+        background: var(--lime-soft);
+      }
+
+      .idle-block {
+        border-style: dashed;
+        background: rgba(1, 19, 39, 0.08);
+        color: rgba(1, 19, 39, 0.54);
+      }
+
+      .work-block strong,
+      .idle-block strong {
+        font-size: clamp(1rem, 1.45vw, 1.25rem);
+        line-height: 1.05;
+      }
+
+      .work-block span,
+      .idle-block span {
+        font-size: clamp(0.76rem, 1vw, 0.9rem);
+        font-weight: 700;
+      }
+
+      .sync-limit-list {
+        display: grid;
+        gap: clamp(0.7rem, 1.5vw, 1rem);
+      }
+
+      .sync-limit-card {
+        border: 0.14rem solid var(--navy);
+        border-radius: var(--radius-md);
+        padding: clamp(0.85rem, 1.6vw, 1.15rem);
+        background: rgba(255, 255, 255, 0.58);
+      }
+
+      .sync-limit-card strong {
+        display: block;
+        font-size: clamp(1.12rem, 1.75vw, 1.48rem);
+        line-height: 1.08;
+      }
+
+      .sync-limit-card p {
+        margin-top: clamp(0.35rem, 0.7vw, 0.5rem);
+        color: var(--muted);
+        font-size: clamp(0.95rem, 1.25vw, 1.06rem);
+        line-height: 1.22;
+      }
+
+      .async-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+        gap: clamp(1rem, 3vw, 2.4rem);
+        align-items: center;
+      }
+
+      .async-points {
+        display: grid;
+        gap: clamp(0.7rem, 1.4vw, 1rem);
+      }
+
+      .async-point {
+        border: 0.14rem solid var(--line-on-dark);
+        border-radius: var(--radius-md);
+        padding: clamp(0.8rem, 1.45vw, 1.08rem);
+        background: rgba(245, 255, 209, 0.05);
+      }
+
+      .async-point strong {
+        display: block;
+        color: var(--lime-soft);
+        font-size: clamp(1.1rem, 1.65vw, 1.36rem);
+        line-height: 1.08;
+      }
+
+      .async-point p {
+        margin-top: clamp(0.35rem, 0.7vw, 0.5rem);
+        color: var(--muted-light);
+        font-size: clamp(0.94rem, 1.22vw, 1.04rem);
+        line-height: 1.22;
+      }
+
+      .async-arch {
+        border: 0.16rem solid var(--line-on-dark);
+        border-radius: var(--radius-lg);
+        padding: clamp(1rem, 2vw, 1.55rem);
+        background: rgba(245, 255, 209, 0.05);
+        display: grid;
+        gap: clamp(0.8rem, 1.6vw, 1.1rem);
+      }
+
+      .async-actors {
+        display: grid;
+        grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr) minmax(0, 0.9fr);
+        gap: clamp(0.7rem, 1.4vw, 1rem);
+        align-items: center;
+      }
+
+      .async-actor {
+        min-height: clamp(8.5rem, 23vh, 12.5rem);
+        border: 0.12rem solid var(--line-on-dark);
+        border-radius: var(--radius-md);
+        padding: clamp(0.85rem, 1.5vw, 1.1rem);
+        background: rgba(255, 255, 255, 0.06);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      .async-actor.controller {
+        background: var(--lime-soft);
+        color: var(--navy);
+        border-color: var(--lime-soft);
+      }
+
+      .async-actor strong {
+        font-size: clamp(1.35rem, 2.25vw, 1.9rem);
+        line-height: 1;
+      }
+
+      .async-actor span {
+        color: inherit;
+        opacity: 0.7;
+        font-size: clamp(0.88rem, 1.15vw, 1rem);
+        font-weight: 700;
+        line-height: 1.18;
+      }
+
+      .queue-strip {
+        display: grid;
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+        gap: clamp(0.35rem, 0.8vw, 0.55rem);
+      }
+
+      .queue-cell {
+        min-height: clamp(2.2rem, 6vh, 3.8rem);
+        border-radius: var(--radius-sm);
+        background: var(--cyan);
+        border: 0.1rem solid var(--line-on-dark);
+      }
+
+      .queue-cell:nth-child(2n) {
+        background: var(--lavender);
+      }
+
+      .rollout-bars {
+        display: grid;
+        gap: clamp(0.45rem, 0.9vw, 0.65rem);
+      }
+
+      .rollout-bar {
+        height: clamp(1.25rem, 3.2vh, 2rem);
+        border-radius: 999px;
+        background: var(--cyan);
+        border: 0.1rem solid var(--line-on-dark);
+      }
+
+      .rollout-bar.short {
+        width: 44%;
+      }
+
+      .rollout-bar.medium {
+        width: 68%;
+        background: var(--lavender);
+      }
+
+      .rollout-bar.long {
+        width: 92%;
+        background: var(--lime-soft);
+      }
+
+      .async-note {
+        display: flex;
+        flex-wrap: wrap;
+        gap: clamp(0.5rem, 1vw, 0.75rem);
+      }
+
+      .async-note span {
+        border: 0.12rem solid var(--line-on-dark);
+        border-radius: 999px;
+        padding: clamp(0.42rem, 0.9vw, 0.65rem) clamp(0.7rem, 1.3vw, 0.95rem);
+        color: var(--paper);
+        font-size: clamp(0.88rem, 1.12vw, 1rem);
+        font-weight: 700;
+      }
+
+      .tradeoff-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.22fr);
+        gap: clamp(1rem, 3vw, 2.4rem);
+        align-items: center;
+      }
+
+      .throughput-chart {
+        border: 0.16rem solid var(--navy);
+        border-radius: var(--radius-lg);
+        padding: clamp(1rem, 2vw, 1.55rem);
+        background: rgba(255, 255, 255, 0.58);
+        box-shadow: var(--shadow);
+        display: grid;
+        gap: clamp(0.7rem, 1.5vw, 1rem);
+      }
+
+      .throughput-row {
+        display: grid;
+        grid-template-columns: minmax(8rem, 0.55fr) minmax(0, 1fr) minmax(6.5rem, 0.35fr);
+        gap: clamp(0.65rem, 1.4vw, 1rem);
+        align-items: center;
+      }
+
+      .throughput-label strong {
+        display: block;
+        font-size: clamp(1.05rem, 1.55vw, 1.3rem);
+        line-height: 1.05;
+      }
+
+      .throughput-label span {
+        display: block;
+        margin-top: clamp(0.2rem, 0.5vw, 0.35rem);
+        color: var(--muted);
+        font-size: clamp(0.78rem, 1vw, 0.9rem);
+        font-weight: 700;
+        line-height: 1.15;
+      }
+
+      .throughput-track {
+        height: clamp(2.6rem, 6.4vh, 4.2rem);
+        border: 0.12rem solid var(--navy);
+        border-radius: 999px;
+        padding: clamp(0.22rem, 0.5vw, 0.35rem);
+        background: rgba(1, 19, 39, 0.08);
+      }
+
+      .throughput-fill {
+        width: var(--bar);
+        min-width: clamp(4.2rem, 8vw, 6.2rem);
+        height: 100%;
+        border-radius: 999px;
+        background: var(--cyan);
+      }
+
+      .throughput-fill.sync-bar {
+        background: var(--orange);
+      }
+
+      .throughput-fill.k3-bar {
+        background: var(--lavender);
+      }
+
+      .throughput-fill.k6-bar {
+        background: var(--lime);
+      }
+
+      .throughput-value {
+        font-size: clamp(1.05rem, 1.7vw, 1.45rem);
+        font-weight: 700;
+        line-height: 1;
+        text-align: right;
+      }
+
+      .chart-note {
+        color: var(--muted);
+        font-size: clamp(0.9rem, 1.22vw, 1.04rem);
+        font-weight: 700;
+        line-height: 1.24;
+      }
+
+      .tradeoff-axis {
+        border: 0.16rem solid var(--navy);
+        border-radius: var(--radius-lg);
+        padding: clamp(1rem, 2vw, 1.5rem);
+        background: var(--navy);
+        color: var(--lime-soft);
+      }
+
+      .axis-labels {
+        display: flex;
+        justify-content: space-between;
+        gap: clamp(0.6rem, 1.2vw, 0.9rem);
+        font-size: clamp(0.92rem, 1.24vw, 1.08rem);
+        font-weight: 700;
+      }
+
+      .axis-line {
+        position: relative;
+        height: clamp(1.6rem, 4vh, 2.4rem);
+        margin: clamp(0.65rem, 1.4vw, 1rem) 0;
+      }
+
+      .axis-line::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 50%;
+        height: 0.16rem;
+        transform: translateY(-50%);
+        background: var(--lime-soft);
+      }
+
+      .axis-line::after {
+        content: "";
+        position: absolute;
+        right: 0;
+        top: 50%;
+        width: clamp(0.7rem, 1.2vw, 0.95rem);
+        aspect-ratio: 1;
+        transform: translateY(-50%);
+        background: var(--lime-soft);
+        clip-path: polygon(0 0, 100% 50%, 0 100%);
+      }
+
+      .tradeoff-axis p {
+        color: var(--muted-light);
+        font-size: clamp(1rem, 1.45vw, 1.18rem);
+        font-weight: 700;
+        line-height: 1.24;
+      }
+
+      .nebius-rl-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr);
+        gap: clamp(1rem, 3vw, 2.4rem);
+        align-items: center;
+      }
+
+      .nebius-points {
+        display: grid;
+        gap: clamp(0.7rem, 1.4vw, 1rem);
+      }
+
+      .nebius-point {
+        border: 0.14rem solid var(--line-on-dark);
+        border-radius: var(--radius-md);
+        padding: clamp(0.8rem, 1.5vw, 1.1rem);
+        background: rgba(245, 255, 209, 0.05);
+      }
+
+      .nebius-point strong {
+        display: block;
+        color: var(--lime-soft);
+        font-size: clamp(1.12rem, 1.72vw, 1.42rem);
+        line-height: 1.08;
+      }
+
+      .nebius-point p {
+        margin-top: clamp(0.35rem, 0.7vw, 0.5rem);
+        color: var(--muted-light);
+        font-size: clamp(0.95rem, 1.24vw, 1.05rem);
+        line-height: 1.22;
+      }
+
+      .rl-architecture {
+        border: 0.16rem solid var(--line-on-dark);
+        border-radius: var(--radius-lg);
+        padding: clamp(1rem, 2vw, 1.55rem);
+        background: rgba(245, 255, 209, 0.05);
+        display: grid;
+        gap: clamp(0.9rem, 1.8vw, 1.25rem);
+      }
+
+      .arch-row {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) clamp(2.2rem, 5vw, 4rem) minmax(0, 1fr) clamp(2.2rem, 5vw, 4rem) minmax(0, 1fr);
+        gap: clamp(0.5rem, 1vw, 0.8rem);
+        align-items: center;
+      }
+
+      .arch-box {
+        min-height: clamp(10rem, 27vh, 14.5rem);
+        border: 0.12rem solid var(--line-on-dark);
+        border-radius: var(--radius-md);
+        padding: clamp(0.8rem, 1.5vw, 1.1rem);
+        background: rgba(255, 255, 255, 0.06);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      .arch-box.controller {
+        background: var(--lime-soft);
+        color: var(--navy);
+        border-color: var(--lime-soft);
+      }
+
+      .arch-box strong {
+        font-size: clamp(1.35rem, 2.25vw, 1.9rem);
+        line-height: 0.98;
+      }
+
+      .arch-box span {
+        color: inherit;
+        opacity: 0.72;
+        font-size: clamp(0.88rem, 1.15vw, 1rem);
+        font-weight: 700;
+        line-height: 1.18;
+      }
+
+      .arch-link {
+        position: relative;
+        height: 0.16rem;
+        background: var(--line-on-dark);
+      }
+
+      .arch-link::before,
+      .arch-link::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        width: clamp(0.55rem, 1vw, 0.8rem);
+        aspect-ratio: 1;
+        background: var(--line-on-dark);
+      }
+
+      .arch-link::before {
+        left: 0;
+        transform: translateY(-50%) rotate(180deg);
+        clip-path: polygon(0 0, 100% 50%, 0 100%);
+      }
+
+      .arch-link::after {
+        right: 0;
+        transform: translateY(-50%);
+        clip-path: polygon(0 0, 100% 50%, 0 100%);
+      }
+
+      .resources-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 0.68fr) minmax(0, 1.32fr);
+        gap: clamp(1rem, 3vw, 2.4rem);
+        align-items: center;
+      }
+
+      .gist-qr-card {
+        width: min(100%, clamp(13rem, 24vw, 19rem));
+        border: 0.16rem solid var(--navy);
+        border-radius: var(--radius-lg);
+        padding: clamp(0.75rem, 1.4vw, 1rem);
+        background: rgba(255, 255, 255, 0.72);
+        color: var(--navy);
+        text-decoration: none;
+        display: grid;
+        gap: clamp(0.55rem, 1vw, 0.8rem);
+      }
+
+      .dark .gist-qr-card {
+        border-color: var(--line-on-dark);
+      }
+
+      .gist-qr-card img {
+        width: 100%;
+        aspect-ratio: 1;
+        max-height: none;
+        border-radius: var(--radius-sm);
+        background: #fff;
+      }
+
+      .gist-qr-card strong {
+        font-size: clamp(1rem, 1.45vw, 1.2rem);
+        line-height: 1.05;
+      }
+
+      .gist-qr-card span {
+        color: var(--muted);
+        font-size: clamp(0.78rem, 1vw, 0.9rem);
+        font-weight: 700;
+        line-height: 1.16;
+        overflow-wrap: anywhere;
+      }
+
+      .resource-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: clamp(0.7rem, 1.4vw, 1rem);
+      }
+
+      .resource-card {
+        min-height: clamp(6.3rem, 16vh, 8.8rem);
+        border: 0.14rem solid var(--navy);
+        border-radius: var(--radius-md);
+        padding: clamp(0.8rem, 1.5vw, 1.1rem);
+        background: rgba(255, 255, 255, 0.58);
+        color: var(--navy);
+        text-decoration: none;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        transition:
+          transform 180ms var(--ease-out),
+          background 180ms var(--ease-out);
+      }
+
+      .resource-card:hover {
+        transform: translateY(calc(-1 * clamp(0.16rem, 0.4vw, 0.3rem)));
+        background: var(--lime-soft);
+      }
+
+      .resource-card strong {
+        font-size: clamp(1.2rem, 1.85vw, 1.55rem);
+        line-height: 1;
+      }
+
+      .resource-card span {
+        color: var(--muted);
+        font-size: clamp(0.82rem, 1.04vw, 0.94rem);
+        font-weight: 700;
+        line-height: 1.18;
+        overflow-wrap: anywhere;
+      }
+
+      .resource-card.wide {
+        grid-column: span 2;
+        background: var(--paper-cool);
+      }
+
+      .closing-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 0.72fr);
+        gap: clamp(1rem, 3vw, 2.4rem);
+        align-items: center;
+      }
+
+      .closing-title {
+        color: var(--lime-soft);
+        font-size: clamp(3.2rem, 7.4vw, 7rem);
+        font-weight: 700;
+        line-height: 0.9;
+      }
+
+      .closing-phrase {
+        color: var(--paper);
+        font-size: clamp(1.75rem, 3.2vw, 3rem);
+        font-weight: 700;
+        line-height: 1.02;
+        max-width: min(70vw, 50rem);
+      }
+
+      .closing-panel {
+        border: 0.16rem solid var(--line-on-dark);
+        border-radius: var(--radius-lg);
+        padding: clamp(1rem, 2vw, 1.55rem);
+        background: rgba(245, 255, 209, 0.05);
+        display: grid;
+        gap: clamp(0.75rem, 1.5vw, 1.05rem);
+      }
+
+      .closing-panel strong {
+        color: var(--paper);
+        font-size: clamp(1.35rem, 2.2vw, 1.9rem);
+        line-height: 1.02;
+      }
+
+      .closing-panel p {
+        color: var(--muted-light);
+        font-size: clamp(1rem, 1.35vw, 1.15rem);
+        line-height: 1.24;
+      }
+
+      .question-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(15rem, 0.42fr);
+        gap: clamp(1rem, 3vw, 2.4rem);
+        align-items: center;
+      }
+
+      .question-left {
+        min-height: clamp(30rem, 72vh, 42rem);
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        gap: clamp(0.7rem, 1.5vh, 1.2rem);
+      }
+
+      .thank-you-word {
+        font-size: clamp(4.2rem, 10vw, 10rem);
+        line-height: 0.88;
+        letter-spacing: 0;
+        color: var(--navy);
+      }
+
+      .question-word {
+        font-size: clamp(2.2rem, 5.4vw, 5rem);
+        line-height: 0.95;
+        letter-spacing: 0;
+        color: var(--navy);
+      }
+
+      .question-contact {
+        margin-top: auto;
+        border: 0.16rem solid var(--navy);
+        border-radius: var(--radius-lg);
+        padding: clamp(1rem, 2vw, 1.6rem);
+        background: rgba(255, 255, 255, 0.58);
+        box-shadow: var(--shadow);
+        display: grid;
+        gap: clamp(0.55rem, 1.1vw, 0.8rem);
+      }
+
+      .question-contact strong {
+        font-size: clamp(1.45rem, 2.3vw, 2rem);
+        line-height: 1.02;
+      }
+
+      .question-contact span,
+      .question-contact a,
+      .question-contact p {
+        color: var(--muted);
+        font-size: clamp(1rem, 1.35vw, 1.15rem);
+        font-weight: 700;
+        line-height: 1.22;
+        text-decoration: none;
+      }
+
+      .question-line {
+        height: 0.16rem;
+        background: var(--navy);
+        width: 100%;
+      }
+
+      .problem-list {
+        display: grid;
+        gap: clamp(0.65rem, 1.2vw, 0.95rem);
+      }
+
+      .problem-item {
+        border: 0.14rem solid var(--line-on-dark);
+        border-radius: var(--radius-md);
+        padding: clamp(0.75rem, 1.4vw, 1.08rem);
+        background: rgba(245, 255, 209, 0.05);
+      }
+
+      .problem-item strong {
+        display: block;
+        color: var(--lime-soft);
+        font-size: clamp(1.05rem, 1.55vw, 1.3rem);
+        line-height: 1.05;
+      }
+
+      .problem-item p {
+        margin-top: clamp(0.35rem, 0.8vw, 0.55rem);
+        color: var(--muted-light);
+        font-size: clamp(0.92rem, 1.26vw, 1.08rem);
+        line-height: 1.25;
       }
 
       .comparison-badge {
@@ -748,6 +2001,66 @@
 
         .completion-stack {
           grid-template-columns: 1fr;
+        }
+
+        .contract-wrap {
+          grid-template-columns: 1fr;
+        }
+
+        .naive-flow,
+        .bottleneck-layout,
+        .sync-layout,
+        .vllm-sync-layout,
+        .idle-layout,
+        .async-layout,
+        .async-actors,
+        .tradeoff-layout,
+        .nebius-rl-layout,
+        .resources-layout,
+        .closing-layout,
+        .question-layout {
+          grid-template-columns: 1fr;
+        }
+
+        .naive-step:not(:last-child)::after {
+          display: none;
+        }
+
+        .sync-link::before,
+        .sync-link::after {
+          display: none;
+        }
+
+        .sync-footer,
+        .engine-pipeline,
+        .timeline-head,
+        .timeline-row,
+        .arch-row,
+        .throughput-row {
+          grid-template-columns: 1fr;
+        }
+
+        .arch-link {
+          min-height: clamp(1.5rem, 4vh, 2.2rem);
+          width: 0.16rem;
+          justify-self: center;
+        }
+
+        .arch-link::before,
+        .arch-link::after {
+          display: none;
+        }
+
+        .throughput-value {
+          text-align: left;
+        }
+
+        .resource-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .resource-card.wide {
+          grid-column: auto;
         }
       }
     </style>
@@ -996,8 +2309,8 @@
       <section class="slide" id="slide-7">
         <div class="brand">NEBIUS</div>
         <div class="slide-content stack">
-          <span class="kicker reveal">GRPO Intuition, No Formula</span>
-          <h2 class="reveal delay-1">Learn from the group, not one answer.</h2>
+          <h2 class="section-heading compact reveal">GRPO Intuition, No Formula</h2>
+          <p class="subhead reveal delay-1">Learn from the group, not one answer.</p>
           <div class="grpo-grid reveal delay-2">
             <div class="comparison-card">
               <span class="label-pill accent-pill">Prompt</span>
@@ -1028,12 +2341,572 @@
               group
             </div>
           </div>
-          <p class="flow-caption reveal delay-3">
-            The systems consequence: each step needs fresh rollouts, rewards,
-            token IDs, logprobs, and grouping metadata.
-          </p>
         </div>
         <div class="page-num">7</div>
+      </section>
+
+      <section class="slide" id="slide-8">
+        <div class="brand">NEBIUS</div>
+        <div class="slide-content stack">
+          <h2 class="section-heading compact reveal">The Rollout Data Contract</h2>
+          <p class="subhead reveal delay-1">
+            In RL training, inference must return training data, not just text.
+          </p>
+          <div class="contract-wrap reveal delay-2">
+            <div class="contract-packet">
+              <strong>rollout sample</strong>
+              <p>
+                The unit that moves from generation into reward computation and training.
+              </p>
+            </div>
+            <div class="field-list">
+              <div class="field-row">
+                <code>group_id</code>
+                <span>ties completions generated for the same prompt</span>
+              </div>
+              <div class="field-row">
+                <code>sample_id</code>
+                <span>identifies one sampled trajectory or completion</span>
+              </div>
+              <div class="field-row">
+                <code>token_ids</code>
+                <span>the generated sequence as model tokens</span>
+              </div>
+              <div class="field-row">
+                <code>logprobs</code>
+                <span>probabilities needed for policy-gradient-style updates</span>
+              </div>
+              <div class="field-row">
+                <code>reward</code>
+                <span>the score from tests, evaluators, or environment feedback</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="page-num">8</div>
+      </section>
+
+      <section class="slide" id="slide-9" data-fragments="1">
+        <div class="brand">NEBIUS</div>
+        <div class="slide-content stack">
+          <h2 class="section-heading compact reveal">Naive RL Loop</h2>
+          <p class="subhead reveal delay-1">
+            Straightforward, but too slow to be practical.
+          </p>
+          <div class="naive-flow reveal delay-2">
+            <div class="naive-step">
+              <span class="step-num">1</span>
+              <div>
+                <strong>Train</strong>
+                <p>Update model weights on the trainer side.</p>
+              </div>
+            </div>
+            <div class="naive-step checkpoint problem-step">
+              <span class="step-num">2</span>
+              <span class="pain-label">bottleneck</span>
+              <div>
+                <strong>Save checkpoint</strong>
+                <p>Write a large model state to disk.</p>
+              </div>
+            </div>
+            <div class="naive-step checkpoint problem-step">
+              <span class="step-num">3</span>
+              <span class="pain-label">startup cost</span>
+              <div>
+                <strong>Reload inference</strong>
+                <p>Restart or reload vLLM with new weights.</p>
+              </div>
+            </div>
+            <div class="naive-step rollout">
+              <span class="step-num">4</span>
+              <div>
+                <strong>Generate rollouts</strong>
+                <p>Sample completions for the next training batch.</p>
+              </div>
+            </div>
+            <div class="naive-step">
+              <span class="step-num">5</span>
+              <div>
+                <strong>Repeat</strong>
+                <p>The next iteration needs fresh weights again.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="page-num">9</div>
+      </section>
+
+      <section class="slide dark" id="slide-10">
+        <div class="brand">NEBIUS</div>
+        <div class="slide-content bottleneck-layout">
+          <div class="stack">
+            <h2 class="section-heading compact reveal">Why Naive Breaks</h2>
+            <p class="subhead reveal delay-1">
+              Checkpoints are too large to route through disk every iteration.
+            </p>
+            <div class="problem-list reveal delay-2">
+              <div class="problem-item">
+                <strong>Huge write + read path</strong>
+                <p>Training writes the checkpoint, then inference reads it back.</p>
+              </div>
+              <div class="problem-item">
+                <strong>Repeated startup cost</strong>
+                <p>Inference reload becomes part of the training clock.</p>
+              </div>
+              <div class="problem-item">
+                <strong>Fresh weights are required</strong>
+                <p>Rollouts must reflect the current or near-current policy.</p>
+              </div>
+            </div>
+          </div>
+          <div class="checkpoint-size-card reveal delay-2">
+            <span class="label-pill accent-pill">Concrete checkpoint size</span>
+            <strong class="model-name">GPT-OSS-120B</strong>
+            <div class="weight-math">
+              <strong>120B params = ~240 GB weights in FP16</strong>
+              <span>That full weight set has to move before inference can generate from the updated policy.</span>
+            </div>
+            <div class="io-stack">
+              <div class="io-chip">
+                <strong>~240 GB</strong>
+                <span>checkpoint write</span>
+              </div>
+              <div class="io-chip">
+                <strong>~240 GB</strong>
+                <span>checkpoint read</span>
+              </div>
+            </div>
+            <p class="io-total">
+              About ~480 GB of disk traffic per refresh, before reload/startup overhead.
+            </p>
+          </div>
+        </div>
+        <div class="page-num">10</div>
+      </section>
+
+      <section class="slide" id="slide-11">
+        <div class="brand">NEBIUS</div>
+        <div class="slide-content stack">
+          <h2 class="section-heading compact reveal">Sync Loop: Keep vLLM Alive</h2>
+          <p class="subhead reveal delay-1">
+            Replace checkpoint reload with live weight transfer.
+          </p>
+          <div class="sync-layout reveal delay-2">
+            <div class="sync-node trainer">
+              <span class="label-pill">persistent</span>
+              <strong>Trainer</strong>
+              <p>Updates policy weights after each batch.</p>
+            </div>
+            <div class="sync-middle">
+              <div class="sync-link">
+                <span class="label-pill accent-pill">InfiniBand + NCCL</span>
+                <strong>push updated weights</strong>
+              </div>
+              <div class="disk-bypass">
+                <span class="label-pill">old path</span>
+                <strong>disk checkpoint reload is no longer in the hot loop</strong>
+              </div>
+            </div>
+            <div class="sync-node inference">
+              <span class="label-pill">persistent</span>
+              <strong>vLLM</strong>
+              <p>Serves rollouts from the updated model without restart.</p>
+            </div>
+          </div>
+          <div class="sync-footer reveal delay-3">
+            <span>trainer stays up</span>
+            <span>vLLM stays up</span>
+            <span>fresh rollouts</span>
+          </div>
+        </div>
+        <div class="page-num">11</div>
+      </section>
+
+      <section class="slide dark" id="slide-12">
+        <div class="brand">NEBIUS</div>
+        <div class="slide-content vllm-sync-layout">
+          <div class="stack">
+            <h2 class="section-heading compact reveal">What vLLM Needs in the Sync World</h2>
+            <p class="subhead reveal delay-1">
+              Live weight updates turn inference into a stateful training component.
+            </p>
+            <div class="hook-list reveal delay-2">
+              <div class="hook-card">
+                <strong>Weight update path</strong>
+                <p>Receive new tensors into live workers without rebuilding the serving process.</p>
+              </div>
+              <div class="hook-card">
+                <strong>Cache reset after weight changes</strong>
+                <p>Prefix and KV cache state must not outlive the model weights that created it.</p>
+              </div>
+              <div class="hook-card">
+                <strong>Lifecycle boundaries</strong>
+                <p>Coordinate generation, pause, update, and resume so rollouts stay coherent.</p>
+              </div>
+            </div>
+          </div>
+          <div class="engine-box reveal delay-2">
+            <div class="engine-title">
+              <strong>vLLM engine</strong>
+              <span class="label-pill accent-pill">training mode</span>
+            </div>
+            <div class="engine-pipeline">
+              <div class="engine-stage">
+                <strong>generate</strong>
+                <span>rollouts</span>
+              </div>
+              <div class="engine-stage">
+                <strong>pause</strong>
+                <span>safe boundary</span>
+              </div>
+              <div class="engine-stage">
+                <strong>update</strong>
+                <span>new weights</span>
+              </div>
+            </div>
+            <p class="engine-note">
+              The serving engine now needs correctness hooks. vLLM TRL and weight-transfer docs are the follow-up path.
+            </p>
+          </div>
+        </div>
+        <div class="page-num">12</div>
+      </section>
+
+      <section class="slide" id="slide-13">
+        <div class="brand">NEBIUS</div>
+        <div class="slide-content stack">
+          <h2 class="section-heading compact reveal">Sync Fixes IO, But Creates Idle GPUs</h2>
+          <p class="subhead reveal delay-1">
+            Fresh weights are useful, but the work still runs one phase at a time.
+          </p>
+          <div class="idle-layout reveal delay-2">
+            <div class="idle-timeline">
+              <div class="timeline-head">
+                <span></span>
+                <span>rollout</span>
+                <span>train</span>
+                <span>rollout</span>
+                <span>train</span>
+              </div>
+              <div class="timeline-row">
+                <div class="lane-label">Trainer GPUs</div>
+                <div class="idle-block">
+                  <strong>idle</strong>
+                  <span>waiting for samples</span>
+                </div>
+                <div class="work-block train">
+                  <strong>train</strong>
+                  <span>policy update</span>
+                </div>
+                <div class="idle-block">
+                  <strong>idle</strong>
+                  <span>waiting again</span>
+                </div>
+                <div class="work-block train">
+                  <strong>train</strong>
+                  <span>next update</span>
+                </div>
+              </div>
+              <div class="timeline-row">
+                <div class="lane-label">vLLM GPUs</div>
+                <div class="work-block">
+                  <strong>generate</strong>
+                  <span>rollouts</span>
+                </div>
+                <div class="idle-block">
+                  <strong>idle</strong>
+                  <span>trainer owns step</span>
+                </div>
+                <div class="work-block">
+                  <strong>generate</strong>
+                  <span>fresh rollouts</span>
+                </div>
+                <div class="idle-block">
+                  <strong>idle</strong>
+                  <span>trainer owns step</span>
+                </div>
+              </div>
+            </div>
+            <div class="sync-limit-list">
+              <div class="sync-limit-card">
+                <strong>Fresh, but serialized</strong>
+                <p>Inference and training still alternate instead of overlapping.</p>
+              </div>
+              <div class="sync-limit-card">
+                <strong>Slowest rollout sets the clock</strong>
+                <p>Fixed batches wait for stragglers before the next update.</p>
+              </div>
+              <div class="sync-limit-card">
+                <strong>Tighter failure coupling</strong>
+                <p>A worker failure can restart the whole synchronized run.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="page-num">13</div>
+      </section>
+
+      <section class="slide dark" id="slide-14">
+        <div class="brand">NEBIUS</div>
+        <div class="slide-content async-layout">
+          <div class="stack">
+            <h2 class="section-heading compact reveal">Async Loop: Keep Both Sides Busy</h2>
+            <p class="subhead reveal delay-1">
+              Overlap rollout generation and training with bounded staleness.
+            </p>
+            <div class="async-points reveal delay-2">
+              <div class="async-point">
+                <strong>Continuous rollout production</strong>
+                <p>vLLM keeps generating instead of waiting for trainer phases.</p>
+              </div>
+              <div class="async-point">
+                <strong>Controller buffers samples</strong>
+                <p>Tasks and completed rollouts flow through queues.</p>
+              </div>
+              <div class="async-point">
+                <strong>Trainer consumes ready batches</strong>
+                <p>Updates proceed when enough useful samples are available.</p>
+              </div>
+            </div>
+          </div>
+          <div class="async-arch reveal delay-2">
+            <div class="async-actors">
+              <div class="async-actor">
+                <span>producer</span>
+                <strong>vLLM</strong>
+                <span>variable-length rollouts</span>
+              </div>
+              <div class="async-actor controller">
+                <span>scheduler + buffer</span>
+                <strong>Controller</strong>
+                <span>queues tasks and samples</span>
+              </div>
+              <div class="async-actor">
+                <span>consumer</span>
+                <strong>Trainer</strong>
+                <span>batches ready samples</span>
+              </div>
+            </div>
+            <div class="queue-strip" aria-label="rollout sample queue">
+              <div class="queue-cell"></div>
+              <div class="queue-cell"></div>
+              <div class="queue-cell"></div>
+              <div class="queue-cell"></div>
+              <div class="queue-cell"></div>
+              <div class="queue-cell"></div>
+            </div>
+            <div class="rollout-bars" aria-label="variable rollout lengths">
+              <div class="rollout-bar short"></div>
+              <div class="rollout-bar long"></div>
+              <div class="rollout-bar medium"></div>
+            </div>
+            <div class="async-note">
+              <span>no fixed batch barrier</span>
+              <span>weights up to K steps old</span>
+              <span>higher utilization</span>
+            </div>
+          </div>
+        </div>
+        <div class="page-num">14</div>
+      </section>
+
+      <section class="slide" id="slide-15">
+        <div class="brand">NEBIUS</div>
+        <div class="slide-content tradeoff-layout">
+          <div class="stack">
+            <h2 class="section-heading compact reveal">Sync vs Async Tradeoff</h2>
+            <p class="subhead reveal delay-1">
+              Async improves utilization, but pays with staleness and orchestration complexity.
+            </p>
+            <div class="tradeoff-axis reveal delay-2">
+              <div class="axis-labels">
+                <span>fresh weights</span>
+                <span>higher utilization</span>
+              </div>
+              <div class="axis-line"></div>
+              <p>Moving right buys throughput by accepting bounded policy lag.</p>
+            </div>
+          </div>
+          <div class="throughput-chart reveal delay-2">
+            <span class="label-pill accent-pill">basic math RLVR / small context</span>
+            <div class="throughput-row">
+              <div class="throughput-label">
+                <strong>sync</strong>
+                <span>latest weights</span>
+              </div>
+              <div class="throughput-track">
+                <div class="throughput-fill sync-bar" style="--bar: 32%"></div>
+              </div>
+              <strong class="throughput-value">1200</strong>
+            </div>
+            <div class="throughput-row">
+              <div class="throughput-label">
+                <strong>async-k1</strong>
+                <span>slight lag</span>
+              </div>
+              <div class="throughput-track">
+                <div class="throughput-fill" style="--bar: 68%"></div>
+              </div>
+              <strong class="throughput-value">2500</strong>
+            </div>
+            <div class="throughput-row">
+              <div class="throughput-label">
+                <strong>async-k3</strong>
+                <span>more lag</span>
+              </div>
+              <div class="throughput-track">
+                <div class="throughput-fill k3-bar" style="--bar: 89%"></div>
+              </div>
+              <strong class="throughput-value">3300</strong>
+            </div>
+            <div class="throughput-row">
+              <div class="throughput-label">
+                <strong>async-k6</strong>
+                <span>more lag</span>
+              </div>
+              <div class="throughput-track">
+                <div class="throughput-fill k6-bar" style="--bar: 100%"></div>
+              </div>
+              <strong class="throughput-value">3700</strong>
+            </div>
+            <p class="chart-note">Throughput shown as generated tokens/sec for this setup.</p>
+          </div>
+        </div>
+        <div class="page-num">15</div>
+      </section>
+
+      <section class="slide dark" id="slide-16">
+        <div class="brand">NEBIUS</div>
+        <div class="slide-content nebius-rl-layout">
+          <div class="stack">
+            <h2 class="section-heading compact reveal">How We Do RL at Nebius AI R&amp;D</h2>
+            <p class="subhead reveal delay-1">
+              Training, rollout inference, and orchestration are separate jobs with a shared contract.
+            </p>
+            <div class="nebius-points reveal delay-2">
+              <div class="nebius-point">
+                <strong>Papyrax</strong>
+                <p>In-house JAX-based large-scale training framework.</p>
+              </div>
+              <div class="nebius-point">
+                <strong>Controller</strong>
+                <p>Scheduling, queues, rollout metadata, and actor-based orchestration.</p>
+              </div>
+              <div class="nebius-point">
+                <strong>vLLM</strong>
+                <p>Rollout inference for continuously changing policies.</p>
+              </div>
+            </div>
+          </div>
+          <div class="rl-architecture reveal delay-2">
+            <div class="arch-row">
+              <div class="arch-box">
+                <span>training</span>
+                <strong>Papyrax</strong>
+                <span>policy updates</span>
+              </div>
+              <div class="arch-link" aria-hidden="true"></div>
+              <div class="arch-box controller">
+                <span>orchestration</span>
+                <strong>Controller</strong>
+                <span>tasks, queues, samples</span>
+              </div>
+              <div class="arch-link" aria-hidden="true"></div>
+              <div class="arch-box">
+                <span>inference</span>
+                <strong>vLLM</strong>
+                <span>rollouts + logprobs</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="page-num">16</div>
+      </section>
+
+      <section class="slide" id="slide-17">
+        <div class="brand">NEBIUS</div>
+        <div class="slide-content resources-layout">
+          <div class="stack">
+            <h2 class="section-heading compact reveal">Where to Continue Learning</h2>
+            <p class="subhead reveal delay-1">
+              There are now real open-source and vLLM paths to study RL training systems.
+            </p>
+            <a class="gist-qr-card reveal delay-2" href="https://gist.github.com/minotru/8bd5aebf1e1aec5a32f463553072a563" target="_blank" rel="noreferrer">
+              <img
+                src="https://api.qrserver.com/v1/create-qr-code/?size=360x360&amp;margin=12&amp;data=https%3A%2F%2Fgist.github.com%2Fminotru%2F8bd5aebf1e1aec5a32f463553072a563"
+                alt="QR code for the resource gist"
+              />
+              <strong>Resource gist</strong>
+              <span>gist.github.com/minotru/8bd5aebf1e1aec5a32f463553072a563</span>
+            </a>
+          </div>
+          <div class="resource-grid reveal delay-2">
+            <a class="resource-card" href="https://github.com/rllm-org/rllm" target="_blank" rel="noreferrer">
+              <strong>rLLM</strong>
+              <span>github.com/rllm-org/rllm</span>
+            </a>
+            <a class="resource-card" href="https://github.com/verl-project/verl" target="_blank" rel="noreferrer">
+              <strong>veRL</strong>
+              <span>github.com/verl-project/verl</span>
+            </a>
+            <a class="resource-card" href="https://docs.vllm.ai/en/stable/training/trl/" target="_blank" rel="noreferrer">
+              <strong>vLLM TRL</strong>
+              <span>docs.vllm.ai/en/stable/training/trl/</span>
+            </a>
+            <a class="resource-card" href="https://docs.vllm.ai/en/stable/training/weight_transfer/" target="_blank" rel="noreferrer">
+              <strong>vLLM weight transfer</strong>
+              <span>docs.vllm.ai/en/stable/training/weight_transfer/</span>
+            </a>
+            <a class="resource-card wide" href="https://nebius.com/blog/posts/post-training-in-token-factory" target="_blank" rel="noreferrer">
+              <strong>Nebius post-training blog</strong>
+              <span>nebius.com/blog/posts/post-training-in-token-factory</span>
+            </a>
+          </div>
+        </div>
+        <div class="page-num">17</div>
+      </section>
+
+      <section class="slide dark" id="slide-18">
+        <div class="brand">NEBIUS</div>
+        <div class="slide-content closing-layout">
+          <div class="stack">
+            <h2 class="closing-title reveal">Token Factory RL FT Beta</h2>
+            <p class="closing-phrase reveal delay-1">
+              Research-proven RL fine-tuning as a service.
+            </p>
+          </div>
+          <div class="closing-panel reveal delay-2">
+            <strong>Use the RL post-training loop without building the whole system stack.</strong>
+            <p>
+              Training, rollout inference, controller orchestration, and product workflow are packaged together.
+            </p>
+          </div>
+        </div>
+        <div class="page-num">18</div>
+      </section>
+
+      <section class="slide lime-cut" id="slide-19">
+        <div class="brand">NEBIUS</div>
+        <div class="slide-content question-layout">
+          <div class="question-left">
+            <h2 class="thank-you-word reveal">Thank you!</h2>
+            <h2 class="question-word reveal">Questions?</h2>
+            <div class="question-contact reveal delay-1">
+              <strong>Simon Karasik</strong>
+              <span>Infrastructure Lead | Nebius AI R&amp;D</span>
+              <a href="mailto:sbkarasik@nebius.com">sbkarasik@nebius.com</a>
+            </div>
+          </div>
+          <a class="gist-qr-card reveal delay-2" href="https://gist.github.com/minotru/8bd5aebf1e1aec5a32f463553072a563" target="_blank" rel="noreferrer">
+            <img
+              src="https://api.qrserver.com/v1/create-qr-code/?size=360x360&amp;margin=12&amp;data=https%3A%2F%2Fgist.github.com%2Fminotru%2F8bd5aebf1e1aec5a32f463553072a563"
+              alt="QR code for the resource gist"
+            />
+            <strong>Useful links</strong>
+            <span>gist.github.com/minotru/8bd5aebf1e1aec5a32f463553072a563</span>
+          </a>
+        </div>
+        <div class="page-num">19</div>
       </section>
     </main>
     <div class="keyboard-hint">Arrow keys, Space, or scroll</div>
@@ -1043,7 +2916,29 @@
       const slides = Array.from(document.querySelectorAll(".slide"));
       const progress = document.getElementById("progress");
       let activeIndex = 0;
+      let activeFragment = 0;
       let wheelLock = false;
+
+      function fragmentCount(index) {
+        return Number(slides[index]?.dataset.fragments || 0);
+      }
+
+      function indexFromHash() {
+        const rawHash = window.location.hash.replace(/^#/, "").trim();
+        const match = rawHash.match(/^(?:slide-)?(\d+)$/i);
+        if (!match) return null;
+
+        const page = Number(match[1]);
+        if (!Number.isInteger(page) || page < 1 || page > slides.length) return null;
+        return page - 1;
+      }
+
+      function syncPageAnchor() {
+        const nextHash = `#${activeIndex + 1}`;
+        if (window.location.hash === nextHash) return;
+        const url = `${window.location.href.split("#")[0]}${nextHash}`;
+        window.history.replaceState(null, "", url);
+      }
 
       function render() {
         deck.style.transform = `translate3d(0, ${activeIndex * -window.innerHeight}px, 0)`;
@@ -1051,11 +2946,35 @@
         progress.style.width = `${(activeIndex / max) * 100}%`;
         slides.forEach((slide, index) => {
           slide.setAttribute("aria-hidden", index === activeIndex ? "false" : "true");
+          slide.dataset.fragment = index === activeIndex ? String(activeFragment) : "0";
         });
+        syncPageAnchor();
       }
 
       function goTo(index) {
         activeIndex = Math.max(0, Math.min(index, slides.length - 1));
+        activeFragment = 0;
+        render();
+      }
+
+      function next() {
+        if (activeFragment < fragmentCount(activeIndex)) {
+          activeFragment += 1;
+          render();
+          return;
+        }
+        goTo(activeIndex + 1);
+      }
+
+      function previous() {
+        if (activeFragment > 0) {
+          activeFragment -= 1;
+          render();
+          return;
+        }
+        const previousIndex = Math.max(0, activeIndex - 1);
+        activeIndex = previousIndex;
+        activeFragment = fragmentCount(previousIndex);
         render();
       }
 
@@ -1066,10 +2985,10 @@
 
         if (nextKeys.includes(key) || event.code === "Space") {
           event.preventDefault();
-          goTo(activeIndex + 1);
+          next();
         } else if (prevKeys.includes(key)) {
           event.preventDefault();
-          goTo(activeIndex - 1);
+          previous();
         } else if (key === "Home") {
           event.preventDefault();
           goTo(0);
@@ -1085,7 +3004,11 @@
           event.preventDefault();
           if (wheelLock || Math.abs(event.deltaY) < 20) return;
           wheelLock = true;
-          goTo(activeIndex + (event.deltaY > 0 ? 1 : -1));
+          if (event.deltaY > 0) {
+            next();
+          } else {
+            previous();
+          }
           window.setTimeout(() => {
             wheelLock = false;
           }, 460);
@@ -1094,6 +3017,16 @@
       );
       window.addEventListener("resize", render);
 
+      window.addEventListener("hashchange", () => {
+        const hashIndex = indexFromHash();
+        if (hashIndex === null || hashIndex === activeIndex) return;
+        goTo(hashIndex);
+      });
+
+      const initialHashIndex = indexFromHash();
+      if (initialHashIndex !== null) {
+        activeIndex = initialHashIndex;
+      }
       render();
     </script>
   </body>
