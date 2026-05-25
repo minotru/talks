@@ -256,10 +256,14 @@
         top: clamp(1rem, 3vw, 2.2rem);
         left: clamp(1rem, 4vw, 4rem);
         z-index: 2;
-        color: currentColor;
-        font-size: clamp(0.55rem, 0.78vw, 0.76rem);
-        font-weight: 700;
-        letter-spacing: 0;
+        width: clamp(3.9rem, 6vw, 6.2rem);
+        height: auto;
+      }
+
+      .brand img {
+        display: block;
+        width: 100%;
+        height: auto;
       }
 
       .page-num {
@@ -2082,7 +2086,7 @@
     <div class="progress" id="progress"></div>
     <main id="deck">
       <section class="slide lime-cut" id="slide-1">
-        <div class="brand">NEBIUS</div>
+        <div class="brand" aria-label="Nebius"><img src="NEBIUS(RGB).svg" alt="Nebius" /></div>
         <div class="slide-content title-grid">
           <div class="stack">
             <span class="kicker reveal">Israel vLLM Meetup #2</span>
@@ -2094,7 +2098,7 @@
             <div class="speaker reveal delay-2">
               <strong>Simon Karasik</strong>
               <span>Senior ML Engineer / Infrastructure Lead</span>
-              <span>Nebius</span>
+              <span>Nebius AI R&D</span>
             </div>
           </div>
           <div class="diagram-panel reveal delay-2" aria-label="Training and inference loop motif">
@@ -2124,7 +2128,7 @@
       </section>
 
       <section class="slide" id="slide-2">
-        <div class="brand">NEBIUS</div>
+        <div class="brand" aria-label="Nebius"><img src="NEBIUS(RGB).svg" alt="Nebius" /></div>
         <div class="slide-content two-col">
           <div class="stack">
             <h2 class="reveal delay-1">
@@ -2170,7 +2174,7 @@
       </section>
 
       <section class="slide" id="slide-3">
-        <div class="brand">NEBIUS</div>
+        <div class="brand" aria-label="Nebius"><img src="NEBIUS(RGB).svg" alt="Nebius" /></div>
         <div class="slide-content stack">
           <span class="kicker reveal">Topics</span>
           <h2 class="reveal delay-1">A systems ladder for RL post-training.</h2>
@@ -2216,7 +2220,7 @@
       </section>
 
       <section class="slide dark" id="slide-4">
-        <div class="brand">NEBIUS</div>
+        <div class="brand" aria-label="Nebius"><img src="NEBIUS(RGB).svg" alt="Nebius" /></div>
         <div class="slide-content">
           <div class="stack">
             <h2 class="reveal delay-1">
@@ -2246,7 +2250,7 @@
       </section>
 
       <section class="slide" id="slide-5">
-        <div class="brand">NEBIUS</div>
+        <div class="brand" aria-label="Nebius"><img src="NEBIUS(RGB).svg" alt="Nebius" /></div>
         <div class="slide-content stack">
           <h2 class="section-heading reveal">From SFT to RLVR</h2>
           <p class="subhead reveal delay-1">The reward signal gets more operational.</p>
@@ -2282,7 +2286,7 @@
       </section>
 
       <section class="slide" id="slide-6">
-        <div class="brand">NEBIUS</div>
+        <div class="brand" aria-label="Nebius"><img src="NEBIUS(RGB).svg" alt="Nebius" /></div>
         <div class="slide-content two-col">
           <div class="stack">
             <h2 class="section-heading compact reveal">RLVR Training Loop</h2>
@@ -2325,7 +2329,7 @@
       </section>
 
       <section class="slide" id="slide-7">
-        <div class="brand">NEBIUS</div>
+        <div class="brand" aria-label="Nebius"><img src="NEBIUS(RGB).svg" alt="Nebius" /></div>
         <div class="slide-content stack">
           <h2 class="section-heading compact reveal">GRPO Intuition, No Formula</h2>
           <p class="subhead reveal delay-1">Learn from the group, not one answer.</p>
@@ -2364,7 +2368,7 @@
       </section>
 
       <section class="slide" id="slide-8">
-        <div class="brand">NEBIUS</div>
+        <div class="brand" aria-label="Nebius"><img src="NEBIUS(RGB).svg" alt="Nebius" /></div>
         <div class="slide-content stack">
           <h2 class="section-heading compact reveal">The Rollout Data Contract</h2>
           <p class="subhead reveal delay-1">
@@ -2405,7 +2409,7 @@
       </section>
 
       <section class="slide" id="slide-9" data-fragments="1">
-        <div class="brand">NEBIUS</div>
+        <div class="brand" aria-label="Nebius"><img src="NEBIUS(RGB).svg" alt="Nebius" /></div>
         <div class="slide-content stack">
           <h2 class="section-heading compact reveal">Naive RL Loop</h2>
           <p class="subhead reveal delay-1">
@@ -2455,7 +2459,7 @@
       </section>
 
       <section class="slide dark" id="slide-10">
-        <div class="brand">NEBIUS</div>
+        <div class="brand" aria-label="Nebius"><img src="NEBIUS(RGB).svg" alt="Nebius" /></div>
         <div class="slide-content bottleneck-layout">
           <div class="stack">
             <h2 class="section-heading compact reveal">Why Naive Breaks</h2>
@@ -2503,7 +2507,7 @@
       </section>
 
       <section class="slide" id="slide-11">
-        <div class="brand">NEBIUS</div>
+        <div class="brand" aria-label="Nebius"><img src="NEBIUS(RGB).svg" alt="Nebius" /></div>
         <div class="slide-content stack">
           <h2 class="section-heading compact reveal">Sync Loop: Keep vLLM Alive</h2>
           <p class="subhead reveal delay-1">
@@ -2541,7 +2545,7 @@
       </section>
 
       <section class="slide dark" id="slide-12">
-        <div class="brand">NEBIUS</div>
+        <div class="brand" aria-label="Nebius"><img src="NEBIUS(RGB).svg" alt="Nebius" /></div>
         <div class="slide-content vllm-sync-layout">
           <div class="stack">
             <h2 class="section-heading compact reveal">What vLLM Needs in the Sync World</h2>
@@ -2591,7 +2595,7 @@
       </section>
 
       <section class="slide" id="slide-13">
-        <div class="brand">NEBIUS</div>
+        <div class="brand" aria-label="Nebius"><img src="NEBIUS(RGB).svg" alt="Nebius" /></div>
         <div class="slide-content stack">
           <h2 class="section-heading compact reveal">Sync Fixes IO, But Creates Idle GPUs</h2>
           <p class="subhead reveal delay-1">
@@ -2665,7 +2669,7 @@
       </section>
 
       <section class="slide dark" id="slide-14">
-        <div class="brand">NEBIUS</div>
+        <div class="brand" aria-label="Nebius"><img src="NEBIUS(RGB).svg" alt="Nebius" /></div>
         <div class="slide-content async-layout">
           <div class="stack">
             <h2 class="section-heading compact reveal">Async Loop: Keep Both Sides Busy</h2>
@@ -2729,7 +2733,7 @@
       </section>
 
       <section class="slide" id="slide-15">
-        <div class="brand">NEBIUS</div>
+        <div class="brand" aria-label="Nebius"><img src="NEBIUS(RGB).svg" alt="Nebius" /></div>
         <div class="slide-content tradeoff-layout">
           <div class="stack">
             <h2 class="section-heading compact reveal">Sync vs Async Tradeoff</h2>
@@ -2794,7 +2798,7 @@
       </section>
 
       <section class="slide dark" id="slide-16">
-        <div class="brand">NEBIUS</div>
+        <div class="brand" aria-label="Nebius"><img src="NEBIUS(RGB).svg" alt="Nebius" /></div>
         <div class="slide-content nebius-rl-layout">
           <div class="stack">
             <h2 class="section-heading compact reveal">How We Do RL at Nebius&nbsp;AI&nbsp;R&amp;D</h2>
@@ -2842,7 +2846,7 @@
       </section>
 
       <section class="slide" id="slide-17">
-        <div class="brand">NEBIUS</div>
+        <div class="brand" aria-label="Nebius"><img src="NEBIUS(RGB).svg" alt="Nebius" /></div>
         <div class="slide-content resources-layout">
           <div class="stack">
             <h2 class="section-heading compact reveal">Where to Continue Learning</h2>
@@ -2885,7 +2889,7 @@
       </section>
 
       <section class="slide dark" id="slide-18">
-        <div class="brand">NEBIUS</div>
+        <div class="brand" aria-label="Nebius"><img src="NEBIUS(RGB).svg" alt="Nebius" /></div>
         <div class="slide-content closing-layout">
           <div class="stack">
             <h2 class="closing-title reveal">Token Factory RL FT Beta</h2>
@@ -2904,7 +2908,7 @@
       </section>
 
       <section class="slide lime-cut" id="slide-19">
-        <div class="brand">NEBIUS</div>
+        <div class="brand" aria-label="Nebius"><img src="NEBIUS(RGB).svg" alt="Nebius" /></div>
         <div class="slide-content question-layout">
           <div class="question-left">
             <h2 class="thank-you-word reveal">Thank you!</h2>
