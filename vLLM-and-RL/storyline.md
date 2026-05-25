@@ -202,9 +202,9 @@ Target: 30-minute slot including questions. Aim for around 24-25 minutes of prep
 - **Main point**: GRPO learns from relative quality inside a generated group.
 - **Content**:
   - One prompt produces K completions.
-  - Each completion gets a reward.
+  - Each completion gets a reward, shown as simple `r=...` scores.
   - Better-than-group-average samples are reinforced.
-- **Visual**: Diagram/cards: prompt -> K completions -> rewards -> group-relative comparison -> update.
+- **Visual**: Large dark rounded flow panel: Prompt card -> four horizontal completion rows with rewards -> lime "Group-relative comparison" card -> Update card. Highlight better samples in the completion rows.
 - **Timing**: 2 min
 
 ### Slide 8: The Rollout Data Contract

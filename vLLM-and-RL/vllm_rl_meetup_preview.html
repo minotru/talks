@@ -682,6 +682,122 @@
         box-shadow: inset 0 0 0 0.28rem rgba(224, 255, 79, 0.8);
       }
 
+      .grpo-flow {
+        display: grid;
+        grid-template-columns:
+          minmax(7.2rem, 1fr)
+          minmax(1.4rem, 0.22fr)
+          minmax(11rem, 1.35fr)
+          minmax(1.4rem, 0.22fr)
+          minmax(12rem, 1.52fr)
+          minmax(1.4rem, 0.22fr)
+          minmax(7.4rem, 1.06fr);
+        gap: clamp(0.35rem, 0.8vw, 0.7rem);
+        align-items: center;
+        min-height: clamp(19rem, 52vh, 29rem);
+        margin-top: clamp(0.3rem, 1vw, 0.8rem);
+        padding: clamp(1.05rem, 2vw, 1.7rem);
+        border-radius: clamp(2rem, 5vw, 4rem);
+        background: var(--navy-soft);
+        box-shadow: var(--shadow);
+      }
+
+      .grpo-panel-card {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        min-height: clamp(8rem, 23vh, 12rem);
+        border-radius: var(--radius-md);
+        padding: clamp(0.9rem, 1.8vw, 1.35rem);
+        background: var(--paper);
+        color: var(--navy);
+      }
+
+      .grpo-panel-card strong,
+      .grpo-compare-card strong {
+        font-size: clamp(1.05rem, 1.7vw, 1.5rem);
+        line-height: 1.08;
+      }
+
+      .grpo-panel-card p,
+      .grpo-compare-card p {
+        margin-top: clamp(0.7rem, 1.5vw, 1.2rem);
+        color: var(--muted);
+        font-size: clamp(0.9rem, 1.18vw, 1.08rem);
+        line-height: 1.25;
+      }
+
+      .grpo-completions {
+        display: grid;
+        gap: clamp(0.45rem, 1vw, 0.8rem);
+      }
+
+      .grpo-completion {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        gap: clamp(0.55rem, 1vw, 0.9rem);
+        align-items: center;
+        min-height: clamp(2.15rem, 5.4vh, 3.15rem);
+        border-radius: var(--radius-sm);
+        padding: clamp(0.45rem, 0.9vw, 0.7rem) clamp(0.65rem, 1.2vw, 0.95rem);
+        background: var(--paper-cool);
+        color: var(--navy);
+      }
+
+      .grpo-completion strong,
+      .grpo-completion span {
+        font-size: clamp(0.86rem, 1.06vw, 1rem);
+        line-height: 1;
+      }
+
+      .grpo-completion strong {
+        font-weight: 700;
+      }
+
+      .grpo-completion span {
+        color: var(--navy);
+        font-weight: 700;
+      }
+
+      .grpo-completion.best {
+        background: var(--lime-soft);
+        box-shadow: inset 0 0 0 0.18rem rgba(224, 255, 79, 0.95);
+      }
+
+      .grpo-compare-card {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        min-height: clamp(10rem, 29vh, 15rem);
+        border-radius: var(--radius-lg);
+        padding: clamp(1rem, 2vw, 1.55rem);
+        background: var(--lime);
+        color: var(--navy);
+      }
+
+      .grpo-compare-card p {
+        color: var(--navy);
+      }
+
+      .grpo-arrow {
+        position: relative;
+        height: clamp(0.14rem, 0.28vw, 0.22rem);
+        background: var(--lime);
+      }
+
+      .grpo-arrow::after {
+        content: "";
+        position: absolute;
+        right: calc(-1 * clamp(0.02rem, 0.08vw, 0.08rem));
+        top: 50%;
+        width: 0;
+        height: 0;
+        border-top: clamp(0.35rem, 0.7vw, 0.58rem) solid transparent;
+        border-bottom: clamp(0.35rem, 0.7vw, 0.58rem) solid transparent;
+        border-left: clamp(0.55rem, 1vw, 0.85rem) solid var(--lime);
+        transform: translateY(-50%);
+      }
+
       .contract-wrap {
         display: grid;
         grid-template-columns: minmax(0, 0.86fr) minmax(0, 1.14fr);
@@ -740,19 +856,20 @@
         border: 0.14rem solid var(--navy);
         border-radius: var(--radius-sm);
         padding: clamp(0.55rem, 1vw, 0.8rem) clamp(0.75rem, 1.4vw, 1rem);
-        background: rgba(255, 255, 255, 0.58);
+        background: rgba(255, 255, 255, 0.88);
       }
 
       .field-row code {
         font-family: var(--font-body);
-        font-size: clamp(1rem, 1.45vw, 1.22rem);
+        font-size: clamp(1.06rem, 1.52vw, 1.28rem);
         font-weight: 700;
       }
 
       .field-row span {
-        color: var(--muted);
-        font-size: clamp(0.9rem, 1.25vw, 1.06rem);
-        line-height: 1.2;
+        color: var(--navy);
+        font-size: clamp(1.06rem, 1.52vw, 1.26rem);
+        font-weight: 700;
+        line-height: 1.16;
       }
 
       .naive-flow {
@@ -1963,6 +2080,73 @@
         color: var(--muted-light);
       }
 
+      @page {
+        size: 16in 9in;
+        margin: 0;
+      }
+
+      @media print {
+        html,
+        body {
+          width: 16in;
+          height: auto;
+          overflow: visible !important;
+          background: var(--paper);
+          print-color-adjust: exact;
+          -webkit-print-color-adjust: exact;
+        }
+
+        body {
+          touch-action: auto;
+        }
+
+        main {
+          height: auto !important;
+          transform: none !important;
+          transition: none !important;
+          will-change: auto !important;
+        }
+
+        .slide {
+          width: 16in !important;
+          height: 9in !important;
+          min-height: 9in !important;
+          break-after: page;
+          page-break-after: always;
+          overflow: hidden !important;
+        }
+
+        .slide:last-child {
+          break-after: auto;
+          page-break-after: auto;
+        }
+
+        .progress,
+        .keyboard-hint {
+          display: none !important;
+        }
+
+        .reveal {
+          opacity: 1 !important;
+          transform: none !important;
+          animation: none !important;
+        }
+
+        .slide[data-fragments="1"] .naive-step {
+          opacity: 0.28;
+        }
+
+        .slide[data-fragments="1"] .naive-step.problem-step {
+          opacity: 1;
+          transform: translateY(calc(-1 * clamp(0.45rem, 1vw, 0.7rem)));
+        }
+
+        .slide[data-fragments="1"] .naive-step.problem-step .pain-label {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
       .reveal {
         opacity: 0;
         transform: translateY(clamp(0.7rem, 2vw, 1.4rem));
@@ -2014,6 +2198,18 @@
 
         .stage-card {
           min-height: auto;
+        }
+
+        .grpo-flow {
+          grid-template-columns: 1fr;
+          min-height: auto;
+          border-radius: var(--radius-lg);
+        }
+
+        .grpo-arrow {
+          width: clamp(2rem, 12vw, 4rem);
+          justify-self: center;
+          transform: rotate(90deg);
         }
 
         .completion-stack {
@@ -2333,34 +2529,42 @@
         <div class="slide-content stack">
           <h2 class="section-heading compact reveal">GRPO Intuition, No Formula</h2>
           <p class="subhead reveal delay-1">Learn from the group, not one answer.</p>
-          <div class="grpo-grid reveal delay-2">
-            <div class="comparison-card">
-              <span class="label-pill accent-pill">Prompt</span>
-              <strong>One task</strong>
-              <p>Ask the current model for multiple completions.</p>
+          <div class="grpo-flow reveal delay-2" aria-label="GRPO prompt completions comparison update flow">
+            <div class="grpo-panel-card">
+              <strong>Prompt</strong>
+              <p>one task</p>
             </div>
-            <div class="completion-stack">
-              <div class="completion-card">
-                <strong>Sample A</strong>
-                <p>reward: 0.2</p>
+            <div class="grpo-arrow" aria-hidden="true"></div>
+            <div class="grpo-completions">
+              <div class="grpo-completion">
+                <strong>completion 1</strong>
+                <span>r=0.2</span>
               </div>
-              <div class="completion-card good">
-                <strong>Sample B</strong>
-                <p>reward: 1.0</p>
+              <div class="grpo-completion best">
+                <strong>completion 2</strong>
+                <span>r=0.8</span>
               </div>
-              <div class="completion-card">
-                <strong>Sample C</strong>
-                <p>reward: 0.4</p>
+              <div class="grpo-completion">
+                <strong>completion 3</strong>
+                <span>r=0.4</span>
               </div>
-              <div class="completion-card good">
-                <strong>Sample D</strong>
-                <p>reward: 0.9</p>
+              <div class="grpo-completion best">
+                <strong>completion 4</strong>
+                <span>r=1.0</span>
               </div>
             </div>
-            <div class="comparison-badge">
-              compare<br />
-              within<br />
-              group
+            <div class="grpo-arrow" aria-hidden="true"></div>
+            <div class="grpo-compare-card">
+              <strong>Group-relative comparison</strong>
+              <p>
+                better than average -> reinforce<br />
+                worse than average -> reduce
+              </p>
+            </div>
+            <div class="grpo-arrow" aria-hidden="true"></div>
+            <div class="grpo-panel-card">
+              <strong>Update</strong>
+              <p>Move policy toward better samples.</p>
             </div>
           </div>
         </div>
