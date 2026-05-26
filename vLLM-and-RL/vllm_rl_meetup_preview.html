@@ -230,6 +230,10 @@
         background-size: clamp(2.6rem, 6vw, 5.6rem) clamp(2.6rem, 6vw, 5.6rem);
       }
 
+      .slide[data-hidden="true"] {
+        display: none;
+      }
+
       .slide.dark {
         background:
           radial-gradient(circle at 12% 18%, rgba(121, 191, 197, 0.2), transparent 28%),
@@ -1043,16 +1047,16 @@
       .checkpoint-size-card {
         border: 0.16rem solid var(--line-on-dark);
         border-radius: var(--radius-lg);
-        padding: clamp(1rem, 2vw, 1.65rem);
+        padding: clamp(0.82rem, 1.45vw, 1.2rem);
         background: rgba(245, 255, 209, 0.05);
         display: grid;
-        gap: clamp(0.8rem, 1.6vw, 1.2rem);
+        gap: clamp(0.52rem, 1vw, 0.78rem);
       }
 
       .model-name {
         display: block;
         color: var(--lime-soft);
-        font-size: clamp(1.65rem, 3vw, 2.55rem);
+        font-size: clamp(1.5rem, 2.65vw, 2.25rem);
         font-weight: 700;
         line-height: 0.98;
       }
@@ -1060,22 +1064,22 @@
       .weight-math {
         border: 0.12rem solid var(--line-on-dark);
         border-radius: var(--radius-md);
-        padding: clamp(0.8rem, 1.4vw, 1.05rem);
+        padding: clamp(0.62rem, 1.05vw, 0.85rem);
         background: rgba(255, 255, 255, 0.06);
       }
 
       .weight-math strong {
         display: block;
         color: var(--paper);
-        font-size: clamp(1.18rem, 2vw, 1.6rem);
+        font-size: clamp(1.02rem, 1.55vw, 1.34rem);
         line-height: 1.08;
       }
 
       .weight-math span {
         display: block;
-        margin-top: clamp(0.35rem, 0.7vw, 0.5rem);
+        margin-top: clamp(0.22rem, 0.45vw, 0.34rem);
         color: var(--muted-light);
-        font-size: clamp(0.96rem, 1.34vw, 1.14rem);
+        font-size: clamp(0.86rem, 1.12vw, 1rem);
         line-height: 1.22;
       }
 
@@ -1087,28 +1091,28 @@
 
       .io-chip {
         border-radius: var(--radius-md);
-        padding: clamp(0.75rem, 1.4vw, 1rem);
+        padding: clamp(0.55rem, 1vw, 0.78rem);
         background: var(--orange);
         color: var(--navy);
       }
 
       .io-chip strong {
         display: block;
-        font-size: clamp(1.55rem, 2.7vw, 2.25rem);
+        font-size: clamp(1.2rem, 1.9vw, 1.65rem);
         line-height: 0.95;
       }
 
       .io-chip span {
         display: block;
-        margin-top: clamp(0.25rem, 0.6vw, 0.42rem);
-        font-size: clamp(0.9rem, 1.2vw, 1.02rem);
+        margin-top: clamp(0.18rem, 0.4vw, 0.3rem);
+        font-size: clamp(0.78rem, 1vw, 0.9rem);
         font-weight: 700;
         line-height: 1.15;
       }
 
       .io-total {
         color: var(--muted-light);
-        font-size: clamp(1rem, 1.42vw, 1.2rem);
+        font-size: clamp(0.9rem, 1.18vw, 1.04rem);
         font-weight: 700;
         line-height: 1.24;
       }
@@ -1576,6 +1580,136 @@
         padding: clamp(0.42rem, 0.9vw, 0.65rem) clamp(0.7rem, 1.3vw, 0.95rem);
         color: var(--paper);
         font-size: clamp(0.88rem, 1.12vw, 1rem);
+        font-weight: 700;
+      }
+
+      .async-overlap-panel {
+        border: 0.16rem solid var(--line-on-dark);
+        border-radius: var(--radius-lg);
+        padding: clamp(0.9rem, 1.8vw, 1.4rem);
+        background: rgba(245, 255, 209, 0.05);
+        display: grid;
+        gap: clamp(0.55rem, 1.1vw, 0.8rem);
+      }
+
+      .async-timeline-head,
+      .async-timeline-row {
+        display: grid;
+        grid-template-columns: minmax(7.4rem, 0.72fr) repeat(4, minmax(0, 1fr));
+        gap: clamp(0.4rem, 0.8vw, 0.62rem);
+        align-items: stretch;
+      }
+
+      .async-timeline-head span {
+        color: var(--muted-light);
+        font-size: clamp(0.72rem, 0.96vw, 0.86rem);
+        font-weight: 700;
+        text-align: center;
+      }
+
+      .async-lane-label {
+        border: 0.12rem solid var(--line-on-dark);
+        border-radius: var(--radius-sm);
+        padding: clamp(0.55rem, 1vw, 0.82rem);
+        color: var(--lime-soft);
+        font-size: clamp(0.9rem, 1.18vw, 1.04rem);
+        font-weight: 700;
+        line-height: 1.08;
+        display: flex;
+        align-items: center;
+      }
+
+      .async-lane-label.controller {
+        color: var(--cyan);
+      }
+
+      .async-work,
+      .async-buffer,
+      .bubble-cell {
+        min-height: clamp(3.8rem, 10vh, 5.8rem);
+        border-radius: var(--radius-sm);
+        padding: clamp(0.5rem, 1vw, 0.78rem);
+        border: 0.12rem solid var(--line-on-dark);
+      }
+
+      .async-work,
+      .async-buffer {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      .async-work.generate {
+        background: var(--cyan);
+        color: var(--navy);
+      }
+
+      .async-work.train {
+        background: var(--lime-soft);
+        color: var(--navy);
+      }
+
+      .async-buffer {
+        border-style: dashed;
+        background: rgba(255, 255, 255, 0.06);
+        color: var(--muted-light);
+      }
+
+      .async-work strong,
+      .async-buffer strong {
+        font-size: clamp(0.96rem, 1.34vw, 1.16rem);
+        line-height: 1.05;
+      }
+
+      .async-work span,
+      .async-buffer span {
+        font-size: clamp(0.72rem, 0.92vw, 0.84rem);
+        font-weight: 700;
+        line-height: 1.1;
+      }
+
+      .bubble-cell {
+        display: grid;
+        place-items: center;
+        background: rgba(255, 255, 255, 0.035);
+      }
+
+      .bubble-pack {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: clamp(0.22rem, 0.45vw, 0.34rem);
+      }
+
+      .sample-bubble {
+        width: clamp(0.54rem, 1vw, 0.85rem);
+        aspect-ratio: 1;
+        border-radius: 50%;
+        background: var(--cyan);
+        box-shadow: 0 0 0 0.08rem rgba(245, 255, 209, 0.28);
+      }
+
+      .sample-bubble:nth-child(2n) {
+        background: var(--lime-soft);
+      }
+
+      .sample-bubble:nth-child(3n) {
+        background: var(--lavender);
+      }
+
+      .async-overlap-note {
+        display: flex;
+        flex-wrap: wrap;
+        gap: clamp(0.45rem, 0.9vw, 0.7rem);
+        margin-top: clamp(0.15rem, 0.4vw, 0.3rem);
+      }
+
+      .async-overlap-note span {
+        border: 0.12rem solid var(--line-on-dark);
+        border-radius: 999px;
+        padding: clamp(0.36rem, 0.75vw, 0.55rem) clamp(0.62rem, 1.1vw, 0.84rem);
+        color: var(--paper);
+        font-size: clamp(0.78rem, 1vw, 0.9rem);
         font-weight: 700;
       }
 
@@ -2248,6 +2382,8 @@
         .engine-pipeline,
         .timeline-head,
         .timeline-row,
+        .async-timeline-head,
+        .async-timeline-row,
         .arch-row,
         .throughput-row {
           grid-template-columns: 1fr;
@@ -2373,7 +2509,7 @@
         <div class="brand" aria-label="Nebius"><img src="NEBIUS(RGB).svg" alt="Nebius" /></div>
         <div class="slide-content stack">
           <span class="kicker reveal">Topics</span>
-          <h2 class="reveal delay-1">A systems ladder for RL post-training.</h2>
+          <h2 class="reveal delay-1">RL context, then naive -> sync -> async.</h2>
           <div class="topic-track reveal delay-2">
             <div class="topic-step">
               <div>
@@ -2415,7 +2551,7 @@
         <div class="page-num">3</div>
       </section>
 
-      <section class="slide dark" id="slide-4">
+      <section class="slide dark" id="slide-4" data-hidden="true">
         <div class="brand" aria-label="Nebius"><img src="NEBIUS(RGB).svg" alt="Nebius" /></div>
         <div class="slide-content">
           <div class="stack">
@@ -2481,53 +2617,10 @@
         <div class="page-num">5</div>
       </section>
 
-      <section class="slide" id="slide-6">
-        <div class="brand" aria-label="Nebius"><img src="NEBIUS(RGB).svg" alt="Nebius" /></div>
-        <div class="slide-content two-col">
-          <div class="stack">
-            <h2 class="section-heading compact reveal">RLVR Training Loop</h2>
-            <p class="subhead reveal delay-1">Generate, score, train, repeat.</p>
-            <p class="subhead reveal delay-2">
-              The rollout comes from the current-ish model, then becomes training
-              data for the next update.
-            </p>
-          </div>
-          <div class="diagram-panel reveal delay-2">
-            <svg viewBox="0 0 760 520" aria-label="RLVR training loop">
-              <defs>
-                <marker id="arrow-loop" markerWidth="12" markerHeight="12" refX="9" refY="6" orient="auto">
-                  <path d="M0,0 L12,6 L0,12 Z" fill="#011327"></path>
-                </marker>
-              </defs>
-              <rect x="78" y="78" width="178" height="90" rx="26" class="node"></rect>
-              <rect x="500" y="78" width="178" height="90" rx="26" class="node-soft"></rect>
-              <rect x="500" y="346" width="178" height="90" rx="26" class="node"></rect>
-              <rect x="78" y="346" width="178" height="90" rx="26" class="node-cyan"></rect>
-              <circle cx="378" cy="257" r="66" class="node-accent"></circle>
-              <text x="167" y="116" text-anchor="middle" fill="#f5ffd1" class="diagram-label">Prompts</text>
-              <text x="167" y="145" text-anchor="middle" fill="#f5ffd1" class="diagram-small">tasks</text>
-              <text x="589" y="116" text-anchor="middle" fill="#f5ffd1" class="diagram-label">vLLM</text>
-              <text x="589" y="145" text-anchor="middle" fill="#f5ffd1" class="diagram-small">rollouts</text>
-              <text x="589" y="384" text-anchor="middle" fill="#f5ffd1" class="diagram-label">Reward</text>
-              <text x="589" y="413" text-anchor="middle" fill="#f5ffd1" class="diagram-small">tests / checks</text>
-              <text x="167" y="384" text-anchor="middle" fill="#011327" class="diagram-label">Trainer</text>
-              <text x="167" y="413" text-anchor="middle" fill="#011327" class="diagram-small">updates model</text>
-              <text x="378" y="252" text-anchor="middle" fill="#011327" class="diagram-label">Loop</text>
-              <text x="378" y="282" text-anchor="middle" fill="#011327" class="diagram-small">new weights</text>
-              <path d="M256 123 H490" fill="none" stroke="#011327" stroke-width="6" marker-end="url(#arrow-loop)"></path>
-              <path d="M589 168 V336" fill="none" stroke="#011327" stroke-width="6" marker-end="url(#arrow-loop)"></path>
-              <path d="M500 391 H266" fill="none" stroke="#011327" stroke-width="6" marker-end="url(#arrow-loop)"></path>
-              <path d="M167 346 V178" fill="none" stroke="#011327" stroke-width="6" marker-end="url(#arrow-loop)"></path>
-            </svg>
-          </div>
-        </div>
-        <div class="page-num">6</div>
-      </section>
-
       <section class="slide" id="slide-7">
         <div class="brand" aria-label="Nebius"><img src="NEBIUS(RGB).svg" alt="Nebius" /></div>
         <div class="slide-content stack">
-          <h2 class="section-heading compact reveal">GRPO Intuition, No Formula</h2>
+          <h2 class="section-heading compact reveal">RLVR core algorithm: GRPO</h2>
           <p class="subhead reveal delay-1">Learn from the group, not one answer.</p>
           <div class="grpo-flow reveal delay-2" aria-label="GRPO prompt completions comparison update flow">
             <div class="grpo-panel-card">
@@ -2557,8 +2650,8 @@
             <div class="grpo-compare-card">
               <strong>Group-relative comparison</strong>
               <p>
-                better than average -> reinforce<br />
-                worse than average -> reduce
+                better than average -> <strong>reinforce</strong><br />
+                worse than average -> <strong>reduce</strong>
               </p>
             </div>
             <div class="grpo-arrow" aria-hidden="true"></div>
@@ -2610,6 +2703,49 @@
           </div>
         </div>
         <div class="page-num">8</div>
+      </section>
+
+      <section class="slide" id="slide-6">
+        <div class="brand" aria-label="Nebius"><img src="NEBIUS(RGB).svg" alt="Nebius" /></div>
+        <div class="slide-content two-col">
+          <div class="stack">
+            <h2 class="section-heading compact reveal">RL Training Loop</h2>
+            <p class="subhead reveal delay-1">Generate, score, train, repeat.</p>
+            <p class="subhead reveal delay-2">
+              The rollout comes from the current-ish model, then becomes training
+              data for the next update.
+            </p>
+          </div>
+          <div class="diagram-panel reveal delay-2">
+            <svg viewBox="0 0 760 520" aria-label="RL training loop">
+              <defs>
+                <marker id="arrow-loop" markerWidth="12" markerHeight="12" refX="9" refY="6" orient="auto">
+                  <path d="M0,0 L12,6 L0,12 Z" fill="#011327"></path>
+                </marker>
+              </defs>
+              <rect x="78" y="78" width="178" height="90" rx="26" class="node"></rect>
+              <rect x="500" y="78" width="178" height="90" rx="26" class="node-soft"></rect>
+              <rect x="500" y="346" width="178" height="90" rx="26" class="node"></rect>
+              <rect x="78" y="346" width="178" height="90" rx="26" class="node-cyan"></rect>
+              <circle cx="378" cy="257" r="66" class="node-accent"></circle>
+              <text x="167" y="116" text-anchor="middle" fill="#f5ffd1" class="diagram-label">Prompts</text>
+              <text x="167" y="145" text-anchor="middle" fill="#f5ffd1" class="diagram-small">tasks</text>
+              <text x="589" y="116" text-anchor="middle" fill="#f5ffd1" class="diagram-label">vLLM</text>
+              <text x="589" y="145" text-anchor="middle" fill="#f5ffd1" class="diagram-small">rollouts</text>
+              <text x="589" y="384" text-anchor="middle" fill="#f5ffd1" class="diagram-label">Reward</text>
+              <text x="589" y="413" text-anchor="middle" fill="#f5ffd1" class="diagram-small">tests / checks</text>
+              <text x="167" y="384" text-anchor="middle" fill="#011327" class="diagram-label">Trainer</text>
+              <text x="167" y="413" text-anchor="middle" fill="#011327" class="diagram-small">updates model</text>
+              <text x="378" y="252" text-anchor="middle" fill="#011327" class="diagram-label">Loop</text>
+              <text x="378" y="282" text-anchor="middle" fill="#011327" class="diagram-small">new weights</text>
+              <path d="M256 123 H490" fill="none" stroke="#011327" stroke-width="6" marker-end="url(#arrow-loop)"></path>
+              <path d="M589 168 V336" fill="none" stroke="#011327" stroke-width="6" marker-end="url(#arrow-loop)"></path>
+              <path d="M500 391 H266" fill="none" stroke="#011327" stroke-width="6" marker-end="url(#arrow-loop)"></path>
+              <path d="M167 346 V178" fill="none" stroke="#011327" stroke-width="6" marker-end="url(#arrow-loop)"></path>
+            </svg>
+          </div>
+        </div>
+        <div class="page-num">6</div>
       </section>
 
       <section class="slide" id="slide-9" data-fragments="1">
@@ -2672,38 +2808,50 @@
             </p>
             <div class="problem-list reveal delay-2">
               <div class="problem-item">
-                <strong>Huge write + read path</strong>
-                <p>Training writes the checkpoint, then inference reads it back.</p>
+                <strong>Two formats, two restarts</strong>
+                <p>Training saves BF16 weights plus optimizer state; inference reloads a separate FP8 checkpoint.</p>
               </div>
               <div class="problem-item">
-                <strong>Repeated startup cost</strong>
-                <p>Inference reload becomes part of the training clock.</p>
+                <strong>Disk IO sits in the hot loop</strong>
+                <p>Both trainer and vLLM restart, so checkpoint writes and reads gate every iteration.</p>
               </div>
               <div class="problem-item">
                 <strong>Fresh weights are required</strong>
-                <p>Rollouts must reflect the current or near-current policy.</p>
+                <p>Generation waits until both restart paths finish.</p>
               </div>
             </div>
           </div>
           <div class="checkpoint-size-card reveal delay-2">
-            <span class="label-pill accent-pill">Concrete checkpoint size</span>
+            <span class="label-pill accent-pill">Concrete iteration IO</span>
             <strong class="model-name">GPT-OSS-120B</strong>
             <div class="weight-math">
-              <strong>120B params = ~240 GB weights in FP16</strong>
-              <span>That full weight set has to move before inference can generate from the updated policy.</span>
+              <strong>Training: BF16 params + Adam-style state ~= 1.2 TB</strong>
+              <span>120B x (2B weights + 8B optimizer state).</span>
+            </div>
+            <div class="weight-math">
+              <strong>Inference: FP8 params ~= 120 GB</strong>
+              <span>Separate serving checkpoint for the vLLM reload path.</span>
             </div>
             <div class="io-stack">
               <div class="io-chip">
-                <strong>~240 GB</strong>
-                <span>checkpoint write</span>
+                <strong>~1.2 TB</strong>
+                <span>training write</span>
               </div>
               <div class="io-chip">
-                <strong>~240 GB</strong>
-                <span>checkpoint read</span>
+                <strong>~1.2 TB</strong>
+                <span>training read</span>
+              </div>
+              <div class="io-chip">
+                <strong>~120 GB</strong>
+                <span>inference write</span>
+              </div>
+              <div class="io-chip">
+                <strong>~120 GB</strong>
+                <span>inference read</span>
               </div>
             </div>
             <p class="io-total">
-              About ~480 GB of disk traffic per refresh, before reload/startup overhead.
+              About ~2.6 TB of disk traffic per iteration, plus trainer and inference restarts.
             </p>
           </div>
         </div>
@@ -2762,12 +2910,12 @@
                 <p>Receive new tensors into live workers without rebuilding the serving process.</p>
               </div>
               <div class="hook-card">
-                <strong>Cache reset after weight changes</strong>
-                <p>Prefix and KV cache state must not outlive the model weights that created it.</p>
+                <strong>Prefix cache reset after weight changes</strong>
+                <p>Call /reset_prefix_cache so cached prefixes do not outlive the weights that created them.</p>
               </div>
               <div class="hook-card">
-                <strong>Lifecycle boundaries</strong>
-                <p>Coordinate generation, pause, update, and resume so rollouts stay coherent.</p>
+                <strong>Generation boundary</strong>
+                <p>Start the next rollout only after weight update and cache reset complete.</p>
               </div>
             </div>
           </div>
@@ -2782,16 +2930,16 @@
                 <span>rollouts</span>
               </div>
               <div class="engine-stage">
-                <strong>pause</strong>
-                <span>safe boundary</span>
+                <strong>update weights</strong>
+                <span>new tensors</span>
               </div>
               <div class="engine-stage">
-                <strong>update</strong>
-                <span>new weights</span>
+                <strong>reset prefix cache</strong>
+                <span>/reset_prefix_cache</span>
               </div>
             </div>
             <p class="engine-note">
-              The serving engine now needs correctness hooks. vLLM TRL and weight-transfer docs are the follow-up path.
+              The sync loop is generate -> update -> reset cache -> next generation.
             </p>
           </div>
         </div>
@@ -2882,7 +3030,7 @@
             </p>
             <div class="async-points reveal delay-2">
               <div class="async-point">
-                <strong>Continuous rollout production</strong>
+                <strong>Continuous rollout generation</strong>
                 <p>vLLM keeps generating instead of waiting for trainer phases.</p>
               </div>
               <div class="async-point">
@@ -2895,41 +3043,90 @@
               </div>
             </div>
           </div>
-          <div class="async-arch reveal delay-2">
-            <div class="async-actors">
-              <div class="async-actor">
-                <span>producer</span>
-                <strong>vLLM</strong>
-                <span>variable-length rollouts</span>
+          <div class="async-overlap-panel reveal delay-2" aria-label="Async training and generation overlap timeline">
+            <div class="async-timeline-head">
+              <span></span>
+              <span>fill</span>
+              <span>step 1</span>
+              <span>step 2</span>
+              <span>step 3</span>
+            </div>
+            <div class="async-timeline-row">
+              <div class="async-lane-label">Trainer GPUs</div>
+              <div class="async-buffer">
+                <strong>buffer</strong>
+                <span>wait for N</span>
               </div>
-              <div class="async-actor controller">
-                <span>scheduler + buffer</span>
-                <strong>Controller</strong>
-                <span>queues tasks and samples</span>
+              <div class="async-work train">
+                <strong>train</strong>
+                <span>batch A</span>
               </div>
-              <div class="async-actor">
-                <span>consumer</span>
-                <strong>Trainer</strong>
-                <span>batches ready samples</span>
+              <div class="async-work train">
+                <strong>train</strong>
+                <span>batch B</span>
+              </div>
+              <div class="async-work train">
+                <strong>train</strong>
+                <span>batch C</span>
               </div>
             </div>
-            <div class="queue-strip" aria-label="rollout sample queue">
-              <div class="queue-cell"></div>
-              <div class="queue-cell"></div>
-              <div class="queue-cell"></div>
-              <div class="queue-cell"></div>
-              <div class="queue-cell"></div>
-              <div class="queue-cell"></div>
+            <div class="async-timeline-row">
+              <div class="async-lane-label controller">Controller queue</div>
+              <div class="bubble-cell">
+                <div class="bubble-pack">
+                  <span class="sample-bubble"></span>
+                  <span class="sample-bubble"></span>
+                  <span class="sample-bubble"></span>
+                </div>
+              </div>
+              <div class="bubble-cell">
+                <div class="bubble-pack">
+                  <span class="sample-bubble"></span>
+                  <span class="sample-bubble"></span>
+                  <span class="sample-bubble"></span>
+                  <span class="sample-bubble"></span>
+                </div>
+              </div>
+              <div class="bubble-cell">
+                <div class="bubble-pack">
+                  <span class="sample-bubble"></span>
+                  <span class="sample-bubble"></span>
+                  <span class="sample-bubble"></span>
+                  <span class="sample-bubble"></span>
+                  <span class="sample-bubble"></span>
+                </div>
+              </div>
+              <div class="bubble-cell">
+                <div class="bubble-pack">
+                  <span class="sample-bubble"></span>
+                  <span class="sample-bubble"></span>
+                  <span class="sample-bubble"></span>
+                </div>
+              </div>
             </div>
-            <div class="rollout-bars" aria-label="variable rollout lengths">
-              <div class="rollout-bar short"></div>
-              <div class="rollout-bar long"></div>
-              <div class="rollout-bar medium"></div>
+            <div class="async-timeline-row">
+              <div class="async-lane-label">vLLM GPUs</div>
+              <div class="async-work generate">
+                <strong>generate</strong>
+                <span>rollouts A</span>
+              </div>
+              <div class="async-work generate">
+                <strong>generate</strong>
+                <span>rollouts B</span>
+              </div>
+              <div class="async-work generate">
+                <strong>generate</strong>
+                <span>rollouts C</span>
+              </div>
+              <div class="async-work generate">
+                <strong>generate</strong>
+                <span>rollouts D</span>
+              </div>
             </div>
-            <div class="async-note">
+            <div class="async-overlap-note">
+              <span>tiny queue buffers</span>
               <span>no fixed batch barrier</span>
               <span>weights up to K steps old</span>
-              <span>higher utilization</span>
             </div>
           </div>
         </div>
@@ -3139,7 +3336,7 @@
 
     <script>
       const deck = document.getElementById("deck");
-      const slides = Array.from(document.querySelectorAll(".slide"));
+      const slides = Array.from(document.querySelectorAll('.slide:not([data-hidden="true"])'));
       const progress = document.getElementById("progress");
       let activeIndex = 0;
       let activeFragment = 0;
@@ -3154,12 +3351,22 @@
 
       function indexFromHash() {
         const rawHash = window.location.hash.replace(/^#/, "").trim();
-        const match = rawHash.match(/^(?:slide-)?(\d+)$/i);
+        const idIndex = slides.findIndex((slide) => slide.id.toLowerCase() === rawHash.toLowerCase());
+        if (idIndex !== -1) return idIndex;
+
+        const match = rawHash.match(/^(\d+)$/i);
         if (!match) return null;
 
         const page = Number(match[1]);
         if (!Number.isInteger(page) || page < 1 || page > slides.length) return null;
         return page - 1;
+      }
+
+      function numberVisibleSlides() {
+        slides.forEach((slide, index) => {
+          const pageNum = slide.querySelector(".page-num");
+          if (pageNum) pageNum.textContent = String(index + 1);
+        });
       }
 
       function syncPageAnchor() {
@@ -3288,6 +3495,7 @@
       if (initialHashIndex !== null) {
         activeIndex = initialHashIndex;
       }
+      numberVisibleSlides();
       render();
     </script>
   </body>

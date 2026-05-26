@@ -154,6 +154,7 @@ Target: 30-minute slot including questions. Aim for around 24-25 minutes of prep
 
 - **Purpose**: Give the audience a map before the systems ladder.
 - **Main point**: The talk moves from RL context to naive -> sync -> async and then to Nebius/Token Factory.
+- **Deck title**: RL context, then naive -> sync -> async.
 - **Content**:
   - RLVR and GRPO
   - Naive rollout loop
@@ -165,6 +166,7 @@ Target: 30-minute slot including questions. Aim for around 24-25 minutes of prep
 
 ### Slide 4: The Talk in One Sentence
 
+- **Deck status**: Hidden in the current HTML preview.
 - **Purpose**: Give the audience the memory anchor.
 - **Main point**: In RL post-training, inference becomes part of the training loop.
 - **Content**:
@@ -184,10 +186,11 @@ Target: 30-minute slot including questions. Aim for around 24-25 minutes of prep
 - **Visual**: Three large cards: SFT -> RLHF -> RLVR, with large text suitable for stage reading.
 - **Timing**: 1.25 min
 
-### Slide 6: RLVR Training Loop
+### Slide 6: RL Training Loop
 
 - **Purpose**: Show the basic RL training loop before naming GRPO.
 - **Main point**: RLVR repeatedly generates, scores, and trains on fresh model behavior.
+- **Deck placement**: Moved after Slide 8, after the rollout data contract.
 - **Content**:
   - sample tasks/prompts
   - generate rollouts
@@ -196,14 +199,14 @@ Target: 30-minute slot including questions. Aim for around 24-25 minutes of prep
 - **Visual**: Circular loop: prompts -> vLLM rollouts -> verifiable rewards -> trainer -> updated model -> vLLM.
 - **Timing**: 1.75 min
 
-### Slide 7: GRPO Intuition, No Formula
+### Slide 7: RLVR core algorithm: GRPO
 
 - **Purpose**: Explain the algorithmic idea without losing the room.
 - **Main point**: GRPO learns from relative quality inside a generated group.
 - **Content**:
   - One prompt produces K completions.
   - Each completion gets a reward, shown as simple `r=...` scores.
-  - Better-than-group-average samples are reinforced.
+  - Better-than-group-average samples are **reinforced**; worse-than-group-average samples are **reduced**.
 - **Visual**: Large dark rounded flow panel: Prompt card -> four horizontal completion rows with rewards -> lime "Group-relative comparison" card -> Update card. Highlight better samples in the completion rows.
 - **Timing**: 2 min
 
@@ -239,12 +242,13 @@ Target: 30-minute slot including questions. Aim for around 24-25 minutes of prep
 - **Purpose**: Make the bottleneck visceral.
 - **Main point**: Checkpoints are too large to route through disk every iteration.
 - **Content**:
-  - Huge checkpoint write + read path.
-  - Example: GPT-OSS-120B has 120B parameters, which is about 240 GB of FP16 weights.
-  - Naive refresh means writing about 240 GB and reading about 240 GB before inference can continue.
-  - Inference startup/reload is repeated.
+  - Naive refresh saves two checkpoint formats every iteration.
+  - Training format: BF16 parameters plus optimizer state. For a 120B model with Adam-style optimizer state, this is about 1.2 TB: `120B * (2B weights + 8B optimizer state)`.
+  - Inference format: FP8 parameters, about 120 GB for a 120B model.
+  - Since both training and inference restart after every iteration, account for training checkpoint write + read and inference checkpoint write + read.
+  - Rough total for GPT-OSS-120B scale: about 2.6 TB of disk traffic per iteration before restart overhead.
   - Rollouts need fresh or near-fresh weights.
-- **Visual**: Concrete checkpoint-size card: GPT-OSS-120B, about 240 GB FP16 weights, write + read equals about 480 GB of disk traffic per refresh.
+- **Visual**: Concrete iteration-IO card: GPT-OSS-120B, training checkpoint write/read plus FP8 inference checkpoint write/read.
 - **Timing**: 1.75 min
 
 ### Slide 11: Sync Loop: Keep vLLM Alive
@@ -264,10 +268,9 @@ Target: 30-minute slot including questions. Aim for around 24-25 minutes of prep
 - **Main point**: Live weight updates require inference-system correctness hooks.
 - **Content**:
   - Weight update path.
-  - Reset prefix/KV cache after weights change.
-  - Lifecycle controls around generation/update boundaries.
-  - vLLM TRL and weight transfer docs as follow-up material.
-- **Visual**: Checklist over a vLLM engine box: update weights, reset cache, coordinate lifecycle.
+  - Reset prefix cache after weights change with `/reset_prefix_cache`.
+  - Generation boundary: next rollout starts only after weight update and cache reset complete.
+- **Visual**: Checklist over a vLLM engine box: generate -> update weights -> reset prefix cache -> next generation.
 - **Timing**: 2 min
 
 ### Slide 13: Sync Fixes IO, But Creates Idle GPUs
@@ -291,7 +294,7 @@ Target: 30-minute slot including questions. Aim for around 24-25 minutes of prep
   - Trainer consumes batches when enough samples are ready.
   - Continuous dispatch avoids waiting for the slowest rollout in a fixed batch.
   - Weights may be up to K steps old.
-- **Visual**: Producer-consumer architecture: vLLM Inference <-> Controller queues <-> Trainer, with variable-length rollout bars feeding the queue.
+- **Visual**: Timeline like Slide 13, but async: trainer and vLLM work overlap in the same time windows, with only tiny queue bubbles for the controller buffer.
 - **Timing**: 2.25 min
 
 ### Slide 15: Sync vs Async Tradeoff

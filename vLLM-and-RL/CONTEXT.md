@@ -9,16 +9,15 @@ Source of truth:
 
 ## Current State
 
-The preview deck currently implements slides 1-19 from `storyline.md`:
+The preview deck currently implements the main deck from `storyline.md`, with slide 4 hidden in the HTML preview:
 
 - Title
 - Nebius Overview
 - Topics
-- The Talk in One Sentence
 - From SFT to RLVR
-- RLVR Training Loop
-- GRPO Intuition, No Formula
+- RLVR core algorithm: GRPO
 - The Rollout Data Contract
+- RL Training Loop
 - Naive RL Loop
 - Why Naive Breaks
 - Sync Loop: Keep vLLM Alive
