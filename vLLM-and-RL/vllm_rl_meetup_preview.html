@@ -731,6 +731,25 @@
         line-height: 1.25;
       }
 
+      .sample-fields {
+        display: flex;
+        flex-wrap: wrap;
+        gap: clamp(0.28rem, 0.6vw, 0.45rem);
+        margin-top: clamp(0.65rem, 1.2vw, 0.9rem);
+      }
+
+      .sample-fields code {
+        border: 0.1rem solid var(--navy);
+        border-radius: 999px;
+        padding: clamp(0.16rem, 0.35vw, 0.26rem) clamp(0.42rem, 0.75vw, 0.6rem);
+        background: var(--paper-cool);
+        color: var(--navy);
+        font-family: var(--font-body);
+        font-size: clamp(0.68rem, 0.88vw, 0.8rem);
+        font-weight: 700;
+        line-height: 1;
+      }
+
       .grpo-completions {
         display: grid;
         gap: clamp(0.45rem, 1vw, 0.8rem);
@@ -878,18 +897,18 @@
 
       .naive-flow {
         display: grid;
-        grid-template-columns: repeat(5, minmax(0, 1fr));
-        gap: clamp(0.65rem, 1.3vw, 1rem);
+        grid-template-columns: repeat(6, minmax(0, 1fr));
+        gap: clamp(0.5rem, 1vw, 0.78rem);
         align-items: stretch;
       }
 
       .naive-step {
         position: relative;
-        min-height: clamp(11rem, 34vh, 17rem);
+        min-height: clamp(9.5rem, 30vh, 14.5rem);
         border: 0.16rem solid var(--navy);
         border-radius: var(--radius-md);
         background: rgba(255, 255, 255, 0.58);
-        padding: clamp(0.85rem, 1.6vw, 1.3rem);
+        padding: clamp(0.68rem, 1.25vw, 1rem);
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -919,21 +938,29 @@
         background: var(--lavender);
       }
 
+      .naive-step.sample {
+        background: var(--paper-cool);
+      }
+
+      .naive-step.reward {
+        background: var(--lime-soft);
+      }
+
       .naive-step strong {
         display: block;
-        font-size: clamp(1.1rem, 1.8vw, 1.5rem);
+        font-size: clamp(0.98rem, 1.52vw, 1.28rem);
         line-height: 1.08;
       }
 
       .naive-step p {
         color: inherit;
         opacity: 0.76;
-        font-size: clamp(0.9rem, 1.25vw, 1.08rem);
+        font-size: clamp(0.8rem, 1.04vw, 0.95rem);
         line-height: 1.24;
       }
 
       .step-num {
-        width: clamp(1.75rem, 3vw, 2.45rem);
+        width: clamp(1.55rem, 2.6vw, 2.15rem);
         aspect-ratio: 1;
         display: grid;
         place-items: center;
@@ -1061,6 +1088,35 @@
         line-height: 0.98;
       }
 
+      .io-hero {
+        border: 0.14rem solid var(--lime);
+        border-radius: var(--radius-lg);
+        padding: clamp(0.8rem, 1.5vw, 1.15rem);
+        background: var(--lime);
+        color: var(--navy);
+      }
+
+      .io-hero strong {
+        display: block;
+        font-size: clamp(2.35rem, 5vw, 4.5rem);
+        line-height: 0.92;
+      }
+
+      .io-hero span {
+        display: block;
+        margin-top: clamp(0.25rem, 0.6vw, 0.42rem);
+        font-size: clamp(0.95rem, 1.32vw, 1.12rem);
+        font-weight: 700;
+        line-height: 1.14;
+      }
+
+      .io-breakdown-label {
+        color: var(--muted-light);
+        font-size: clamp(0.82rem, 1.05vw, 0.94rem);
+        font-weight: 700;
+        line-height: 1;
+      }
+
       .weight-math {
         border: 0.12rem solid var(--line-on-dark);
         border-radius: var(--radius-md);
@@ -1086,26 +1142,26 @@
       .io-stack {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: clamp(0.7rem, 1.4vw, 1rem);
+        gap: clamp(0.45rem, 0.9vw, 0.68rem);
       }
 
       .io-chip {
         border-radius: var(--radius-md);
-        padding: clamp(0.55rem, 1vw, 0.78rem);
+        padding: clamp(0.46rem, 0.84vw, 0.64rem);
         background: var(--orange);
         color: var(--navy);
       }
 
       .io-chip strong {
         display: block;
-        font-size: clamp(1.2rem, 1.9vw, 1.65rem);
+        font-size: clamp(1.05rem, 1.55vw, 1.34rem);
         line-height: 0.95;
       }
 
       .io-chip span {
         display: block;
         margin-top: clamp(0.18rem, 0.4vw, 0.3rem);
-        font-size: clamp(0.78rem, 1vw, 0.9rem);
+        font-size: clamp(0.72rem, 0.92vw, 0.84rem);
         font-weight: 700;
         line-height: 1.15;
       }
@@ -1331,6 +1387,44 @@
         color: var(--muted-light);
         font-size: clamp(0.95rem, 1.25vw, 1.06rem);
         line-height: 1.24;
+      }
+
+      .sync-needs-light .hook-card {
+        border-color: var(--navy);
+        background: rgba(255, 255, 255, 0.62);
+      }
+
+      .sync-needs-light .hook-card strong {
+        color: var(--navy);
+      }
+
+      .sync-needs-light .hook-card p {
+        color: var(--muted);
+      }
+
+      .sync-needs-light .engine-box {
+        border-color: var(--navy);
+        background: rgba(255, 255, 255, 0.62);
+        color: var(--navy);
+        box-shadow: var(--shadow);
+      }
+
+      .sync-needs-light .engine-title strong {
+        color: var(--navy);
+      }
+
+      .sync-needs-light .engine-stage {
+        border-color: var(--navy);
+        background: var(--paper-cool);
+      }
+
+      .sync-needs-light .engine-stage strong {
+        color: var(--navy);
+      }
+
+      .sync-needs-light .engine-stage span,
+      .sync-needs-light .engine-note {
+        color: var(--muted);
       }
 
       .idle-layout {
@@ -1713,6 +1807,124 @@
         font-weight: 700;
       }
 
+      .async-light .async-point {
+        border-color: var(--navy);
+        background: rgba(255, 255, 255, 0.62);
+      }
+
+      .async-light .async-point strong {
+        color: var(--navy);
+      }
+
+      .async-light .async-point p {
+        color: var(--muted);
+      }
+
+      .async-light .async-overlap-panel {
+        border-color: var(--navy);
+        background: rgba(255, 255, 255, 0.62);
+        box-shadow: var(--shadow);
+      }
+
+      .async-light .async-timeline-head span {
+        color: var(--muted);
+      }
+
+      .async-light .async-lane-label {
+        border-color: var(--navy);
+        background: var(--navy);
+        color: var(--lime-soft);
+      }
+
+      .async-light .async-lane-label.controller {
+        color: var(--cyan);
+      }
+
+      .async-light .async-work,
+      .async-light .async-buffer,
+      .async-light .bubble-cell {
+        border-color: var(--navy);
+      }
+
+      .async-light .async-buffer {
+        background: rgba(1, 19, 39, 0.08);
+        color: var(--muted);
+      }
+
+      .async-light .bubble-cell {
+        background: rgba(1, 19, 39, 0.05);
+      }
+
+      .async-light .async-overlap-note span {
+        border-color: var(--navy);
+        color: var(--navy);
+        background: rgba(255, 255, 255, 0.58);
+      }
+
+      .ladder-recap-layout {
+        display: grid;
+        gap: clamp(1rem, 2.2vw, 1.7rem);
+      }
+
+      .ladder-cards {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: clamp(0.8rem, 1.7vw, 1.25rem);
+        align-items: stretch;
+      }
+
+      .ladder-card {
+        min-height: clamp(17rem, 48vh, 27rem);
+        border: 0.16rem solid var(--navy);
+        border-radius: var(--radius-lg);
+        padding: clamp(0.95rem, 1.8vw, 1.4rem);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        box-shadow: var(--shadow);
+      }
+
+      .ladder-card.naive {
+        background: var(--paper-cool);
+      }
+
+      .ladder-card.sync {
+        background: var(--lavender);
+      }
+
+      .ladder-card.async {
+        background: var(--navy);
+        color: var(--lime-soft);
+      }
+
+      .ladder-card strong {
+        display: block;
+        font-size: clamp(1.6rem, 3vw, 2.7rem);
+        line-height: 0.96;
+      }
+
+      .ladder-card p {
+        color: inherit;
+        opacity: 0.76;
+        font-size: clamp(0.98rem, 1.36vw, 1.14rem);
+        font-weight: 700;
+        line-height: 1.24;
+      }
+
+      .ladder-detail {
+        display: grid;
+        gap: clamp(0.45rem, 0.9vw, 0.65rem);
+      }
+
+      .ladder-detail span {
+        border: 0.12rem solid currentColor;
+        border-radius: 999px;
+        padding: clamp(0.34rem, 0.7vw, 0.52rem) clamp(0.58rem, 1vw, 0.8rem);
+        font-size: clamp(0.78rem, 1vw, 0.9rem);
+        font-weight: 700;
+        line-height: 1.08;
+      }
+
       .tradeoff-layout {
         display: grid;
         grid-template-columns: minmax(0, 0.78fr) minmax(0, 1.22fr);
@@ -2065,25 +2277,10 @@
         max-width: min(70vw, 50rem);
       }
 
-      .closing-panel {
-        border: 0.16rem solid var(--line-on-dark);
-        border-radius: var(--radius-lg);
-        padding: clamp(1rem, 2vw, 1.55rem);
-        background: rgba(245, 255, 209, 0.05);
+      .closing-side {
         display: grid;
-        gap: clamp(0.75rem, 1.5vw, 1.05rem);
-      }
-
-      .closing-panel strong {
-        color: var(--paper);
-        font-size: clamp(1.35rem, 2.2vw, 1.9rem);
-        line-height: 1.02;
-      }
-
-      .closing-panel p {
-        color: var(--muted-light);
-        font-size: clamp(1rem, 1.35vw, 1.15rem);
-        line-height: 1.24;
+        gap: clamp(0.9rem, 1.8vw, 1.25rem);
+        justify-items: start;
       }
 
       .question-layout {
@@ -2361,6 +2558,7 @@
         .idle-layout,
         .async-layout,
         .async-actors,
+        .ladder-cards,
         .tradeoff-layout,
         .nebius-rl-layout,
         .resources-layout,
@@ -2544,7 +2742,7 @@
                 <span class="topic-index">5</span>
                 <strong>Where this lands</strong>
               </div>
-              <p>Nebius AI R&D, vLLM direction, and Token Factory RL FT.</p>
+              <p>Nebius AI R&D, vLLM direction, and Token Factory RFT.</p>
             </div>
           </div>
         </div>
@@ -2585,7 +2783,9 @@
         <div class="brand" aria-label="Nebius"><img src="NEBIUS(RGB).svg" alt="Nebius" /></div>
         <div class="slide-content stack">
           <h2 class="section-heading reveal">From SFT to RLVR</h2>
-          <p class="subhead reveal delay-1">The reward signal gets more operational.</p>
+          <p class="subhead reveal delay-1">
+            Post-training becomes a bootstrap loop: sample attempts, score them, learn from the signal.
+          </p>
           <div class="stage-row reveal delay-2">
             <div class="stage-card">
               <span class="label-pill">SFT</span>
@@ -2658,13 +2858,18 @@
             <div class="grpo-panel-card">
               <strong>Update</strong>
               <p>Move policy toward better samples.</p>
+              <div class="sample-fields" aria-label="rollout fields used by the trainer">
+                <code>token_ids</code>
+                <code>logprobs</code>
+                <code>reward</code>
+              </div>
             </div>
           </div>
         </div>
         <div class="page-num">7</div>
       </section>
 
-      <section class="slide" id="slide-8">
+      <section class="slide" id="slide-8" data-hidden="true">
         <div class="brand" aria-label="Nebius"><img src="NEBIUS(RGB).svg" alt="Nebius" /></div>
         <div class="slide-content stack">
           <h2 class="section-heading compact reveal">The Rollout Data Contract</h2>
@@ -2728,14 +2933,14 @@
               <rect x="500" y="346" width="178" height="90" rx="26" class="node"></rect>
               <rect x="78" y="346" width="178" height="90" rx="26" class="node-cyan"></rect>
               <circle cx="378" cy="257" r="66" class="node-accent"></circle>
-              <text x="167" y="116" text-anchor="middle" fill="#f5ffd1" class="diagram-label">Prompts</text>
-              <text x="167" y="145" text-anchor="middle" fill="#f5ffd1" class="diagram-small">tasks</text>
+              <text x="167" y="116" text-anchor="middle" fill="#f5ffd1" class="diagram-label">Sample tasks</text>
+              <text x="167" y="145" text-anchor="middle" fill="#f5ffd1" class="diagram-small">prompts</text>
               <text x="589" y="116" text-anchor="middle" fill="#f5ffd1" class="diagram-label">vLLM</text>
-              <text x="589" y="145" text-anchor="middle" fill="#f5ffd1" class="diagram-small">rollouts</text>
-              <text x="589" y="384" text-anchor="middle" fill="#f5ffd1" class="diagram-label">Reward</text>
-              <text x="589" y="413" text-anchor="middle" fill="#f5ffd1" class="diagram-small">tests / checks</text>
+              <text x="589" y="145" text-anchor="middle" fill="#f5ffd1" class="diagram-small">tokens + logprobs</text>
+              <text x="589" y="384" text-anchor="middle" fill="#f5ffd1" class="diagram-label">Score</text>
+              <text x="589" y="413" text-anchor="middle" fill="#f5ffd1" class="diagram-small">reward</text>
               <text x="167" y="384" text-anchor="middle" fill="#011327" class="diagram-label">Trainer</text>
-              <text x="167" y="413" text-anchor="middle" fill="#011327" class="diagram-small">updates model</text>
+              <text x="167" y="413" text-anchor="middle" fill="#011327" class="diagram-small">reward -> update</text>
               <text x="378" y="252" text-anchor="middle" fill="#011327" class="diagram-label">Loop</text>
               <text x="378" y="282" text-anchor="middle" fill="#011327" class="diagram-small">new weights</text>
               <path d="M256 123 H490" fill="none" stroke="#011327" stroke-width="6" marker-end="url(#arrow-loop)"></path>
@@ -2756,15 +2961,36 @@
             Straightforward, but too slow to be practical.
           </p>
           <div class="naive-flow reveal delay-2">
-            <div class="naive-step">
+            <div class="naive-step sample">
               <span class="step-num">1</span>
               <div>
+                <strong>Sample tasks</strong>
+                <p>Choose prompts or environment tasks for this iteration.</p>
+              </div>
+            </div>
+            <div class="naive-step rollout">
+              <span class="step-num">2</span>
+              <div>
+                <strong>Generate rollouts</strong>
+                <p>Sample completions using the current inference weights.</p>
+              </div>
+            </div>
+            <div class="naive-step reward">
+              <span class="step-num">3</span>
+              <div>
+                <strong>Score rewards</strong>
+                <p>Run tests, evaluators, or environment feedback.</p>
+              </div>
+            </div>
+            <div class="naive-step">
+              <span class="step-num">4</span>
+              <div>
                 <strong>Train</strong>
-                <p>Update model weights on the trainer side.</p>
+                <p>Update the policy from tokens, logprobs, and rewards.</p>
               </div>
             </div>
             <div class="naive-step checkpoint problem-step">
-              <span class="step-num">2</span>
+              <span class="step-num">5</span>
               <span class="pain-label">bottleneck</span>
               <div>
                 <strong>Save checkpoint</strong>
@@ -2772,25 +2998,11 @@
               </div>
             </div>
             <div class="naive-step checkpoint problem-step">
-              <span class="step-num">3</span>
+              <span class="step-num">6</span>
               <span class="pain-label">startup cost</span>
               <div>
                 <strong>Reload inference</strong>
                 <p>Restart or reload vLLM with new weights.</p>
-              </div>
-            </div>
-            <div class="naive-step rollout">
-              <span class="step-num">4</span>
-              <div>
-                <strong>Generate rollouts</strong>
-                <p>Sample completions for the next training batch.</p>
-              </div>
-            </div>
-            <div class="naive-step">
-              <span class="step-num">5</span>
-              <div>
-                <strong>Repeat</strong>
-                <p>The next iteration needs fresh weights again.</p>
               </div>
             </div>
           </div>
@@ -2824,6 +3036,10 @@
           <div class="checkpoint-size-card reveal delay-2">
             <span class="label-pill accent-pill">Concrete iteration IO</span>
             <strong class="model-name">GPT-OSS-120B</strong>
+            <div class="io-hero">
+              <strong>~2.6 TB</strong>
+              <span>disk traffic per iteration before trainer and inference restarts</span>
+            </div>
             <div class="weight-math">
               <strong>Training: BF16 params + Adam-style state ~= 1.2 TB</strong>
               <span>120B x (2B weights + 8B optimizer state).</span>
@@ -2832,6 +3048,7 @@
               <strong>Inference: FP8 params ~= 120 GB</strong>
               <span>Separate serving checkpoint for the vLLM reload path.</span>
             </div>
+            <span class="io-breakdown-label">Breakdown</span>
             <div class="io-stack">
               <div class="io-chip">
                 <strong>~1.2 TB</strong>
@@ -2850,9 +3067,6 @@
                 <span>inference read</span>
               </div>
             </div>
-            <p class="io-total">
-              About ~2.6 TB of disk traffic per iteration, plus trainer and inference restarts.
-            </p>
           </div>
         </div>
         <div class="page-num">10</div>
@@ -2896,7 +3110,7 @@
         <div class="page-num">11</div>
       </section>
 
-      <section class="slide dark" id="slide-12">
+      <section class="slide sync-needs-light" id="slide-12">
         <div class="brand" aria-label="Nebius"><img src="NEBIUS(RGB).svg" alt="Nebius" /></div>
         <div class="slide-content vllm-sync-layout">
           <div class="stack">
@@ -3020,7 +3234,7 @@
         <div class="page-num">13</div>
       </section>
 
-      <section class="slide dark" id="slide-14">
+      <section class="slide async-light" id="slide-14">
         <div class="brand" aria-label="Nebius"><img src="NEBIUS(RGB).svg" alt="Nebius" /></div>
         <div class="slide-content async-layout">
           <div class="stack">
@@ -3133,6 +3347,51 @@
         <div class="page-num">14</div>
       </section>
 
+      <section class="slide" id="slide-14-recap">
+        <div class="brand" aria-label="Nebius"><img src="NEBIUS(RGB).svg" alt="Nebius" /></div>
+        <div class="slide-content ladder-recap-layout">
+          <div class="stack">
+            <h2 class="section-heading compact reveal">Naive -> Sync -> Async</h2>
+            <p class="subhead reveal delay-1">
+              Same RL loop, progressively less time spent waiting.
+            </p>
+          </div>
+          <div class="ladder-cards reveal delay-2">
+            <div class="ladder-card naive">
+              <span class="label-pill">1</span>
+              <strong>Naive</strong>
+              <p>Correct mental model, but checkpoint IO and inference restart sit inside every iteration.</p>
+              <div class="ladder-detail">
+                <span>sample -> score -> train</span>
+                <span>save checkpoint</span>
+                <span>reload vLLM</span>
+              </div>
+            </div>
+            <div class="ladder-card sync">
+              <span class="label-pill">2</span>
+              <strong>Sync</strong>
+              <p>Keep vLLM alive and push weights directly, but training and generation still alternate.</p>
+              <div class="ladder-detail">
+                <span>live weight update</span>
+                <span>reset prefix cache</span>
+                <span>fresh, serialized</span>
+              </div>
+            </div>
+            <div class="ladder-card async">
+              <span class="label-pill accent-pill">3</span>
+              <strong>Async</strong>
+              <p>Overlap generation and training through queues, accepting bounded policy lag.</p>
+              <div class="ladder-detail">
+                <span>continuous generation</span>
+                <span>ready-batch training</span>
+                <span>higher utilization</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="page-num">15</div>
+      </section>
+
       <section class="slide" id="slide-15">
         <div class="brand" aria-label="Nebius"><img src="NEBIUS(RGB).svg" alt="Nebius" /></div>
         <div class="slide-content tradeoff-layout">
@@ -3195,7 +3454,46 @@
             <p class="chart-note">Throughput shown as generated tokens/sec for this setup.</p>
           </div>
         </div>
-        <div class="page-num">15</div>
+        <div class="page-num">17</div>
+      </section>
+
+      <section class="slide" id="slide-17">
+        <div class="brand" aria-label="Nebius"><img src="NEBIUS(RGB).svg" alt="Nebius" /></div>
+        <div class="slide-content resources-layout">
+          <div class="stack">
+            <h2 class="section-heading compact reveal">Where to Continue Learning</h2>
+            <p class="subhead reveal delay-1">
+              There are now real open-source and vLLM paths to study RL training systems.
+            </p>
+            <a class="gist-qr-card reveal delay-2" href="https://gist.github.com/minotru/8bd5aebf1e1aec5a32f463553072a563" target="_blank" rel="noreferrer">
+              <img
+                src="https://api.qrserver.com/v1/create-qr-code/?size=360x360&amp;margin=12&amp;data=https%3A%2F%2Fgist.github.com%2Fminotru%2F8bd5aebf1e1aec5a32f463553072a563"
+                alt="QR code for the resource gist"
+              />
+              <strong>Resource gist</strong>
+              <span>gist.github.com/minotru/8bd5aebf1e1aec5a32f463553072a563</span>
+            </a>
+          </div>
+          <div class="resource-grid reveal delay-2">
+            <a class="resource-card" href="https://github.com/rllm-org/rllm" target="_blank" rel="noreferrer">
+              <strong>rLLM</strong>
+              <span>github.com/rllm-org/rllm</span>
+            </a>
+            <a class="resource-card" href="https://github.com/verl-project/verl" target="_blank" rel="noreferrer">
+              <strong>veRL</strong>
+              <span>github.com/verl-project/verl</span>
+            </a>
+            <a class="resource-card" href="https://docs.vllm.ai/en/stable/training/trl/" target="_blank" rel="noreferrer">
+              <strong>vLLM TRL</strong>
+              <span>docs.vllm.ai/en/stable/training/trl/</span>
+            </a>
+            <a class="resource-card" href="https://docs.vllm.ai/en/stable/training/weight_transfer/" target="_blank" rel="noreferrer">
+              <strong>vLLM weight transfer</strong>
+              <span>docs.vllm.ai/en/stable/training/weight_transfer/</span>
+            </a>
+          </div>
+        </div>
+        <div class="page-num">17</div>
       </section>
 
       <section class="slide dark" id="slide-16">
@@ -3246,63 +3544,24 @@
         <div class="page-num">16</div>
       </section>
 
-      <section class="slide" id="slide-17">
-        <div class="brand" aria-label="Nebius"><img src="NEBIUS(RGB).svg" alt="Nebius" /></div>
-        <div class="slide-content resources-layout">
-          <div class="stack">
-            <h2 class="section-heading compact reveal">Where to Continue Learning</h2>
-            <p class="subhead reveal delay-1">
-              There are now real open-source and vLLM paths to study RL training systems.
-            </p>
-            <a class="gist-qr-card reveal delay-2" href="https://gist.github.com/minotru/8bd5aebf1e1aec5a32f463553072a563" target="_blank" rel="noreferrer">
-              <img
-                src="https://api.qrserver.com/v1/create-qr-code/?size=360x360&amp;margin=12&amp;data=https%3A%2F%2Fgist.github.com%2Fminotru%2F8bd5aebf1e1aec5a32f463553072a563"
-                alt="QR code for the resource gist"
-              />
-              <strong>Resource gist</strong>
-              <span>gist.github.com/minotru/8bd5aebf1e1aec5a32f463553072a563</span>
-            </a>
-          </div>
-          <div class="resource-grid reveal delay-2">
-            <a class="resource-card" href="https://github.com/rllm-org/rllm" target="_blank" rel="noreferrer">
-              <strong>rLLM</strong>
-              <span>github.com/rllm-org/rllm</span>
-            </a>
-            <a class="resource-card" href="https://github.com/verl-project/verl" target="_blank" rel="noreferrer">
-              <strong>veRL</strong>
-              <span>github.com/verl-project/verl</span>
-            </a>
-            <a class="resource-card" href="https://docs.vllm.ai/en/stable/training/trl/" target="_blank" rel="noreferrer">
-              <strong>vLLM TRL</strong>
-              <span>docs.vllm.ai/en/stable/training/trl/</span>
-            </a>
-            <a class="resource-card" href="https://docs.vllm.ai/en/stable/training/weight_transfer/" target="_blank" rel="noreferrer">
-              <strong>vLLM weight transfer</strong>
-              <span>docs.vllm.ai/en/stable/training/weight_transfer/</span>
-            </a>
-            <a class="resource-card wide" href="https://nebius.com/blog/posts/post-training-in-token-factory" target="_blank" rel="noreferrer">
-              <strong>Nebius post-training blog</strong>
-              <span>nebius.com/blog/posts/post-training-in-token-factory</span>
-            </a>
-          </div>
-        </div>
-        <div class="page-num">17</div>
-      </section>
-
       <section class="slide dark" id="slide-18">
         <div class="brand" aria-label="Nebius"><img src="NEBIUS(RGB).svg" alt="Nebius" /></div>
         <div class="slide-content closing-layout">
           <div class="stack">
-            <h2 class="closing-title reveal">Token Factory RL FT Beta</h2>
+            <h2 class="closing-title reveal">Token Factory RFT Beta</h2>
             <p class="closing-phrase reveal delay-1">
               Research-proven RL fine-tuning as a service.
             </p>
           </div>
-          <div class="closing-panel reveal delay-2">
-            <strong>Use the RL post-training loop without building the whole system stack.</strong>
-            <p>
-              Training, rollout inference, controller orchestration, and product workflow are packaged together.
-            </p>
+          <div class="closing-side">
+            <a class="gist-qr-card reveal delay-3" href="https://forms.cloud.microsoft/e/BmcYJQ3dv3" target="_blank" rel="noreferrer">
+              <img
+                src="https://api.qrserver.com/v1/create-qr-code/?size=360x360&amp;margin=12&amp;data=https%3A%2F%2Fforms.cloud.microsoft%2Fe%2FBmcYJQ3dv3"
+                alt="QR code for the Token Factory RFT beta form"
+              />
+              <strong>Token Factory RFT beta</strong>
+              <span>forms.cloud.microsoft/e/BmcYJQ3dv3</span>
+            </a>
           </div>
         </div>
         <div class="page-num">18</div>

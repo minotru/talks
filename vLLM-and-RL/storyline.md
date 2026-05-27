@@ -119,7 +119,7 @@ Scope principle: the backbone is **naive -> sync -> async**. Everything else sho
       1. Reference: https://nebius.com/blog/posts/post-training-in-token-factory
    2. **Required**: vLLM -- inference.
    3. **Required conceptually**: Controller -- actor-based scheduling/orchestration logic.
-8. **Required**: Token Factory RL FT beta!
+8. **Required**: Token Factory RFT beta!
    1. Closing memory / call to action, not the center of gravity.
    2. Wording: Research-proven RL fine-tuning as a service.
 
@@ -178,7 +178,7 @@ Target: 30-minute slot including questions. Aim for around 24-25 minutes of prep
 ### Slide 5: From SFT to RLVR
 
 - **Purpose**: Place RLVR in the post-training progression without teaching all of RL.
-- **Main point**: RLVR is where the reward signal becomes programmatic/verifiable, which makes scalable rollout generation valuable.
+- **Main point**: RLVR turns post-training into a bootstrap loop: sample attempts, score them, and learn from the signal.
 - **Content**:
   - SFT: imitate examples
   - RLHF: optimize preference signals
@@ -190,13 +190,13 @@ Target: 30-minute slot including questions. Aim for around 24-25 minutes of prep
 
 - **Purpose**: Show the basic RL training loop before naming GRPO.
 - **Main point**: RLVR repeatedly generates, scores, and trains on fresh model behavior.
-- **Deck placement**: Moved after Slide 8, after the rollout data contract.
+- **Deck placement**: After the GRPO slide; the standalone rollout contract slide is hidden.
 - **Content**:
   - sample tasks/prompts
-  - generate rollouts
-  - score/evaluate
+  - generate rollouts with tokens and logprobs
+  - score/evaluate into reward
   - update model
-- **Visual**: Circular loop: prompts -> vLLM rollouts -> verifiable rewards -> trainer -> updated model -> vLLM.
+- **Visual**: Circular loop: sample tasks -> vLLM rollouts with tokens/logprobs -> scoring/reward -> trainer -> updated model -> vLLM.
 - **Timing**: 1.75 min
 
 ### Slide 7: RLVR core algorithm: GRPO
@@ -207,11 +207,13 @@ Target: 30-minute slot including questions. Aim for around 24-25 minutes of prep
   - One prompt produces K completions.
   - Each completion gets a reward, shown as simple `r=...` scores.
   - Better-than-group-average samples are **reinforced**; worse-than-group-average samples are **reduced**.
-- **Visual**: Large dark rounded flow panel: Prompt card -> four horizontal completion rows with rewards -> lime "Group-relative comparison" card -> Update card. Highlight better samples in the completion rows.
+  - The trainer consumes rollout fields such as `token_ids`, `logprobs`, and `reward`.
+- **Visual**: Large dark rounded flow panel: Prompt card -> four horizontal completion rows with rewards -> lime "Group-relative comparison" card -> Update card with `token_ids`, `logprobs`, and `reward`. Highlight better samples in the completion rows.
 - **Timing**: 2 min
 
 ### Slide 8: The Rollout Data Contract
 
+- **Deck status**: Hidden in the current HTML preview; key fields are integrated into Slide 7.
 - **Purpose**: Bridge algorithm to systems.
 - **Main point**: In RL training, inference must return training data, not just text.
 - **Content**:
@@ -228,12 +230,13 @@ Target: 30-minute slot including questions. Aim for around 24-25 minutes of prep
 - **Purpose**: Establish the first architecture in the ladder.
 - **Main point**: The naive loop is straightforward, but too slow to be practical once checkpoint movement and startup sit inside every iteration.
 - **Content**:
+  - sample tasks
+  - generate rollouts
+  - score rewards
   - train
   - save checkpoint
   - load/restart inference
-  - generate rollouts
-  - repeat
-- **Visual**: Sequential timeline with five cards.
+- **Visual**: Sequential loop-like timeline with six cards: sample tasks -> generate rollouts -> score rewards -> train -> save checkpoint -> reload inference.
 - **Transition**: In-slide fragment. First show the full loop; on next click/key press, dim the other cards and emphasize `save checkpoint` and `reload inference` as the problematic parts.
 - **Timing**: 1.75 min
 
@@ -248,7 +251,7 @@ Target: 30-minute slot including questions. Aim for around 24-25 minutes of prep
   - Since both training and inference restart after every iteration, account for training checkpoint write + read and inference checkpoint write + read.
   - Rough total for GPT-OSS-120B scale: about 2.6 TB of disk traffic per iteration before restart overhead.
   - Rollouts need fresh or near-fresh weights.
-- **Visual**: Concrete iteration-IO card: GPT-OSS-120B, training checkpoint write/read plus FP8 inference checkpoint write/read.
+- **Visual**: Concrete iteration-IO card: large `~2.6 TB` total first, then smaller training checkpoint write/read plus FP8 inference checkpoint write/read breakdown.
 - **Timing**: 1.75 min
 
 ### Slide 11: Sync Loop: Keep vLLM Alive
@@ -297,7 +300,18 @@ Target: 30-minute slot including questions. Aim for around 24-25 minutes of prep
 - **Visual**: Timeline like Slide 13, but async: trainer and vLLM work overlap in the same time windows, with only tiny queue bubbles for the controller buffer.
 - **Timing**: 2.25 min
 
-### Slide 15: Sync vs Async Tradeoff
+### Slide 15: Naive -> Sync -> Async Recap
+
+- **Purpose**: Re-anchor the architecture ladder after introducing async.
+- **Main point**: The RL loop stays the same; each step removes a different kind of waiting.
+- **Content**:
+  - Naive: sample -> score -> train, but save/reload sits in the loop.
+  - Sync: live weight update and prefix cache reset, but generation/training still alternate.
+  - Async: continuous generation and ready-batch training overlap, with bounded policy lag.
+- **Visual**: Three large cards: Naive, Sync, Async.
+- **Timing**: 1 min
+
+### Slide 16: Sync vs Async Tradeoff
 
 - **Purpose**: Cement the ladder with concrete throughput.
 - **Main point**: Async improves utilization, but pays with staleness and orchestration complexity.
@@ -310,7 +324,20 @@ Target: 30-minute slot including questions. Aim for around 24-25 minutes of prep
 - **Diagram input needed**: Confirm benchmark label: "basic math RLVR, small context".
 - **Timing**: 2 min
 
-### Slide 16: How We Do RL at Nebius AI R&D
+### Slide 17: Where to Continue Learning
+
+- **Purpose**: Give audience practical next steps.
+- **Main point**: There are now real open-source and vLLM paths to study this.
+- **Content**:
+  - rLLM: https://github.com/rllm-org/rllm
+  - veRL: https://github.com/verl-project/verl
+  - vLLM TRL: https://docs.vllm.ai/en/stable/training/trl/
+  - vLLM weight transfer: https://docs.vllm.ai/en/stable/training/weight_transfer/
+  - QR code with links: https://gist.github.com/minotru/8bd5aebf1e1aec5a32f463553072a563.
+- **Visual**: Compact clickable link grid plus QR code to the gist.
+- **Timing**: 45 sec
+
+### Slide 18: How We Do RL at Nebius AI R&D
 
 - **Purpose**: Ground the architecture in the platform without turning into an internal deep dive.
 - **Main point**: Nebius combines training, vLLM inference, and controller orchestration.
@@ -321,33 +348,18 @@ Target: 30-minute slot including questions. Aim for around 24-25 minutes of prep
 - **Visual**: Three-box architecture map: Papyrax <-> Controller <-> vLLM.
 - **Timing**: 1.5 min
 
-### Slide 17: Where to Continue Learning
-
-- **Purpose**: Give audience practical next steps.
-- **Main point**: There are now real open-source and vLLM paths to study this.
-- **Content**:
-  - rLLM: https://github.com/rllm-org/rllm
-  - veRL: https://github.com/verl-project/verl
-  - vLLM TRL: https://docs.vllm.ai/en/stable/training/trl/
-  - vLLM weight transfer: https://docs.vllm.ai/en/stable/training/weight_transfer/
-  - Nebius post-training blog: https://nebius.com/blog/posts/post-training-in-token-factory
-  - QR code with links: https://gist.github.com/minotru/8bd5aebf1e1aec5a32f463553072a563.
-- **Visual**: Compact clickable link grid plus QR code to the gist.
-- **Timing**: 45 sec
-
-### Slide 18: Token Factory RL FT Beta
+### Slide 19: Token Factory RFT Beta
 
 - **Purpose**: Close with the product option.
 - **Main point**: Research-proven RL fine-tuning as a service.
 - **Content**:
-  - Token Factory RL FT beta.
-  - For teams that want the RL post-training loop without building the whole system stack.
+  - Token Factory RFT beta.
   - Training, rollout inference, controller orchestration, and product workflow are packaged together.
-- **Visual**: Clean closing slide with the phrase "Research-proven RL fine-tuning as a service."
-- **Deck note**: "Token Factory RL FT Beta" is the large headline; the service phrase is the supporting statement.
+- **Visual**: Clean closing slide with the phrase "Research-proven RL fine-tuning as a service" and QR code to https://forms.cloud.microsoft/e/BmcYJQ3dv3.
+- **Deck note**: "Token Factory RFT Beta" is the large headline; the service phrase is the supporting statement.
 - **Timing**: 45 sec
 
-### Slide 19: Questions
+### Slide 20: Questions
 
 - **Purpose**: Leave a clean final screen for discussion.
 - **Main point**: Open the floor for questions.

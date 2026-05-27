@@ -9,14 +9,13 @@ Source of truth:
 
 ## Current State
 
-The preview deck currently implements the main deck from `storyline.md`, with slide 4 hidden in the HTML preview:
+The preview deck currently implements the main deck from `storyline.md`, with the one-sentence slide and the standalone rollout data contract hidden in the HTML preview:
 
 - Title
 - Nebius Overview
 - Topics
 - From SFT to RLVR
 - RLVR core algorithm: GRPO
-- The Rollout Data Contract
 - RL Training Loop
 - Naive RL Loop
 - Why Naive Breaks
@@ -24,10 +23,11 @@ The preview deck currently implements the main deck from `storyline.md`, with sl
 - What vLLM Needs in the Sync World
 - Sync Fixes IO, But Creates Idle GPUs
 - Async Loop: Keep Both Sides Busy
+- Naive -> Sync -> Async recap
 - Sync vs Async Tradeoff
-- How We Do RL at Nebius AI R&D
 - Where to Continue Learning
-- Token Factory RL FT Beta
+- How We Do RL at Nebius AI R&D
+- Token Factory RFT Beta
 - Questions
 
 The main deck is implemented through the final questions slide. Appendix slides are not implemented yet.
@@ -52,9 +52,9 @@ Avoid:
 ## Important Decisions
 
 - GRPO formula is appendix only. Mainline slide explains GRPO intuition visually.
-- Rollout data contract is a separate slide after GRPO.
+- Rollout data contract is integrated into the GRPO and RL loop diagrams. The old standalone contract slide remains in the HTML with `data-hidden="true"`.
 - Slide 9 has an in-slide fragment:
-  - first show the full naive loop
+  - first show the full naive loop: sample tasks, generate rollouts, score rewards, train, save checkpoint, reload inference
   - next key press emphasizes `Save checkpoint` and `Reload inference`
   - next key press moves to Slide 10
 - Keep `storyline.md` synchronized with meaningful deck changes.
@@ -89,6 +89,10 @@ Token Factory copy:
 
 - **Research-proven RL fine-tuning as a service.**
 
+Token Factory RFT beta form:
+
+- https://forms.cloud.microsoft/e/BmcYJQ3dv3
+
 Useful-links gist for QR codes:
 
 - https://gist.github.com/minotru/8bd5aebf1e1aec5a32f463553072a563
@@ -113,4 +117,3 @@ Links for learning slide:
 - veRL: https://github.com/verl-project/verl
 - vLLM TRL: https://docs.vllm.ai/en/stable/training/trl/
 - vLLM weight transfer: https://docs.vllm.ai/en/stable/training/weight_transfer/
-- Nebius blog: https://nebius.com/blog/posts/post-training-in-token-factory
