@@ -143,8 +143,8 @@ Target: 30-minute slot including questions. Aim for around 24-25 minutes of prep
 - **Purpose**: Reuse company context from the previous deck without spending much time on it.
 - **Main point**: Nebius brings together datacenters, cloud, AI platform, and applied AI R&D.
 - **Content**:
-  - Datacenters: global physical infrastructure footprint, 7+ data centers.
-  - Cloud: GPU cloud on top of the datacenter layer, H100/H200/B200/GB200/GB300.
+  - Datacenters: global physical infrastructure footprint, 7+ data centers, H100/H200/B200/GB200/GB300.
+  - Cloud: Kubernetes, VM, Storage, Observability, Serverless.
   - Token Factory: build, fine-tune, and run open models at production scale.
   - AI R&D: in-house research lab, open applied research, papers/code/data.
 - **Visual**: Four company blocks in Nebius style; lime as accent, not full-slide overload.
@@ -359,7 +359,20 @@ Target: 30-minute slot including questions. Aim for around 24-25 minutes of prep
 - **Deck note**: "Token Factory RFT Beta" is the large headline; the service phrase is the supporting statement.
 - **Timing**: 45 sec
 
-### Slide 20: Questions
+### Slide 20: Token Factory Promo
+
+- **Purpose**: Give the audience the promo-code QR and clarify Token Factory scope.
+- **Main point**: Token Factory is one platform for the practical workflow around open models.
+- **Content**:
+  - Inference: serve open models at production scale.
+  - Fine-Tuning: run SFT and RFT on your data.
+  - DataLab: prepare, inspect, and iterate on datasets close to training.
+  - Sandboxes: run code safely in isolated environments.
+  - Promo-code QR: Nebius promo-code activation link.
+- **Visual**: Four platform cards plus QR code labeled "Promo code" / "Scan to activate".
+- **Timing**: 45 sec
+
+### Slide 21: Questions
 
 - **Purpose**: Leave a clean final screen for discussion.
 - **Main point**: Open the floor for questions.

@@ -5,7 +5,7 @@ This file is a helper for future agents. It is **not** the source of truth.
 Source of truth:
 
 - `storyline.md`: talk scope, current storyboard, timings, slide intent.
-- `vllm_rl_meetup_preview.html`: current generated HTML preview deck.
+- `slidedeck.html`: current generated HTML preview deck.
 
 ## Current State
 
@@ -28,6 +28,7 @@ The preview deck currently implements the main deck from `storyline.md`, with th
 - Where to Continue Learning
 - How We Do RL at Nebius AI R&D
 - Token Factory RFT Beta
+- Token Factory Promo
 - Questions
 
 The main deck is implemented through the final questions slide. Appendix slides are not implemented yet.
@@ -61,7 +62,7 @@ Avoid:
 
 ## Navigation Implementation
 
-`vllm_rl_meetup_preview.html` uses transform-based navigation, not browser scrolling/hash navigation.
+`slidedeck.html` uses transform-based navigation, not browser scrolling/hash navigation.
 
 Reason: `file://` preview produced security-origin warnings and scroll/hash navigation broke arrow/space transitions.
 
@@ -92,6 +93,10 @@ Token Factory copy:
 Token Factory RFT beta form:
 
 - https://forms.cloud.microsoft/e/BmcYJQ3dv3
+
+Token Factory promo-code:
+
+- https://nebius.com/promo-code?utm_promo_event_code=2026-05-27_vllm-meetup-telaviv&utm_promo_code_type=Token_Factory&utm_promo_activation_code=VLLM-TELAVIV-2026-05
 
 Useful-links gist for QR codes:
 

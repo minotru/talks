@@ -193,6 +193,7 @@
         --radius-lg: clamp(1rem, 2vw, 2rem);
         --shadow: 0 1.2rem 3.4rem rgba(1, 19, 39, 0.16);
         --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+        --qr-card-width: clamp(13rem, 24vw, 19rem);
       }
 
       * {
@@ -2166,15 +2167,20 @@
         clip-path: polygon(0 0, 100% 50%, 0 100%);
       }
 
-      .resources-layout {
+      .resources-layout,
+      .closing-layout,
+      .promo-layout,
+      .question-layout {
         display: grid;
-        grid-template-columns: minmax(0, 0.68fr) minmax(0, 1.32fr);
+        grid-template-columns: minmax(0, 1fr) var(--qr-card-width);
         gap: clamp(1rem, 3vw, 2.4rem);
         align-items: center;
       }
 
       .gist-qr-card {
-        width: min(100%, clamp(13rem, 24vw, 19rem));
+        width: min(100%, var(--qr-card-width));
+        justify-self: end;
+        align-self: center;
         border: 0.16rem solid var(--navy);
         border-radius: var(--radius-lg);
         padding: clamp(0.75rem, 1.4vw, 1rem);
@@ -2203,6 +2209,7 @@
       }
 
       .gist-qr-card span {
+        min-height: clamp(1.8rem, 2.4vw, 2.15rem);
         color: var(--muted);
         font-size: clamp(0.78rem, 1vw, 0.9rem);
         font-weight: 700;
@@ -2255,13 +2262,6 @@
         background: var(--paper-cool);
       }
 
-      .closing-layout {
-        display: grid;
-        grid-template-columns: minmax(0, 1fr) minmax(0, 0.72fr);
-        gap: clamp(1rem, 3vw, 2.4rem);
-        align-items: center;
-      }
-
       .closing-title {
         color: var(--lime-soft);
         font-size: clamp(3.2rem, 7.4vw, 7rem);
@@ -2278,16 +2278,66 @@
       }
 
       .closing-side {
+        width: var(--qr-card-width);
+        justify-self: end;
         display: grid;
         gap: clamp(0.9rem, 1.8vw, 1.25rem);
-        justify-items: start;
+        justify-items: stretch;
       }
 
-      .question-layout {
+      .platform-grid {
         display: grid;
-        grid-template-columns: minmax(0, 1fr) minmax(15rem, 0.42fr);
-        gap: clamp(1rem, 3vw, 2.4rem);
-        align-items: center;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: clamp(0.75rem, 1.5vw, 1.1rem);
+      }
+
+      .platform-card {
+        min-height: clamp(7.4rem, 18vh, 10.5rem);
+        border: 0.14rem solid var(--line-on-dark);
+        border-radius: var(--radius-md);
+        padding: clamp(0.85rem, 1.5vw, 1.12rem);
+        background: rgba(245, 255, 209, 0.05);
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+      }
+
+      .platform-card:nth-child(2) {
+        background: rgba(121, 191, 197, 0.18);
+      }
+
+      .platform-card:nth-child(3) {
+        background: rgba(193, 193, 255, 0.16);
+      }
+
+      .platform-card:nth-child(4) {
+        background: rgba(224, 255, 79, 0.14);
+      }
+
+      .platform-card strong {
+        color: var(--lime-soft);
+        font-size: clamp(1.25rem, 2vw, 1.68rem);
+        line-height: 1.02;
+      }
+
+      .platform-card span {
+        color: var(--muted-light);
+        font-size: clamp(0.9rem, 1.18vw, 1rem);
+        font-weight: 700;
+        line-height: 1.18;
+      }
+
+      .promo-code {
+        display: inline-flex;
+        width: fit-content;
+        border: 0.14rem solid var(--lime);
+        border-radius: 999px;
+        padding: clamp(0.32rem, 0.65vw, 0.48rem) clamp(0.65rem, 1.15vw, 0.9rem);
+        color: var(--navy);
+        background: var(--lime);
+        font-size: clamp(0.86rem, 1.1vw, 0.98rem);
+        font-weight: 700;
+        line-height: 1;
       }
 
       .question-left {
@@ -2563,6 +2613,7 @@
         .nebius-rl-layout,
         .resources-layout,
         .closing-layout,
+        .promo-layout,
         .question-layout {
           grid-template-columns: 1fr;
         }
@@ -2609,6 +2660,10 @@
         .resource-card.wide {
           grid-column: auto;
         }
+
+        .platform-grid {
+          grid-template-columns: 1fr;
+        }
       }
     </style>
   </head>
@@ -2616,7 +2671,7 @@
     <div class="progress" id="progress"></div>
     <main id="deck">
       <section class="slide lime-cut" id="slide-1">
-        <div class="brand" aria-label="Nebius"><img src="NEBIUS(RGB).svg" alt="Nebius" /></div>
+        <div class="brand" aria-label="Nebius"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0iTkVCSVVTIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDExMzMuOSAzMTEuOCI+CiAgPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDI5LjAuMSwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDIuMS4wIEJ1aWxkIDE5MikgIC0tPgogIDxkZWZzPgogICAgPHN0eWxlPgogICAgICAuc3QwIHsKICAgICAgICBmaWxsOiAjMDUyYjQyOwogICAgICB9CgogICAgICAuc3QxIHsKICAgICAgICBmaWxsOiAjZTBmZjRmOwogICAgICB9CiAgICA8L3N0eWxlPgogIDwvZGVmcz4KICA8cGF0aCBjbGFzcz0ic3QxIiBkPSJNMTA1NS44LDBINzhDMzQuOSwwLDAsMzUuMiwwLDc4LjZ2MTU0LjZjMCw0My40LDM0LjksNzguNiw3OCw3OC42aDk3Ny44YzQzLjEsMCw3OC0zNS4yLDc4LTc4LjZWNzguNmMwLTQzLjQtMzQuOS03OC42LTc4LTc4LjZaIi8+CiAgPGc+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMjAzLjksMTg3LjdoMGwtMzYuNi04NC41Yy02LTEzLjctMTUuOC0yMS40LTI5LjctMjEuNHMtMjMuNCwxMS4zLTIzLjQsMjMuM2MwLDAsMTcuNS0yLjQsMjYuOCwxOC45bDM2LjYsODQuNWM2LDEzLjcsMTUuOCwyMS40LDI5LjcsMjEuNHMyMy40LTExLjMsMjMuNC0yMy4zYzAsMC0xNy41LDIuNC0yNi44LTE4LjlaIi8+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNODUuMiwxNDAuM3Y4Ny41aDI5LjF2LTEyMi43cy0yOS4xLDEuOC0yOS4xLDM1LjJaIi8+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMjMwLjcsMjA2LjdzMjkuMS0xLjgsMjkuMS0zNS4ydi04Ny41aC0yOS4xdjEyMi43WiIvPgogICAgPHBvbHlnb24gY2xhc3M9InN0MCIgcG9pbnRzPSIyODkuNyA4My45IDI4OS43IDgzLjkgMjg5LjcgMjI3LjkgMjg5LjcgMjI3LjkgNDM5LjIgMjI3LjkgNDM5LjIgMjAwLjYgMzE5IDIwMC42IDMxOSAxNjkuMyA0MjYuMiAxNjkuMyA0MjYuMiAxNDIuMSAzMTkgMTQyLjEgMzE5IDExMS4xIDQzOS4yIDExMS4xIDQzOS4yIDgzLjkgMzE5IDgzLjkgMjg5LjcgODMuOSIvPgogICAgPHBhdGggY2xhc3M9InN0MCIgZD0iTTU5Ni44LDE1Mi45aDBjNy44LTUuMiwxNC40LTE1LjEsMTQuNC0yOS44LDAtMzMuNS0zMi4xLTM5LjEtNTcuMS0zOS4zaC04NC45djE0NGg5My43YzQzLjIsMCw1Ny4zLTE2LjUsNTcuMy00MC43cy0xNS41LTMxLjgtMjMuNC0zNC4yWk00OTguNSwxMTEuMWg2MC44YzEzLjUsMCwyMy44LDQuNywyMy44LDE2LjlzLTExLjgsMTQuNy0xOS44LDE0LjhoLTY0Ljh2LTMxLjdaTTU2My4yLDIwMC42aDBzLTY0LjgsMC02NC44LDB2LTMyLjNoNjQuNGMxMi42LDAsMjcsMi43LDI3LDE2LjRzLTEzLjEsMTUuOS0yNi42LDE1LjlaIi8+CiAgICA8cmVjdCBjbGFzcz0ic3QwIiB4PSI2NDYuNiIgeT0iODMuOSIgd2lkdGg9IjI5LjMiIGhlaWdodD0iMTQ0Ii8+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMTAzOCwxNTguN2gwczAsMCwwLDBjLTE0LjMtMTEuNS0yNi42LTEyLjgtNTAtMTUuMmwtMi4xLS4yYy0yLjktLjItNDMuMi0zLjYtNDYuMy0zLjktMjcuNi0yLjYtMjUuNi0xNS4xLTI1LjYtMTUuMSwwLTEzLjgsMjcuOS0xNC45LDI3LjktMTQuOSwyMy4xLTIuMyw2OC40LTEuNiw3MS4yLDE4LjhoMzJjLTIuOS00MC4zLTUyLjgtNDYuMS04NC44LTQ2LjUtMjEuMi41LTQ0LjQsMS44LTYyLjcsMTMuOC0yMC42LDEzLjYtMTguNiw0MC42LTUuNyw1Mi44LDUsNC40LDEyLjcsMTAuNCwyOC4zLDEzLjMsNy4yLDEuMywxOSwzLjEsMzUuMSw0LjIsMCwwLDI1LjgsMS42LDMxLjMsMiwuMywwLC41LDAsLjgsMGgwYzguNi43LDI2LjksMi4xLDI4LjQsMTUuOCwxLjcsMTUuMS0yNC40LDE5LjUtNTEuMSwxOS41LTExLjcsMC0yMy42LS41LTM2LTQtMTAuNC0zLTE2LjQtOS4xLTE3LjQtMTkuM2gtMzEuN2MwLDQzLjQsNDkuMyw1MC4xLDgzLjcsNTAuMSwyMy41LS42LDQ4LjktMi4yLDY5LjItMTUuMiwyMi40LTE0LjcsMjAuMS00My4yLDUuMy01NloiLz4KICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik04MjYuMywxNjAuNWMwLDI2LjctMTcsNDIuNS00NS44LDQyLjVzLTQ1LjYtMTUuOC00NS42LTQyLjV2LTc2LjZoLTI5LjF2NzYuMWMwLDQyLjEsMjkuNSw3MCw3NC42LDcwczc0LjktMjcuNyw3NC45LTcwdi03Ni4xaC0yOS4xdjc2LjZaIi8+CiAgPC9nPgo8L3N2Zz4=" alt="Nebius" /></div>
         <div class="slide-content title-grid">
           <div class="stack">
             <span class="kicker reveal">Israel vLLM Meetup #2</span>
@@ -2658,7 +2713,7 @@
       </section>
 
       <section class="slide" id="slide-2">
-        <div class="brand" aria-label="Nebius"><img src="NEBIUS(RGB).svg" alt="Nebius" /></div>
+        <div class="brand" aria-label="Nebius"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0iTkVCSVVTIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDExMzMuOSAzMTEuOCI+CiAgPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDI5LjAuMSwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDIuMS4wIEJ1aWxkIDE5MikgIC0tPgogIDxkZWZzPgogICAgPHN0eWxlPgogICAgICAuc3QwIHsKICAgICAgICBmaWxsOiAjMDUyYjQyOwogICAgICB9CgogICAgICAuc3QxIHsKICAgICAgICBmaWxsOiAjZTBmZjRmOwogICAgICB9CiAgICA8L3N0eWxlPgogIDwvZGVmcz4KICA8cGF0aCBjbGFzcz0ic3QxIiBkPSJNMTA1NS44LDBINzhDMzQuOSwwLDAsMzUuMiwwLDc4LjZ2MTU0LjZjMCw0My40LDM0LjksNzguNiw3OCw3OC42aDk3Ny44YzQzLjEsMCw3OC0zNS4yLDc4LTc4LjZWNzguNmMwLTQzLjQtMzQuOS03OC42LTc4LTc4LjZaIi8+CiAgPGc+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMjAzLjksMTg3LjdoMGwtMzYuNi04NC41Yy02LTEzLjctMTUuOC0yMS40LTI5LjctMjEuNHMtMjMuNCwxMS4zLTIzLjQsMjMuM2MwLDAsMTcuNS0yLjQsMjYuOCwxOC45bDM2LjYsODQuNWM2LDEzLjcsMTUuOCwyMS40LDI5LjcsMjEuNHMyMy40LTExLjMsMjMuNC0yMy4zYzAsMC0xNy41LDIuNC0yNi44LTE4LjlaIi8+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNODUuMiwxNDAuM3Y4Ny41aDI5LjF2LTEyMi43cy0yOS4xLDEuOC0yOS4xLDM1LjJaIi8+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMjMwLjcsMjA2LjdzMjkuMS0xLjgsMjkuMS0zNS4ydi04Ny41aC0yOS4xdjEyMi43WiIvPgogICAgPHBvbHlnb24gY2xhc3M9InN0MCIgcG9pbnRzPSIyODkuNyA4My45IDI4OS43IDgzLjkgMjg5LjcgMjI3LjkgMjg5LjcgMjI3LjkgNDM5LjIgMjI3LjkgNDM5LjIgMjAwLjYgMzE5IDIwMC42IDMxOSAxNjkuMyA0MjYuMiAxNjkuMyA0MjYuMiAxNDIuMSAzMTkgMTQyLjEgMzE5IDExMS4xIDQzOS4yIDExMS4xIDQzOS4yIDgzLjkgMzE5IDgzLjkgMjg5LjcgODMuOSIvPgogICAgPHBhdGggY2xhc3M9InN0MCIgZD0iTTU5Ni44LDE1Mi45aDBjNy44LTUuMiwxNC40LTE1LjEsMTQuNC0yOS44LDAtMzMuNS0zMi4xLTM5LjEtNTcuMS0zOS4zaC04NC45djE0NGg5My43YzQzLjIsMCw1Ny4zLTE2LjUsNTcuMy00MC43cy0xNS41LTMxLjgtMjMuNC0zNC4yWk00OTguNSwxMTEuMWg2MC44YzEzLjUsMCwyMy44LDQuNywyMy44LDE2LjlzLTExLjgsMTQuNy0xOS44LDE0LjhoLTY0Ljh2LTMxLjdaTTU2My4yLDIwMC42aDBzLTY0LjgsMC02NC44LDB2LTMyLjNoNjQuNGMxMi42LDAsMjcsMi43LDI3LDE2LjRzLTEzLjEsMTUuOS0yNi42LDE1LjlaIi8+CiAgICA8cmVjdCBjbGFzcz0ic3QwIiB4PSI2NDYuNiIgeT0iODMuOSIgd2lkdGg9IjI5LjMiIGhlaWdodD0iMTQ0Ii8+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMTAzOCwxNTguN2gwczAsMCwwLDBjLTE0LjMtMTEuNS0yNi42LTEyLjgtNTAtMTUuMmwtMi4xLS4yYy0yLjktLjItNDMuMi0zLjYtNDYuMy0zLjktMjcuNi0yLjYtMjUuNi0xNS4xLTI1LjYtMTUuMSwwLTEzLjgsMjcuOS0xNC45LDI3LjktMTQuOSwyMy4xLTIuMyw2OC40LTEuNiw3MS4yLDE4LjhoMzJjLTIuOS00MC4zLTUyLjgtNDYuMS04NC44LTQ2LjUtMjEuMi41LTQ0LjQsMS44LTYyLjcsMTMuOC0yMC42LDEzLjYtMTguNiw0MC42LTUuNyw1Mi44LDUsNC40LDEyLjcsMTAuNCwyOC4zLDEzLjMsNy4yLDEuMywxOSwzLjEsMzUuMSw0LjIsMCwwLDI1LjgsMS42LDMxLjMsMiwuMywwLC41LDAsLjgsMGgwYzguNi43LDI2LjksMi4xLDI4LjQsMTUuOCwxLjcsMTUuMS0yNC40LDE5LjUtNTEuMSwxOS41LTExLjcsMC0yMy42LS41LTM2LTQtMTAuNC0zLTE2LjQtOS4xLTE3LjQtMTkuM2gtMzEuN2MwLDQzLjQsNDkuMyw1MC4xLDgzLjcsNTAuMSwyMy41LS42LDQ4LjktMi4yLDY5LjItMTUuMiwyMi40LTE0LjcsMjAuMS00My4yLDUuMy01NloiLz4KICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik04MjYuMywxNjAuNWMwLDI2LjctMTcsNDIuNS00NS44LDQyLjVzLTQ1LjYtMTUuOC00NS42LTQyLjV2LTc2LjZoLTI5LjF2NzYuMWMwLDQyLjEsMjkuNSw3MCw3NC42LDcwczc0LjktMjcuNyw3NC45LTcwdi03Ni4xaC0yOS4xdjc2LjZaIi8+CiAgPC9nPgo8L3N2Zz4=" alt="Nebius" /></div>
         <div class="slide-content two-col">
           <div class="stack">
             <h2 class="reveal delay-1">
@@ -2675,17 +2730,23 @@
               <span class="label-pill">Datacenters</span>
               <strong>Global physical footprint</strong>
               <p>7+ data centers around the globe.</p>
-            </div>
-            <div class="overview-card cloud">
-              <span class="label-pill accent-pill">Cloud</span>
-              <strong>GPU cloud on top</strong>
-              <p>Elastic access to the latest accelerators.</p>
               <div class="spec-line">
                 <span>H100</span>
                 <span>H200</span>
                 <span>B200</span>
                 <span>GB200</span>
                 <span>GB300</span>
+              </div>
+            </div>
+            <div class="overview-card cloud">
+              <span class="label-pill accent-pill">Cloud</span>
+              <strong>Full-featured cloud stack</strong>
+              <div class="spec-line">
+                <span>Kubernetes</span>
+                <span>VM</span>
+                <span>Storage</span>
+                <span>Observability</span>
+                <span>Serverless</span>
               </div>
             </div>
             <div class="overview-card accent">
@@ -2704,7 +2765,7 @@
       </section>
 
       <section class="slide" id="slide-3">
-        <div class="brand" aria-label="Nebius"><img src="NEBIUS(RGB).svg" alt="Nebius" /></div>
+        <div class="brand" aria-label="Nebius"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0iTkVCSVVTIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDExMzMuOSAzMTEuOCI+CiAgPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDI5LjAuMSwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDIuMS4wIEJ1aWxkIDE5MikgIC0tPgogIDxkZWZzPgogICAgPHN0eWxlPgogICAgICAuc3QwIHsKICAgICAgICBmaWxsOiAjMDUyYjQyOwogICAgICB9CgogICAgICAuc3QxIHsKICAgICAgICBmaWxsOiAjZTBmZjRmOwogICAgICB9CiAgICA8L3N0eWxlPgogIDwvZGVmcz4KICA8cGF0aCBjbGFzcz0ic3QxIiBkPSJNMTA1NS44LDBINzhDMzQuOSwwLDAsMzUuMiwwLDc4LjZ2MTU0LjZjMCw0My40LDM0LjksNzguNiw3OCw3OC42aDk3Ny44YzQzLjEsMCw3OC0zNS4yLDc4LTc4LjZWNzguNmMwLTQzLjQtMzQuOS03OC42LTc4LTc4LjZaIi8+CiAgPGc+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMjAzLjksMTg3LjdoMGwtMzYuNi04NC41Yy02LTEzLjctMTUuOC0yMS40LTI5LjctMjEuNHMtMjMuNCwxMS4zLTIzLjQsMjMuM2MwLDAsMTcuNS0yLjQsMjYuOCwxOC45bDM2LjYsODQuNWM2LDEzLjcsMTUuOCwyMS40LDI5LjcsMjEuNHMyMy40LTExLjMsMjMuNC0yMy4zYzAsMC0xNy41LDIuNC0yNi44LTE4LjlaIi8+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNODUuMiwxNDAuM3Y4Ny41aDI5LjF2LTEyMi43cy0yOS4xLDEuOC0yOS4xLDM1LjJaIi8+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMjMwLjcsMjA2LjdzMjkuMS0xLjgsMjkuMS0zNS4ydi04Ny41aC0yOS4xdjEyMi43WiIvPgogICAgPHBvbHlnb24gY2xhc3M9InN0MCIgcG9pbnRzPSIyODkuNyA4My45IDI4OS43IDgzLjkgMjg5LjcgMjI3LjkgMjg5LjcgMjI3LjkgNDM5LjIgMjI3LjkgNDM5LjIgMjAwLjYgMzE5IDIwMC42IDMxOSAxNjkuMyA0MjYuMiAxNjkuMyA0MjYuMiAxNDIuMSAzMTkgMTQyLjEgMzE5IDExMS4xIDQzOS4yIDExMS4xIDQzOS4yIDgzLjkgMzE5IDgzLjkgMjg5LjcgODMuOSIvPgogICAgPHBhdGggY2xhc3M9InN0MCIgZD0iTTU5Ni44LDE1Mi45aDBjNy44LTUuMiwxNC40LTE1LjEsMTQuNC0yOS44LDAtMzMuNS0zMi4xLTM5LjEtNTcuMS0zOS4zaC04NC45djE0NGg5My43YzQzLjIsMCw1Ny4zLTE2LjUsNTcuMy00MC43cy0xNS41LTMxLjgtMjMuNC0zNC4yWk00OTguNSwxMTEuMWg2MC44YzEzLjUsMCwyMy44LDQuNywyMy44LDE2LjlzLTExLjgsMTQuNy0xOS44LDE0LjhoLTY0Ljh2LTMxLjdaTTU2My4yLDIwMC42aDBzLTY0LjgsMC02NC44LDB2LTMyLjNoNjQuNGMxMi42LDAsMjcsMi43LDI3LDE2LjRzLTEzLjEsMTUuOS0yNi42LDE1LjlaIi8+CiAgICA8cmVjdCBjbGFzcz0ic3QwIiB4PSI2NDYuNiIgeT0iODMuOSIgd2lkdGg9IjI5LjMiIGhlaWdodD0iMTQ0Ii8+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMTAzOCwxNTguN2gwczAsMCwwLDBjLTE0LjMtMTEuNS0yNi42LTEyLjgtNTAtMTUuMmwtMi4xLS4yYy0yLjktLjItNDMuMi0zLjYtNDYuMy0zLjktMjcuNi0yLjYtMjUuNi0xNS4xLTI1LjYtMTUuMSwwLTEzLjgsMjcuOS0xNC45LDI3LjktMTQuOSwyMy4xLTIuMyw2OC40LTEuNiw3MS4yLDE4LjhoMzJjLTIuOS00MC4zLTUyLjgtNDYuMS04NC44LTQ2LjUtMjEuMi41LTQ0LjQsMS44LTYyLjcsMTMuOC0yMC42LDEzLjYtMTguNiw0MC42LTUuNyw1Mi44LDUsNC40LDEyLjcsMTAuNCwyOC4zLDEzLjMsNy4yLDEuMywxOSwzLjEsMzUuMSw0LjIsMCwwLDI1LjgsMS42LDMxLjMsMiwuMywwLC41LDAsLjgsMGgwYzguNi43LDI2LjksMi4xLDI4LjQsMTUuOCwxLjcsMTUuMS0yNC40LDE5LjUtNTEuMSwxOS41LTExLjcsMC0yMy42LS41LTM2LTQtMTAuNC0zLTE2LjQtOS4xLTE3LjQtMTkuM2gtMzEuN2MwLDQzLjQsNDkuMyw1MC4xLDgzLjcsNTAuMSwyMy41LS42LDQ4LjktMi4yLDY5LjItMTUuMiwyMi40LTE0LjcsMjAuMS00My4yLDUuMy01NloiLz4KICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik04MjYuMywxNjAuNWMwLDI2LjctMTcsNDIuNS00NS44LDQyLjVzLTQ1LjYtMTUuOC00NS42LTQyLjV2LTc2LjZoLTI5LjF2NzYuMWMwLDQyLjEsMjkuNSw3MCw3NC42LDcwczc0LjktMjcuNyw3NC45LTcwdi03Ni4xaC0yOS4xdjc2LjZaIi8+CiAgPC9nPgo8L3N2Zz4=" alt="Nebius" /></div>
         <div class="slide-content stack">
           <span class="kicker reveal">Topics</span>
           <h2 class="reveal delay-1">RL context, then naive -> sync -> async.</h2>
@@ -2750,7 +2811,7 @@
       </section>
 
       <section class="slide dark" id="slide-4" data-hidden="true">
-        <div class="brand" aria-label="Nebius"><img src="NEBIUS(RGB).svg" alt="Nebius" /></div>
+        <div class="brand" aria-label="Nebius"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0iTkVCSVVTIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDExMzMuOSAzMTEuOCI+CiAgPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDI5LjAuMSwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDIuMS4wIEJ1aWxkIDE5MikgIC0tPgogIDxkZWZzPgogICAgPHN0eWxlPgogICAgICAuc3QwIHsKICAgICAgICBmaWxsOiAjMDUyYjQyOwogICAgICB9CgogICAgICAuc3QxIHsKICAgICAgICBmaWxsOiAjZTBmZjRmOwogICAgICB9CiAgICA8L3N0eWxlPgogIDwvZGVmcz4KICA8cGF0aCBjbGFzcz0ic3QxIiBkPSJNMTA1NS44LDBINzhDMzQuOSwwLDAsMzUuMiwwLDc4LjZ2MTU0LjZjMCw0My40LDM0LjksNzguNiw3OCw3OC42aDk3Ny44YzQzLjEsMCw3OC0zNS4yLDc4LTc4LjZWNzguNmMwLTQzLjQtMzQuOS03OC42LTc4LTc4LjZaIi8+CiAgPGc+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMjAzLjksMTg3LjdoMGwtMzYuNi04NC41Yy02LTEzLjctMTUuOC0yMS40LTI5LjctMjEuNHMtMjMuNCwxMS4zLTIzLjQsMjMuM2MwLDAsMTcuNS0yLjQsMjYuOCwxOC45bDM2LjYsODQuNWM2LDEzLjcsMTUuOCwyMS40LDI5LjcsMjEuNHMyMy40LTExLjMsMjMuNC0yMy4zYzAsMC0xNy41LDIuNC0yNi44LTE4LjlaIi8+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNODUuMiwxNDAuM3Y4Ny41aDI5LjF2LTEyMi43cy0yOS4xLDEuOC0yOS4xLDM1LjJaIi8+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMjMwLjcsMjA2LjdzMjkuMS0xLjgsMjkuMS0zNS4ydi04Ny41aC0yOS4xdjEyMi43WiIvPgogICAgPHBvbHlnb24gY2xhc3M9InN0MCIgcG9pbnRzPSIyODkuNyA4My45IDI4OS43IDgzLjkgMjg5LjcgMjI3LjkgMjg5LjcgMjI3LjkgNDM5LjIgMjI3LjkgNDM5LjIgMjAwLjYgMzE5IDIwMC42IDMxOSAxNjkuMyA0MjYuMiAxNjkuMyA0MjYuMiAxNDIuMSAzMTkgMTQyLjEgMzE5IDExMS4xIDQzOS4yIDExMS4xIDQzOS4yIDgzLjkgMzE5IDgzLjkgMjg5LjcgODMuOSIvPgogICAgPHBhdGggY2xhc3M9InN0MCIgZD0iTTU5Ni44LDE1Mi45aDBjNy44LTUuMiwxNC40LTE1LjEsMTQuNC0yOS44LDAtMzMuNS0zMi4xLTM5LjEtNTcuMS0zOS4zaC04NC45djE0NGg5My43YzQzLjIsMCw1Ny4zLTE2LjUsNTcuMy00MC43cy0xNS41LTMxLjgtMjMuNC0zNC4yWk00OTguNSwxMTEuMWg2MC44YzEzLjUsMCwyMy44LDQuNywyMy44LDE2LjlzLTExLjgsMTQuNy0xOS44LDE0LjhoLTY0Ljh2LTMxLjdaTTU2My4yLDIwMC42aDBzLTY0LjgsMC02NC44LDB2LTMyLjNoNjQuNGMxMi42LDAsMjcsMi43LDI3LDE2LjRzLTEzLjEsMTUuOS0yNi42LDE1LjlaIi8+CiAgICA8cmVjdCBjbGFzcz0ic3QwIiB4PSI2NDYuNiIgeT0iODMuOSIgd2lkdGg9IjI5LjMiIGhlaWdodD0iMTQ0Ii8+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMTAzOCwxNTguN2gwczAsMCwwLDBjLTE0LjMtMTEuNS0yNi42LTEyLjgtNTAtMTUuMmwtMi4xLS4yYy0yLjktLjItNDMuMi0zLjYtNDYuMy0zLjktMjcuNi0yLjYtMjUuNi0xNS4xLTI1LjYtMTUuMSwwLTEzLjgsMjcuOS0xNC45LDI3LjktMTQuOSwyMy4xLTIuMyw2OC40LTEuNiw3MS4yLDE4LjhoMzJjLTIuOS00MC4zLTUyLjgtNDYuMS04NC44LTQ2LjUtMjEuMi41LTQ0LjQsMS44LTYyLjcsMTMuOC0yMC42LDEzLjYtMTguNiw0MC42LTUuNyw1Mi44LDUsNC40LDEyLjcsMTAuNCwyOC4zLDEzLjMsNy4yLDEuMywxOSwzLjEsMzUuMSw0LjIsMCwwLDI1LjgsMS42LDMxLjMsMiwuMywwLC41LDAsLjgsMGgwYzguNi43LDI2LjksMi4xLDI4LjQsMTUuOCwxLjcsMTUuMS0yNC40LDE5LjUtNTEuMSwxOS41LTExLjcsMC0yMy42LS41LTM2LTQtMTAuNC0zLTE2LjQtOS4xLTE3LjQtMTkuM2gtMzEuN2MwLDQzLjQsNDkuMyw1MC4xLDgzLjcsNTAuMSwyMy41LS42LDQ4LjktMi4yLDY5LjItMTUuMiwyMi40LTE0LjcsMjAuMS00My4yLDUuMy01NloiLz4KICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik04MjYuMywxNjAuNWMwLDI2LjctMTcsNDIuNS00NS44LDQyLjVzLTQ1LjYtMTUuOC00NS42LTQyLjV2LTc2LjZoLTI5LjF2NzYuMWMwLDQyLjEsMjkuNSw3MCw3NC42LDcwczc0LjktMjcuNyw3NC45LTcwdi03Ni4xaC0yOS4xdjc2LjZaIi8+CiAgPC9nPgo8L3N2Zz4=" alt="Nebius" /></div>
         <div class="slide-content">
           <div class="stack">
             <h2 class="reveal delay-1">
@@ -2780,7 +2841,7 @@
       </section>
 
       <section class="slide" id="slide-5">
-        <div class="brand" aria-label="Nebius"><img src="NEBIUS(RGB).svg" alt="Nebius" /></div>
+        <div class="brand" aria-label="Nebius"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0iTkVCSVVTIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDExMzMuOSAzMTEuOCI+CiAgPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDI5LjAuMSwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDIuMS4wIEJ1aWxkIDE5MikgIC0tPgogIDxkZWZzPgogICAgPHN0eWxlPgogICAgICAuc3QwIHsKICAgICAgICBmaWxsOiAjMDUyYjQyOwogICAgICB9CgogICAgICAuc3QxIHsKICAgICAgICBmaWxsOiAjZTBmZjRmOwogICAgICB9CiAgICA8L3N0eWxlPgogIDwvZGVmcz4KICA8cGF0aCBjbGFzcz0ic3QxIiBkPSJNMTA1NS44LDBINzhDMzQuOSwwLDAsMzUuMiwwLDc4LjZ2MTU0LjZjMCw0My40LDM0LjksNzguNiw3OCw3OC42aDk3Ny44YzQzLjEsMCw3OC0zNS4yLDc4LTc4LjZWNzguNmMwLTQzLjQtMzQuOS03OC42LTc4LTc4LjZaIi8+CiAgPGc+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMjAzLjksMTg3LjdoMGwtMzYuNi04NC41Yy02LTEzLjctMTUuOC0yMS40LTI5LjctMjEuNHMtMjMuNCwxMS4zLTIzLjQsMjMuM2MwLDAsMTcuNS0yLjQsMjYuOCwxOC45bDM2LjYsODQuNWM2LDEzLjcsMTUuOCwyMS40LDI5LjcsMjEuNHMyMy40LTExLjMsMjMuNC0yMy4zYzAsMC0xNy41LDIuNC0yNi44LTE4LjlaIi8+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNODUuMiwxNDAuM3Y4Ny41aDI5LjF2LTEyMi43cy0yOS4xLDEuOC0yOS4xLDM1LjJaIi8+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMjMwLjcsMjA2LjdzMjkuMS0xLjgsMjkuMS0zNS4ydi04Ny41aC0yOS4xdjEyMi43WiIvPgogICAgPHBvbHlnb24gY2xhc3M9InN0MCIgcG9pbnRzPSIyODkuNyA4My45IDI4OS43IDgzLjkgMjg5LjcgMjI3LjkgMjg5LjcgMjI3LjkgNDM5LjIgMjI3LjkgNDM5LjIgMjAwLjYgMzE5IDIwMC42IDMxOSAxNjkuMyA0MjYuMiAxNjkuMyA0MjYuMiAxNDIuMSAzMTkgMTQyLjEgMzE5IDExMS4xIDQzOS4yIDExMS4xIDQzOS4yIDgzLjkgMzE5IDgzLjkgMjg5LjcgODMuOSIvPgogICAgPHBhdGggY2xhc3M9InN0MCIgZD0iTTU5Ni44LDE1Mi45aDBjNy44LTUuMiwxNC40LTE1LjEsMTQuNC0yOS44LDAtMzMuNS0zMi4xLTM5LjEtNTcuMS0zOS4zaC04NC45djE0NGg5My43YzQzLjIsMCw1Ny4zLTE2LjUsNTcuMy00MC43cy0xNS41LTMxLjgtMjMuNC0zNC4yWk00OTguNSwxMTEuMWg2MC44YzEzLjUsMCwyMy44LDQuNywyMy44LDE2LjlzLTExLjgsMTQuNy0xOS44LDE0LjhoLTY0Ljh2LTMxLjdaTTU2My4yLDIwMC42aDBzLTY0LjgsMC02NC44LDB2LTMyLjNoNjQuNGMxMi42LDAsMjcsMi43LDI3LDE2LjRzLTEzLjEsMTUuOS0yNi42LDE1LjlaIi8+CiAgICA8cmVjdCBjbGFzcz0ic3QwIiB4PSI2NDYuNiIgeT0iODMuOSIgd2lkdGg9IjI5LjMiIGhlaWdodD0iMTQ0Ii8+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMTAzOCwxNTguN2gwczAsMCwwLDBjLTE0LjMtMTEuNS0yNi42LTEyLjgtNTAtMTUuMmwtMi4xLS4yYy0yLjktLjItNDMuMi0zLjYtNDYuMy0zLjktMjcuNi0yLjYtMjUuNi0xNS4xLTI1LjYtMTUuMSwwLTEzLjgsMjcuOS0xNC45LDI3LjktMTQuOSwyMy4xLTIuMyw2OC40LTEuNiw3MS4yLDE4LjhoMzJjLTIuOS00MC4zLTUyLjgtNDYuMS04NC44LTQ2LjUtMjEuMi41LTQ0LjQsMS44LTYyLjcsMTMuOC0yMC42LDEzLjYtMTguNiw0MC42LTUuNyw1Mi44LDUsNC40LDEyLjcsMTAuNCwyOC4zLDEzLjMsNy4yLDEuMywxOSwzLjEsMzUuMSw0LjIsMCwwLDI1LjgsMS42LDMxLjMsMiwuMywwLC41LDAsLjgsMGgwYzguNi43LDI2LjksMi4xLDI4LjQsMTUuOCwxLjcsMTUuMS0yNC40LDE5LjUtNTEuMSwxOS41LTExLjcsMC0yMy42LS41LTM2LTQtMTAuNC0zLTE2LjQtOS4xLTE3LjQtMTkuM2gtMzEuN2MwLDQzLjQsNDkuMyw1MC4xLDgzLjcsNTAuMSwyMy41LS42LDQ4LjktMi4yLDY5LjItMTUuMiwyMi40LTE0LjcsMjAuMS00My4yLDUuMy01NloiLz4KICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik04MjYuMywxNjAuNWMwLDI2LjctMTcsNDIuNS00NS44LDQyLjVzLTQ1LjYtMTUuOC00NS42LTQyLjV2LTc2LjZoLTI5LjF2NzYuMWMwLDQyLjEsMjkuNSw3MCw3NC42LDcwczc0LjktMjcuNyw3NC45LTcwdi03Ni4xaC0yOS4xdjc2LjZaIi8+CiAgPC9nPgo8L3N2Zz4=" alt="Nebius" /></div>
         <div class="slide-content stack">
           <h2 class="section-heading reveal">From SFT to RLVR</h2>
           <p class="subhead reveal delay-1">
@@ -2818,7 +2879,7 @@
       </section>
 
       <section class="slide" id="slide-7">
-        <div class="brand" aria-label="Nebius"><img src="NEBIUS(RGB).svg" alt="Nebius" /></div>
+        <div class="brand" aria-label="Nebius"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0iTkVCSVVTIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDExMzMuOSAzMTEuOCI+CiAgPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDI5LjAuMSwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDIuMS4wIEJ1aWxkIDE5MikgIC0tPgogIDxkZWZzPgogICAgPHN0eWxlPgogICAgICAuc3QwIHsKICAgICAgICBmaWxsOiAjMDUyYjQyOwogICAgICB9CgogICAgICAuc3QxIHsKICAgICAgICBmaWxsOiAjZTBmZjRmOwogICAgICB9CiAgICA8L3N0eWxlPgogIDwvZGVmcz4KICA8cGF0aCBjbGFzcz0ic3QxIiBkPSJNMTA1NS44LDBINzhDMzQuOSwwLDAsMzUuMiwwLDc4LjZ2MTU0LjZjMCw0My40LDM0LjksNzguNiw3OCw3OC42aDk3Ny44YzQzLjEsMCw3OC0zNS4yLDc4LTc4LjZWNzguNmMwLTQzLjQtMzQuOS03OC42LTc4LTc4LjZaIi8+CiAgPGc+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMjAzLjksMTg3LjdoMGwtMzYuNi04NC41Yy02LTEzLjctMTUuOC0yMS40LTI5LjctMjEuNHMtMjMuNCwxMS4zLTIzLjQsMjMuM2MwLDAsMTcuNS0yLjQsMjYuOCwxOC45bDM2LjYsODQuNWM2LDEzLjcsMTUuOCwyMS40LDI5LjcsMjEuNHMyMy40LTExLjMsMjMuNC0yMy4zYzAsMC0xNy41LDIuNC0yNi44LTE4LjlaIi8+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNODUuMiwxNDAuM3Y4Ny41aDI5LjF2LTEyMi43cy0yOS4xLDEuOC0yOS4xLDM1LjJaIi8+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMjMwLjcsMjA2LjdzMjkuMS0xLjgsMjkuMS0zNS4ydi04Ny41aC0yOS4xdjEyMi43WiIvPgogICAgPHBvbHlnb24gY2xhc3M9InN0MCIgcG9pbnRzPSIyODkuNyA4My45IDI4OS43IDgzLjkgMjg5LjcgMjI3LjkgMjg5LjcgMjI3LjkgNDM5LjIgMjI3LjkgNDM5LjIgMjAwLjYgMzE5IDIwMC42IDMxOSAxNjkuMyA0MjYuMiAxNjkuMyA0MjYuMiAxNDIuMSAzMTkgMTQyLjEgMzE5IDExMS4xIDQzOS4yIDExMS4xIDQzOS4yIDgzLjkgMzE5IDgzLjkgMjg5LjcgODMuOSIvPgogICAgPHBhdGggY2xhc3M9InN0MCIgZD0iTTU5Ni44LDE1Mi45aDBjNy44LTUuMiwxNC40LTE1LjEsMTQuNC0yOS44LDAtMzMuNS0zMi4xLTM5LjEtNTcuMS0zOS4zaC04NC45djE0NGg5My43YzQzLjIsMCw1Ny4zLTE2LjUsNTcuMy00MC43cy0xNS41LTMxLjgtMjMuNC0zNC4yWk00OTguNSwxMTEuMWg2MC44YzEzLjUsMCwyMy44LDQuNywyMy44LDE2LjlzLTExLjgsMTQuNy0xOS44LDE0LjhoLTY0Ljh2LTMxLjdaTTU2My4yLDIwMC42aDBzLTY0LjgsMC02NC44LDB2LTMyLjNoNjQuNGMxMi42LDAsMjcsMi43LDI3LDE2LjRzLTEzLjEsMTUuOS0yNi42LDE1LjlaIi8+CiAgICA8cmVjdCBjbGFzcz0ic3QwIiB4PSI2NDYuNiIgeT0iODMuOSIgd2lkdGg9IjI5LjMiIGhlaWdodD0iMTQ0Ii8+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMTAzOCwxNTguN2gwczAsMCwwLDBjLTE0LjMtMTEuNS0yNi42LTEyLjgtNTAtMTUuMmwtMi4xLS4yYy0yLjktLjItNDMuMi0zLjYtNDYuMy0zLjktMjcuNi0yLjYtMjUuNi0xNS4xLTI1LjYtMTUuMSwwLTEzLjgsMjcuOS0xNC45LDI3LjktMTQuOSwyMy4xLTIuMyw2OC40LTEuNiw3MS4yLDE4LjhoMzJjLTIuOS00MC4zLTUyLjgtNDYuMS04NC44LTQ2LjUtMjEuMi41LTQ0LjQsMS44LTYyLjcsMTMuOC0yMC42LDEzLjYtMTguNiw0MC42LTUuNyw1Mi44LDUsNC40LDEyLjcsMTAuNCwyOC4zLDEzLjMsNy4yLDEuMywxOSwzLjEsMzUuMSw0LjIsMCwwLDI1LjgsMS42LDMxLjMsMiwuMywwLC41LDAsLjgsMGgwYzguNi43LDI2LjksMi4xLDI4LjQsMTUuOCwxLjcsMTUuMS0yNC40LDE5LjUtNTEuMSwxOS41LTExLjcsMC0yMy42LS41LTM2LTQtMTAuNC0zLTE2LjQtOS4xLTE3LjQtMTkuM2gtMzEuN2MwLDQzLjQsNDkuMyw1MC4xLDgzLjcsNTAuMSwyMy41LS42LDQ4LjktMi4yLDY5LjItMTUuMiwyMi40LTE0LjcsMjAuMS00My4yLDUuMy01NloiLz4KICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik04MjYuMywxNjAuNWMwLDI2LjctMTcsNDIuNS00NS44LDQyLjVzLTQ1LjYtMTUuOC00NS42LTQyLjV2LTc2LjZoLTI5LjF2NzYuMWMwLDQyLjEsMjkuNSw3MCw3NC42LDcwczc0LjktMjcuNyw3NC45LTcwdi03Ni4xaC0yOS4xdjc2LjZaIi8+CiAgPC9nPgo8L3N2Zz4=" alt="Nebius" /></div>
         <div class="slide-content stack">
           <h2 class="section-heading compact reveal">RLVR core algorithm: GRPO</h2>
           <p class="subhead reveal delay-1">Learn from the group, not one answer.</p>
@@ -2870,7 +2931,7 @@
       </section>
 
       <section class="slide" id="slide-8" data-hidden="true">
-        <div class="brand" aria-label="Nebius"><img src="NEBIUS(RGB).svg" alt="Nebius" /></div>
+        <div class="brand" aria-label="Nebius"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0iTkVCSVVTIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDExMzMuOSAzMTEuOCI+CiAgPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDI5LjAuMSwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDIuMS4wIEJ1aWxkIDE5MikgIC0tPgogIDxkZWZzPgogICAgPHN0eWxlPgogICAgICAuc3QwIHsKICAgICAgICBmaWxsOiAjMDUyYjQyOwogICAgICB9CgogICAgICAuc3QxIHsKICAgICAgICBmaWxsOiAjZTBmZjRmOwogICAgICB9CiAgICA8L3N0eWxlPgogIDwvZGVmcz4KICA8cGF0aCBjbGFzcz0ic3QxIiBkPSJNMTA1NS44LDBINzhDMzQuOSwwLDAsMzUuMiwwLDc4LjZ2MTU0LjZjMCw0My40LDM0LjksNzguNiw3OCw3OC42aDk3Ny44YzQzLjEsMCw3OC0zNS4yLDc4LTc4LjZWNzguNmMwLTQzLjQtMzQuOS03OC42LTc4LTc4LjZaIi8+CiAgPGc+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMjAzLjksMTg3LjdoMGwtMzYuNi04NC41Yy02LTEzLjctMTUuOC0yMS40LTI5LjctMjEuNHMtMjMuNCwxMS4zLTIzLjQsMjMuM2MwLDAsMTcuNS0yLjQsMjYuOCwxOC45bDM2LjYsODQuNWM2LDEzLjcsMTUuOCwyMS40LDI5LjcsMjEuNHMyMy40LTExLjMsMjMuNC0yMy4zYzAsMC0xNy41LDIuNC0yNi44LTE4LjlaIi8+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNODUuMiwxNDAuM3Y4Ny41aDI5LjF2LTEyMi43cy0yOS4xLDEuOC0yOS4xLDM1LjJaIi8+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMjMwLjcsMjA2LjdzMjkuMS0xLjgsMjkuMS0zNS4ydi04Ny41aC0yOS4xdjEyMi43WiIvPgogICAgPHBvbHlnb24gY2xhc3M9InN0MCIgcG9pbnRzPSIyODkuNyA4My45IDI4OS43IDgzLjkgMjg5LjcgMjI3LjkgMjg5LjcgMjI3LjkgNDM5LjIgMjI3LjkgNDM5LjIgMjAwLjYgMzE5IDIwMC42IDMxOSAxNjkuMyA0MjYuMiAxNjkuMyA0MjYuMiAxNDIuMSAzMTkgMTQyLjEgMzE5IDExMS4xIDQzOS4yIDExMS4xIDQzOS4yIDgzLjkgMzE5IDgzLjkgMjg5LjcgODMuOSIvPgogICAgPHBhdGggY2xhc3M9InN0MCIgZD0iTTU5Ni44LDE1Mi45aDBjNy44LTUuMiwxNC40LTE1LjEsMTQuNC0yOS44LDAtMzMuNS0zMi4xLTM5LjEtNTcuMS0zOS4zaC04NC45djE0NGg5My43YzQzLjIsMCw1Ny4zLTE2LjUsNTcuMy00MC43cy0xNS41LTMxLjgtMjMuNC0zNC4yWk00OTguNSwxMTEuMWg2MC44YzEzLjUsMCwyMy44LDQuNywyMy44LDE2LjlzLTExLjgsMTQuNy0xOS44LDE0LjhoLTY0Ljh2LTMxLjdaTTU2My4yLDIwMC42aDBzLTY0LjgsMC02NC44LDB2LTMyLjNoNjQuNGMxMi42LDAsMjcsMi43LDI3LDE2LjRzLTEzLjEsMTUuOS0yNi42LDE1LjlaIi8+CiAgICA8cmVjdCBjbGFzcz0ic3QwIiB4PSI2NDYuNiIgeT0iODMuOSIgd2lkdGg9IjI5LjMiIGhlaWdodD0iMTQ0Ii8+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMTAzOCwxNTguN2gwczAsMCwwLDBjLTE0LjMtMTEuNS0yNi42LTEyLjgtNTAtMTUuMmwtMi4xLS4yYy0yLjktLjItNDMuMi0zLjYtNDYuMy0zLjktMjcuNi0yLjYtMjUuNi0xNS4xLTI1LjYtMTUuMSwwLTEzLjgsMjcuOS0xNC45LDI3LjktMTQuOSwyMy4xLTIuMyw2OC40LTEuNiw3MS4yLDE4LjhoMzJjLTIuOS00MC4zLTUyLjgtNDYuMS04NC44LTQ2LjUtMjEuMi41LTQ0LjQsMS44LTYyLjcsMTMuOC0yMC42LDEzLjYtMTguNiw0MC42LTUuNyw1Mi44LDUsNC40LDEyLjcsMTAuNCwyOC4zLDEzLjMsNy4yLDEuMywxOSwzLjEsMzUuMSw0LjIsMCwwLDI1LjgsMS42LDMxLjMsMiwuMywwLC41LDAsLjgsMGgwYzguNi43LDI2LjksMi4xLDI4LjQsMTUuOCwxLjcsMTUuMS0yNC40LDE5LjUtNTEuMSwxOS41LTExLjcsMC0yMy42LS41LTM2LTQtMTAuNC0zLTE2LjQtOS4xLTE3LjQtMTkuM2gtMzEuN2MwLDQzLjQsNDkuMyw1MC4xLDgzLjcsNTAuMSwyMy41LS42LDQ4LjktMi4yLDY5LjItMTUuMiwyMi40LTE0LjcsMjAuMS00My4yLDUuMy01NloiLz4KICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik04MjYuMywxNjAuNWMwLDI2LjctMTcsNDIuNS00NS44LDQyLjVzLTQ1LjYtMTUuOC00NS42LTQyLjV2LTc2LjZoLTI5LjF2NzYuMWMwLDQyLjEsMjkuNSw3MCw3NC42LDcwczc0LjktMjcuNyw3NC45LTcwdi03Ni4xaC0yOS4xdjc2LjZaIi8+CiAgPC9nPgo8L3N2Zz4=" alt="Nebius" /></div>
         <div class="slide-content stack">
           <h2 class="section-heading compact reveal">The Rollout Data Contract</h2>
           <p class="subhead reveal delay-1">
@@ -2911,7 +2972,7 @@
       </section>
 
       <section class="slide" id="slide-6">
-        <div class="brand" aria-label="Nebius"><img src="NEBIUS(RGB).svg" alt="Nebius" /></div>
+        <div class="brand" aria-label="Nebius"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0iTkVCSVVTIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDExMzMuOSAzMTEuOCI+CiAgPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDI5LjAuMSwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDIuMS4wIEJ1aWxkIDE5MikgIC0tPgogIDxkZWZzPgogICAgPHN0eWxlPgogICAgICAuc3QwIHsKICAgICAgICBmaWxsOiAjMDUyYjQyOwogICAgICB9CgogICAgICAuc3QxIHsKICAgICAgICBmaWxsOiAjZTBmZjRmOwogICAgICB9CiAgICA8L3N0eWxlPgogIDwvZGVmcz4KICA8cGF0aCBjbGFzcz0ic3QxIiBkPSJNMTA1NS44LDBINzhDMzQuOSwwLDAsMzUuMiwwLDc4LjZ2MTU0LjZjMCw0My40LDM0LjksNzguNiw3OCw3OC42aDk3Ny44YzQzLjEsMCw3OC0zNS4yLDc4LTc4LjZWNzguNmMwLTQzLjQtMzQuOS03OC42LTc4LTc4LjZaIi8+CiAgPGc+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMjAzLjksMTg3LjdoMGwtMzYuNi04NC41Yy02LTEzLjctMTUuOC0yMS40LTI5LjctMjEuNHMtMjMuNCwxMS4zLTIzLjQsMjMuM2MwLDAsMTcuNS0yLjQsMjYuOCwxOC45bDM2LjYsODQuNWM2LDEzLjcsMTUuOCwyMS40LDI5LjcsMjEuNHMyMy40LTExLjMsMjMuNC0yMy4zYzAsMC0xNy41LDIuNC0yNi44LTE4LjlaIi8+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNODUuMiwxNDAuM3Y4Ny41aDI5LjF2LTEyMi43cy0yOS4xLDEuOC0yOS4xLDM1LjJaIi8+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMjMwLjcsMjA2LjdzMjkuMS0xLjgsMjkuMS0zNS4ydi04Ny41aC0yOS4xdjEyMi43WiIvPgogICAgPHBvbHlnb24gY2xhc3M9InN0MCIgcG9pbnRzPSIyODkuNyA4My45IDI4OS43IDgzLjkgMjg5LjcgMjI3LjkgMjg5LjcgMjI3LjkgNDM5LjIgMjI3LjkgNDM5LjIgMjAwLjYgMzE5IDIwMC42IDMxOSAxNjkuMyA0MjYuMiAxNjkuMyA0MjYuMiAxNDIuMSAzMTkgMTQyLjEgMzE5IDExMS4xIDQzOS4yIDExMS4xIDQzOS4yIDgzLjkgMzE5IDgzLjkgMjg5LjcgODMuOSIvPgogICAgPHBhdGggY2xhc3M9InN0MCIgZD0iTTU5Ni44LDE1Mi45aDBjNy44LTUuMiwxNC40LTE1LjEsMTQuNC0yOS44LDAtMzMuNS0zMi4xLTM5LjEtNTcuMS0zOS4zaC04NC45djE0NGg5My43YzQzLjIsMCw1Ny4zLTE2LjUsNTcuMy00MC43cy0xNS41LTMxLjgtMjMuNC0zNC4yWk00OTguNSwxMTEuMWg2MC44YzEzLjUsMCwyMy44LDQuNywyMy44LDE2LjlzLTExLjgsMTQuNy0xOS44LDE0LjhoLTY0Ljh2LTMxLjdaTTU2My4yLDIwMC42aDBzLTY0LjgsMC02NC44LDB2LTMyLjNoNjQuNGMxMi42LDAsMjcsMi43LDI3LDE2LjRzLTEzLjEsMTUuOS0yNi42LDE1LjlaIi8+CiAgICA8cmVjdCBjbGFzcz0ic3QwIiB4PSI2NDYuNiIgeT0iODMuOSIgd2lkdGg9IjI5LjMiIGhlaWdodD0iMTQ0Ii8+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMTAzOCwxNTguN2gwczAsMCwwLDBjLTE0LjMtMTEuNS0yNi42LTEyLjgtNTAtMTUuMmwtMi4xLS4yYy0yLjktLjItNDMuMi0zLjYtNDYuMy0zLjktMjcuNi0yLjYtMjUuNi0xNS4xLTI1LjYtMTUuMSwwLTEzLjgsMjcuOS0xNC45LDI3LjktMTQuOSwyMy4xLTIuMyw2OC40LTEuNiw3MS4yLDE4LjhoMzJjLTIuOS00MC4zLTUyLjgtNDYuMS04NC44LTQ2LjUtMjEuMi41LTQ0LjQsMS44LTYyLjcsMTMuOC0yMC42LDEzLjYtMTguNiw0MC42LTUuNyw1Mi44LDUsNC40LDEyLjcsMTAuNCwyOC4zLDEzLjMsNy4yLDEuMywxOSwzLjEsMzUuMSw0LjIsMCwwLDI1LjgsMS42LDMxLjMsMiwuMywwLC41LDAsLjgsMGgwYzguNi43LDI2LjksMi4xLDI4LjQsMTUuOCwxLjcsMTUuMS0yNC40LDE5LjUtNTEuMSwxOS41LTExLjcsMC0yMy42LS41LTM2LTQtMTAuNC0zLTE2LjQtOS4xLTE3LjQtMTkuM2gtMzEuN2MwLDQzLjQsNDkuMyw1MC4xLDgzLjcsNTAuMSwyMy41LS42LDQ4LjktMi4yLDY5LjItMTUuMiwyMi40LTE0LjcsMjAuMS00My4yLDUuMy01NloiLz4KICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik04MjYuMywxNjAuNWMwLDI2LjctMTcsNDIuNS00NS44LDQyLjVzLTQ1LjYtMTUuOC00NS42LTQyLjV2LTc2LjZoLTI5LjF2NzYuMWMwLDQyLjEsMjkuNSw3MCw3NC42LDcwczc0LjktMjcuNyw3NC45LTcwdi03Ni4xaC0yOS4xdjc2LjZaIi8+CiAgPC9nPgo8L3N2Zz4=" alt="Nebius" /></div>
         <div class="slide-content two-col">
           <div class="stack">
             <h2 class="section-heading compact reveal">RL Training Loop</h2>
@@ -2954,7 +3015,7 @@
       </section>
 
       <section class="slide" id="slide-9" data-fragments="1">
-        <div class="brand" aria-label="Nebius"><img src="NEBIUS(RGB).svg" alt="Nebius" /></div>
+        <div class="brand" aria-label="Nebius"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0iTkVCSVVTIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDExMzMuOSAzMTEuOCI+CiAgPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDI5LjAuMSwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDIuMS4wIEJ1aWxkIDE5MikgIC0tPgogIDxkZWZzPgogICAgPHN0eWxlPgogICAgICAuc3QwIHsKICAgICAgICBmaWxsOiAjMDUyYjQyOwogICAgICB9CgogICAgICAuc3QxIHsKICAgICAgICBmaWxsOiAjZTBmZjRmOwogICAgICB9CiAgICA8L3N0eWxlPgogIDwvZGVmcz4KICA8cGF0aCBjbGFzcz0ic3QxIiBkPSJNMTA1NS44LDBINzhDMzQuOSwwLDAsMzUuMiwwLDc4LjZ2MTU0LjZjMCw0My40LDM0LjksNzguNiw3OCw3OC42aDk3Ny44YzQzLjEsMCw3OC0zNS4yLDc4LTc4LjZWNzguNmMwLTQzLjQtMzQuOS03OC42LTc4LTc4LjZaIi8+CiAgPGc+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMjAzLjksMTg3LjdoMGwtMzYuNi04NC41Yy02LTEzLjctMTUuOC0yMS40LTI5LjctMjEuNHMtMjMuNCwxMS4zLTIzLjQsMjMuM2MwLDAsMTcuNS0yLjQsMjYuOCwxOC45bDM2LjYsODQuNWM2LDEzLjcsMTUuOCwyMS40LDI5LjcsMjEuNHMyMy40LTExLjMsMjMuNC0yMy4zYzAsMC0xNy41LDIuNC0yNi44LTE4LjlaIi8+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNODUuMiwxNDAuM3Y4Ny41aDI5LjF2LTEyMi43cy0yOS4xLDEuOC0yOS4xLDM1LjJaIi8+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMjMwLjcsMjA2LjdzMjkuMS0xLjgsMjkuMS0zNS4ydi04Ny41aC0yOS4xdjEyMi43WiIvPgogICAgPHBvbHlnb24gY2xhc3M9InN0MCIgcG9pbnRzPSIyODkuNyA4My45IDI4OS43IDgzLjkgMjg5LjcgMjI3LjkgMjg5LjcgMjI3LjkgNDM5LjIgMjI3LjkgNDM5LjIgMjAwLjYgMzE5IDIwMC42IDMxOSAxNjkuMyA0MjYuMiAxNjkuMyA0MjYuMiAxNDIuMSAzMTkgMTQyLjEgMzE5IDExMS4xIDQzOS4yIDExMS4xIDQzOS4yIDgzLjkgMzE5IDgzLjkgMjg5LjcgODMuOSIvPgogICAgPHBhdGggY2xhc3M9InN0MCIgZD0iTTU5Ni44LDE1Mi45aDBjNy44LTUuMiwxNC40LTE1LjEsMTQuNC0yOS44LDAtMzMuNS0zMi4xLTM5LjEtNTcuMS0zOS4zaC04NC45djE0NGg5My43YzQzLjIsMCw1Ny4zLTE2LjUsNTcuMy00MC43cy0xNS41LTMxLjgtMjMuNC0zNC4yWk00OTguNSwxMTEuMWg2MC44YzEzLjUsMCwyMy44LDQuNywyMy44LDE2LjlzLTExLjgsMTQuNy0xOS44LDE0LjhoLTY0Ljh2LTMxLjdaTTU2My4yLDIwMC42aDBzLTY0LjgsMC02NC44LDB2LTMyLjNoNjQuNGMxMi42LDAsMjcsMi43LDI3LDE2LjRzLTEzLjEsMTUuOS0yNi42LDE1LjlaIi8+CiAgICA8cmVjdCBjbGFzcz0ic3QwIiB4PSI2NDYuNiIgeT0iODMuOSIgd2lkdGg9IjI5LjMiIGhlaWdodD0iMTQ0Ii8+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMTAzOCwxNTguN2gwczAsMCwwLDBjLTE0LjMtMTEuNS0yNi42LTEyLjgtNTAtMTUuMmwtMi4xLS4yYy0yLjktLjItNDMuMi0zLjYtNDYuMy0zLjktMjcuNi0yLjYtMjUuNi0xNS4xLTI1LjYtMTUuMSwwLTEzLjgsMjcuOS0xNC45LDI3LjktMTQuOSwyMy4xLTIuMyw2OC40LTEuNiw3MS4yLDE4LjhoMzJjLTIuOS00MC4zLTUyLjgtNDYuMS04NC44LTQ2LjUtMjEuMi41LTQ0LjQsMS44LTYyLjcsMTMuOC0yMC42LDEzLjYtMTguNiw0MC42LTUuNyw1Mi44LDUsNC40LDEyLjcsMTAuNCwyOC4zLDEzLjMsNy4yLDEuMywxOSwzLjEsMzUuMSw0LjIsMCwwLDI1LjgsMS42LDMxLjMsMiwuMywwLC41LDAsLjgsMGgwYzguNi43LDI2LjksMi4xLDI4LjQsMTUuOCwxLjcsMTUuMS0yNC40LDE5LjUtNTEuMSwxOS41LTExLjcsMC0yMy42LS41LTM2LTQtMTAuNC0zLTE2LjQtOS4xLTE3LjQtMTkuM2gtMzEuN2MwLDQzLjQsNDkuMyw1MC4xLDgzLjcsNTAuMSwyMy41LS42LDQ4LjktMi4yLDY5LjItMTUuMiwyMi40LTE0LjcsMjAuMS00My4yLDUuMy01NloiLz4KICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik04MjYuMywxNjAuNWMwLDI2LjctMTcsNDIuNS00NS44LDQyLjVzLTQ1LjYtMTUuOC00NS42LTQyLjV2LTc2LjZoLTI5LjF2NzYuMWMwLDQyLjEsMjkuNSw3MCw3NC42LDcwczc0LjktMjcuNyw3NC45LTcwdi03Ni4xaC0yOS4xdjc2LjZaIi8+CiAgPC9nPgo8L3N2Zz4=" alt="Nebius" /></div>
         <div class="slide-content stack">
           <h2 class="section-heading compact reveal">Naive RL Loop</h2>
           <p class="subhead reveal delay-1">
@@ -3011,7 +3072,7 @@
       </section>
 
       <section class="slide dark" id="slide-10">
-        <div class="brand" aria-label="Nebius"><img src="NEBIUS(RGB).svg" alt="Nebius" /></div>
+        <div class="brand" aria-label="Nebius"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0iTkVCSVVTIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDExMzMuOSAzMTEuOCI+CiAgPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDI5LjAuMSwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDIuMS4wIEJ1aWxkIDE5MikgIC0tPgogIDxkZWZzPgogICAgPHN0eWxlPgogICAgICAuc3QwIHsKICAgICAgICBmaWxsOiAjMDUyYjQyOwogICAgICB9CgogICAgICAuc3QxIHsKICAgICAgICBmaWxsOiAjZTBmZjRmOwogICAgICB9CiAgICA8L3N0eWxlPgogIDwvZGVmcz4KICA8cGF0aCBjbGFzcz0ic3QxIiBkPSJNMTA1NS44LDBINzhDMzQuOSwwLDAsMzUuMiwwLDc4LjZ2MTU0LjZjMCw0My40LDM0LjksNzguNiw3OCw3OC42aDk3Ny44YzQzLjEsMCw3OC0zNS4yLDc4LTc4LjZWNzguNmMwLTQzLjQtMzQuOS03OC42LTc4LTc4LjZaIi8+CiAgPGc+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMjAzLjksMTg3LjdoMGwtMzYuNi04NC41Yy02LTEzLjctMTUuOC0yMS40LTI5LjctMjEuNHMtMjMuNCwxMS4zLTIzLjQsMjMuM2MwLDAsMTcuNS0yLjQsMjYuOCwxOC45bDM2LjYsODQuNWM2LDEzLjcsMTUuOCwyMS40LDI5LjcsMjEuNHMyMy40LTExLjMsMjMuNC0yMy4zYzAsMC0xNy41LDIuNC0yNi44LTE4LjlaIi8+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNODUuMiwxNDAuM3Y4Ny41aDI5LjF2LTEyMi43cy0yOS4xLDEuOC0yOS4xLDM1LjJaIi8+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMjMwLjcsMjA2LjdzMjkuMS0xLjgsMjkuMS0zNS4ydi04Ny41aC0yOS4xdjEyMi43WiIvPgogICAgPHBvbHlnb24gY2xhc3M9InN0MCIgcG9pbnRzPSIyODkuNyA4My45IDI4OS43IDgzLjkgMjg5LjcgMjI3LjkgMjg5LjcgMjI3LjkgNDM5LjIgMjI3LjkgNDM5LjIgMjAwLjYgMzE5IDIwMC42IDMxOSAxNjkuMyA0MjYuMiAxNjkuMyA0MjYuMiAxNDIuMSAzMTkgMTQyLjEgMzE5IDExMS4xIDQzOS4yIDExMS4xIDQzOS4yIDgzLjkgMzE5IDgzLjkgMjg5LjcgODMuOSIvPgogICAgPHBhdGggY2xhc3M9InN0MCIgZD0iTTU5Ni44LDE1Mi45aDBjNy44LTUuMiwxNC40LTE1LjEsMTQuNC0yOS44LDAtMzMuNS0zMi4xLTM5LjEtNTcuMS0zOS4zaC04NC45djE0NGg5My43YzQzLjIsMCw1Ny4zLTE2LjUsNTcuMy00MC43cy0xNS41LTMxLjgtMjMuNC0zNC4yWk00OTguNSwxMTEuMWg2MC44YzEzLjUsMCwyMy44LDQuNywyMy44LDE2LjlzLTExLjgsMTQuNy0xOS44LDE0LjhoLTY0Ljh2LTMxLjdaTTU2My4yLDIwMC42aDBzLTY0LjgsMC02NC44LDB2LTMyLjNoNjQuNGMxMi42LDAsMjcsMi43LDI3LDE2LjRzLTEzLjEsMTUuOS0yNi42LDE1LjlaIi8+CiAgICA8cmVjdCBjbGFzcz0ic3QwIiB4PSI2NDYuNiIgeT0iODMuOSIgd2lkdGg9IjI5LjMiIGhlaWdodD0iMTQ0Ii8+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMTAzOCwxNTguN2gwczAsMCwwLDBjLTE0LjMtMTEuNS0yNi42LTEyLjgtNTAtMTUuMmwtMi4xLS4yYy0yLjktLjItNDMuMi0zLjYtNDYuMy0zLjktMjcuNi0yLjYtMjUuNi0xNS4xLTI1LjYtMTUuMSwwLTEzLjgsMjcuOS0xNC45LDI3LjktMTQuOSwyMy4xLTIuMyw2OC40LTEuNiw3MS4yLDE4LjhoMzJjLTIuOS00MC4zLTUyLjgtNDYuMS04NC44LTQ2LjUtMjEuMi41LTQ0LjQsMS44LTYyLjcsMTMuOC0yMC42LDEzLjYtMTguNiw0MC42LTUuNyw1Mi44LDUsNC40LDEyLjcsMTAuNCwyOC4zLDEzLjMsNy4yLDEuMywxOSwzLjEsMzUuMSw0LjIsMCwwLDI1LjgsMS42LDMxLjMsMiwuMywwLC41LDAsLjgsMGgwYzguNi43LDI2LjksMi4xLDI4LjQsMTUuOCwxLjcsMTUuMS0yNC40LDE5LjUtNTEuMSwxOS41LTExLjcsMC0yMy42LS41LTM2LTQtMTAuNC0zLTE2LjQtOS4xLTE3LjQtMTkuM2gtMzEuN2MwLDQzLjQsNDkuMyw1MC4xLDgzLjcsNTAuMSwyMy41LS42LDQ4LjktMi4yLDY5LjItMTUuMiwyMi40LTE0LjcsMjAuMS00My4yLDUuMy01NloiLz4KICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik04MjYuMywxNjAuNWMwLDI2LjctMTcsNDIuNS00NS44LDQyLjVzLTQ1LjYtMTUuOC00NS42LTQyLjV2LTc2LjZoLTI5LjF2NzYuMWMwLDQyLjEsMjkuNSw3MCw3NC42LDcwczc0LjktMjcuNyw3NC45LTcwdi03Ni4xaC0yOS4xdjc2LjZaIi8+CiAgPC9nPgo8L3N2Zz4=" alt="Nebius" /></div>
         <div class="slide-content bottleneck-layout">
           <div class="stack">
             <h2 class="section-heading compact reveal">Why Naive Breaks</h2>
@@ -3073,7 +3134,7 @@
       </section>
 
       <section class="slide" id="slide-11">
-        <div class="brand" aria-label="Nebius"><img src="NEBIUS(RGB).svg" alt="Nebius" /></div>
+        <div class="brand" aria-label="Nebius"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0iTkVCSVVTIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDExMzMuOSAzMTEuOCI+CiAgPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDI5LjAuMSwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDIuMS4wIEJ1aWxkIDE5MikgIC0tPgogIDxkZWZzPgogICAgPHN0eWxlPgogICAgICAuc3QwIHsKICAgICAgICBmaWxsOiAjMDUyYjQyOwogICAgICB9CgogICAgICAuc3QxIHsKICAgICAgICBmaWxsOiAjZTBmZjRmOwogICAgICB9CiAgICA8L3N0eWxlPgogIDwvZGVmcz4KICA8cGF0aCBjbGFzcz0ic3QxIiBkPSJNMTA1NS44LDBINzhDMzQuOSwwLDAsMzUuMiwwLDc4LjZ2MTU0LjZjMCw0My40LDM0LjksNzguNiw3OCw3OC42aDk3Ny44YzQzLjEsMCw3OC0zNS4yLDc4LTc4LjZWNzguNmMwLTQzLjQtMzQuOS03OC42LTc4LTc4LjZaIi8+CiAgPGc+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMjAzLjksMTg3LjdoMGwtMzYuNi04NC41Yy02LTEzLjctMTUuOC0yMS40LTI5LjctMjEuNHMtMjMuNCwxMS4zLTIzLjQsMjMuM2MwLDAsMTcuNS0yLjQsMjYuOCwxOC45bDM2LjYsODQuNWM2LDEzLjcsMTUuOCwyMS40LDI5LjcsMjEuNHMyMy40LTExLjMsMjMuNC0yMy4zYzAsMC0xNy41LDIuNC0yNi44LTE4LjlaIi8+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNODUuMiwxNDAuM3Y4Ny41aDI5LjF2LTEyMi43cy0yOS4xLDEuOC0yOS4xLDM1LjJaIi8+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMjMwLjcsMjA2LjdzMjkuMS0xLjgsMjkuMS0zNS4ydi04Ny41aC0yOS4xdjEyMi43WiIvPgogICAgPHBvbHlnb24gY2xhc3M9InN0MCIgcG9pbnRzPSIyODkuNyA4My45IDI4OS43IDgzLjkgMjg5LjcgMjI3LjkgMjg5LjcgMjI3LjkgNDM5LjIgMjI3LjkgNDM5LjIgMjAwLjYgMzE5IDIwMC42IDMxOSAxNjkuMyA0MjYuMiAxNjkuMyA0MjYuMiAxNDIuMSAzMTkgMTQyLjEgMzE5IDExMS4xIDQzOS4yIDExMS4xIDQzOS4yIDgzLjkgMzE5IDgzLjkgMjg5LjcgODMuOSIvPgogICAgPHBhdGggY2xhc3M9InN0MCIgZD0iTTU5Ni44LDE1Mi45aDBjNy44LTUuMiwxNC40LTE1LjEsMTQuNC0yOS44LDAtMzMuNS0zMi4xLTM5LjEtNTcuMS0zOS4zaC04NC45djE0NGg5My43YzQzLjIsMCw1Ny4zLTE2LjUsNTcuMy00MC43cy0xNS41LTMxLjgtMjMuNC0zNC4yWk00OTguNSwxMTEuMWg2MC44YzEzLjUsMCwyMy44LDQuNywyMy44LDE2LjlzLTExLjgsMTQuNy0xOS44LDE0LjhoLTY0Ljh2LTMxLjdaTTU2My4yLDIwMC42aDBzLTY0LjgsMC02NC44LDB2LTMyLjNoNjQuNGMxMi42LDAsMjcsMi43LDI3LDE2LjRzLTEzLjEsMTUuOS0yNi42LDE1LjlaIi8+CiAgICA8cmVjdCBjbGFzcz0ic3QwIiB4PSI2NDYuNiIgeT0iODMuOSIgd2lkdGg9IjI5LjMiIGhlaWdodD0iMTQ0Ii8+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMTAzOCwxNTguN2gwczAsMCwwLDBjLTE0LjMtMTEuNS0yNi42LTEyLjgtNTAtMTUuMmwtMi4xLS4yYy0yLjktLjItNDMuMi0zLjYtNDYuMy0zLjktMjcuNi0yLjYtMjUuNi0xNS4xLTI1LjYtMTUuMSwwLTEzLjgsMjcuOS0xNC45LDI3LjktMTQuOSwyMy4xLTIuMyw2OC40LTEuNiw3MS4yLDE4LjhoMzJjLTIuOS00MC4zLTUyLjgtNDYuMS04NC44LTQ2LjUtMjEuMi41LTQ0LjQsMS44LTYyLjcsMTMuOC0yMC42LDEzLjYtMTguNiw0MC42LTUuNyw1Mi44LDUsNC40LDEyLjcsMTAuNCwyOC4zLDEzLjMsNy4yLDEuMywxOSwzLjEsMzUuMSw0LjIsMCwwLDI1LjgsMS42LDMxLjMsMiwuMywwLC41LDAsLjgsMGgwYzguNi43LDI2LjksMi4xLDI4LjQsMTUuOCwxLjcsMTUuMS0yNC40LDE5LjUtNTEuMSwxOS41LTExLjcsMC0yMy42LS41LTM2LTQtMTAuNC0zLTE2LjQtOS4xLTE3LjQtMTkuM2gtMzEuN2MwLDQzLjQsNDkuMyw1MC4xLDgzLjcsNTAuMSwyMy41LS42LDQ4LjktMi4yLDY5LjItMTUuMiwyMi40LTE0LjcsMjAuMS00My4yLDUuMy01NloiLz4KICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik04MjYuMywxNjAuNWMwLDI2LjctMTcsNDIuNS00NS44LDQyLjVzLTQ1LjYtMTUuOC00NS42LTQyLjV2LTc2LjZoLTI5LjF2NzYuMWMwLDQyLjEsMjkuNSw3MCw3NC42LDcwczc0LjktMjcuNyw3NC45LTcwdi03Ni4xaC0yOS4xdjc2LjZaIi8+CiAgPC9nPgo8L3N2Zz4=" alt="Nebius" /></div>
         <div class="slide-content stack">
           <h2 class="section-heading compact reveal">Sync Loop: Keep vLLM Alive</h2>
           <p class="subhead reveal delay-1">
@@ -3111,7 +3172,7 @@
       </section>
 
       <section class="slide sync-needs-light" id="slide-12">
-        <div class="brand" aria-label="Nebius"><img src="NEBIUS(RGB).svg" alt="Nebius" /></div>
+        <div class="brand" aria-label="Nebius"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0iTkVCSVVTIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDExMzMuOSAzMTEuOCI+CiAgPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDI5LjAuMSwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDIuMS4wIEJ1aWxkIDE5MikgIC0tPgogIDxkZWZzPgogICAgPHN0eWxlPgogICAgICAuc3QwIHsKICAgICAgICBmaWxsOiAjMDUyYjQyOwogICAgICB9CgogICAgICAuc3QxIHsKICAgICAgICBmaWxsOiAjZTBmZjRmOwogICAgICB9CiAgICA8L3N0eWxlPgogIDwvZGVmcz4KICA8cGF0aCBjbGFzcz0ic3QxIiBkPSJNMTA1NS44LDBINzhDMzQuOSwwLDAsMzUuMiwwLDc4LjZ2MTU0LjZjMCw0My40LDM0LjksNzguNiw3OCw3OC42aDk3Ny44YzQzLjEsMCw3OC0zNS4yLDc4LTc4LjZWNzguNmMwLTQzLjQtMzQuOS03OC42LTc4LTc4LjZaIi8+CiAgPGc+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMjAzLjksMTg3LjdoMGwtMzYuNi04NC41Yy02LTEzLjctMTUuOC0yMS40LTI5LjctMjEuNHMtMjMuNCwxMS4zLTIzLjQsMjMuM2MwLDAsMTcuNS0yLjQsMjYuOCwxOC45bDM2LjYsODQuNWM2LDEzLjcsMTUuOCwyMS40LDI5LjcsMjEuNHMyMy40LTExLjMsMjMuNC0yMy4zYzAsMC0xNy41LDIuNC0yNi44LTE4LjlaIi8+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNODUuMiwxNDAuM3Y4Ny41aDI5LjF2LTEyMi43cy0yOS4xLDEuOC0yOS4xLDM1LjJaIi8+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMjMwLjcsMjA2LjdzMjkuMS0xLjgsMjkuMS0zNS4ydi04Ny41aC0yOS4xdjEyMi43WiIvPgogICAgPHBvbHlnb24gY2xhc3M9InN0MCIgcG9pbnRzPSIyODkuNyA4My45IDI4OS43IDgzLjkgMjg5LjcgMjI3LjkgMjg5LjcgMjI3LjkgNDM5LjIgMjI3LjkgNDM5LjIgMjAwLjYgMzE5IDIwMC42IDMxOSAxNjkuMyA0MjYuMiAxNjkuMyA0MjYuMiAxNDIuMSAzMTkgMTQyLjEgMzE5IDExMS4xIDQzOS4yIDExMS4xIDQzOS4yIDgzLjkgMzE5IDgzLjkgMjg5LjcgODMuOSIvPgogICAgPHBhdGggY2xhc3M9InN0MCIgZD0iTTU5Ni44LDE1Mi45aDBjNy44LTUuMiwxNC40LTE1LjEsMTQuNC0yOS44LDAtMzMuNS0zMi4xLTM5LjEtNTcuMS0zOS4zaC04NC45djE0NGg5My43YzQzLjIsMCw1Ny4zLTE2LjUsNTcuMy00MC43cy0xNS41LTMxLjgtMjMuNC0zNC4yWk00OTguNSwxMTEuMWg2MC44YzEzLjUsMCwyMy44LDQuNywyMy44LDE2LjlzLTExLjgsMTQuNy0xOS44LDE0LjhoLTY0Ljh2LTMxLjdaTTU2My4yLDIwMC42aDBzLTY0LjgsMC02NC44LDB2LTMyLjNoNjQuNGMxMi42LDAsMjcsMi43LDI3LDE2LjRzLTEzLjEsMTUuOS0yNi42LDE1LjlaIi8+CiAgICA8cmVjdCBjbGFzcz0ic3QwIiB4PSI2NDYuNiIgeT0iODMuOSIgd2lkdGg9IjI5LjMiIGhlaWdodD0iMTQ0Ii8+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMTAzOCwxNTguN2gwczAsMCwwLDBjLTE0LjMtMTEuNS0yNi42LTEyLjgtNTAtMTUuMmwtMi4xLS4yYy0yLjktLjItNDMuMi0zLjYtNDYuMy0zLjktMjcuNi0yLjYtMjUuNi0xNS4xLTI1LjYtMTUuMSwwLTEzLjgsMjcuOS0xNC45LDI3LjktMTQuOSwyMy4xLTIuMyw2OC40LTEuNiw3MS4yLDE4LjhoMzJjLTIuOS00MC4zLTUyLjgtNDYuMS04NC44LTQ2LjUtMjEuMi41LTQ0LjQsMS44LTYyLjcsMTMuOC0yMC42LDEzLjYtMTguNiw0MC42LTUuNyw1Mi44LDUsNC40LDEyLjcsMTAuNCwyOC4zLDEzLjMsNy4yLDEuMywxOSwzLjEsMzUuMSw0LjIsMCwwLDI1LjgsMS42LDMxLjMsMiwuMywwLC41LDAsLjgsMGgwYzguNi43LDI2LjksMi4xLDI4LjQsMTUuOCwxLjcsMTUuMS0yNC40LDE5LjUtNTEuMSwxOS41LTExLjcsMC0yMy42LS41LTM2LTQtMTAuNC0zLTE2LjQtOS4xLTE3LjQtMTkuM2gtMzEuN2MwLDQzLjQsNDkuMyw1MC4xLDgzLjcsNTAuMSwyMy41LS42LDQ4LjktMi4yLDY5LjItMTUuMiwyMi40LTE0LjcsMjAuMS00My4yLDUuMy01NloiLz4KICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik04MjYuMywxNjAuNWMwLDI2LjctMTcsNDIuNS00NS44LDQyLjVzLTQ1LjYtMTUuOC00NS42LTQyLjV2LTc2LjZoLTI5LjF2NzYuMWMwLDQyLjEsMjkuNSw3MCw3NC42LDcwczc0LjktMjcuNyw3NC45LTcwdi03Ni4xaC0yOS4xdjc2LjZaIi8+CiAgPC9nPgo8L3N2Zz4=" alt="Nebius" /></div>
         <div class="slide-content vllm-sync-layout">
           <div class="stack">
             <h2 class="section-heading compact reveal">What vLLM Needs in the Sync World</h2>
@@ -3161,7 +3222,7 @@
       </section>
 
       <section class="slide" id="slide-13">
-        <div class="brand" aria-label="Nebius"><img src="NEBIUS(RGB).svg" alt="Nebius" /></div>
+        <div class="brand" aria-label="Nebius"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0iTkVCSVVTIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDExMzMuOSAzMTEuOCI+CiAgPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDI5LjAuMSwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDIuMS4wIEJ1aWxkIDE5MikgIC0tPgogIDxkZWZzPgogICAgPHN0eWxlPgogICAgICAuc3QwIHsKICAgICAgICBmaWxsOiAjMDUyYjQyOwogICAgICB9CgogICAgICAuc3QxIHsKICAgICAgICBmaWxsOiAjZTBmZjRmOwogICAgICB9CiAgICA8L3N0eWxlPgogIDwvZGVmcz4KICA8cGF0aCBjbGFzcz0ic3QxIiBkPSJNMTA1NS44LDBINzhDMzQuOSwwLDAsMzUuMiwwLDc4LjZ2MTU0LjZjMCw0My40LDM0LjksNzguNiw3OCw3OC42aDk3Ny44YzQzLjEsMCw3OC0zNS4yLDc4LTc4LjZWNzguNmMwLTQzLjQtMzQuOS03OC42LTc4LTc4LjZaIi8+CiAgPGc+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMjAzLjksMTg3LjdoMGwtMzYuNi04NC41Yy02LTEzLjctMTUuOC0yMS40LTI5LjctMjEuNHMtMjMuNCwxMS4zLTIzLjQsMjMuM2MwLDAsMTcuNS0yLjQsMjYuOCwxOC45bDM2LjYsODQuNWM2LDEzLjcsMTUuOCwyMS40LDI5LjcsMjEuNHMyMy40LTExLjMsMjMuNC0yMy4zYzAsMC0xNy41LDIuNC0yNi44LTE4LjlaIi8+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNODUuMiwxNDAuM3Y4Ny41aDI5LjF2LTEyMi43cy0yOS4xLDEuOC0yOS4xLDM1LjJaIi8+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMjMwLjcsMjA2LjdzMjkuMS0xLjgsMjkuMS0zNS4ydi04Ny41aC0yOS4xdjEyMi43WiIvPgogICAgPHBvbHlnb24gY2xhc3M9InN0MCIgcG9pbnRzPSIyODkuNyA4My45IDI4OS43IDgzLjkgMjg5LjcgMjI3LjkgMjg5LjcgMjI3LjkgNDM5LjIgMjI3LjkgNDM5LjIgMjAwLjYgMzE5IDIwMC42IDMxOSAxNjkuMyA0MjYuMiAxNjkuMyA0MjYuMiAxNDIuMSAzMTkgMTQyLjEgMzE5IDExMS4xIDQzOS4yIDExMS4xIDQzOS4yIDgzLjkgMzE5IDgzLjkgMjg5LjcgODMuOSIvPgogICAgPHBhdGggY2xhc3M9InN0MCIgZD0iTTU5Ni44LDE1Mi45aDBjNy44LTUuMiwxNC40LTE1LjEsMTQuNC0yOS44LDAtMzMuNS0zMi4xLTM5LjEtNTcuMS0zOS4zaC04NC45djE0NGg5My43YzQzLjIsMCw1Ny4zLTE2LjUsNTcuMy00MC43cy0xNS41LTMxLjgtMjMuNC0zNC4yWk00OTguNSwxMTEuMWg2MC44YzEzLjUsMCwyMy44LDQuNywyMy44LDE2LjlzLTExLjgsMTQuNy0xOS44LDE0LjhoLTY0Ljh2LTMxLjdaTTU2My4yLDIwMC42aDBzLTY0LjgsMC02NC44LDB2LTMyLjNoNjQuNGMxMi42LDAsMjcsMi43LDI3LDE2LjRzLTEzLjEsMTUuOS0yNi42LDE1LjlaIi8+CiAgICA8cmVjdCBjbGFzcz0ic3QwIiB4PSI2NDYuNiIgeT0iODMuOSIgd2lkdGg9IjI5LjMiIGhlaWdodD0iMTQ0Ii8+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMTAzOCwxNTguN2gwczAsMCwwLDBjLTE0LjMtMTEuNS0yNi42LTEyLjgtNTAtMTUuMmwtMi4xLS4yYy0yLjktLjItNDMuMi0zLjYtNDYuMy0zLjktMjcuNi0yLjYtMjUuNi0xNS4xLTI1LjYtMTUuMSwwLTEzLjgsMjcuOS0xNC45LDI3LjktMTQuOSwyMy4xLTIuMyw2OC40LTEuNiw3MS4yLDE4LjhoMzJjLTIuOS00MC4zLTUyLjgtNDYuMS04NC44LTQ2LjUtMjEuMi41LTQ0LjQsMS44LTYyLjcsMTMuOC0yMC42LDEzLjYtMTguNiw0MC42LTUuNyw1Mi44LDUsNC40LDEyLjcsMTAuNCwyOC4zLDEzLjMsNy4yLDEuMywxOSwzLjEsMzUuMSw0LjIsMCwwLDI1LjgsMS42LDMxLjMsMiwuMywwLC41LDAsLjgsMGgwYzguNi43LDI2LjksMi4xLDI4LjQsMTUuOCwxLjcsMTUuMS0yNC40LDE5LjUtNTEuMSwxOS41LTExLjcsMC0yMy42LS41LTM2LTQtMTAuNC0zLTE2LjQtOS4xLTE3LjQtMTkuM2gtMzEuN2MwLDQzLjQsNDkuMyw1MC4xLDgzLjcsNTAuMSwyMy41LS42LDQ4LjktMi4yLDY5LjItMTUuMiwyMi40LTE0LjcsMjAuMS00My4yLDUuMy01NloiLz4KICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik04MjYuMywxNjAuNWMwLDI2LjctMTcsNDIuNS00NS44LDQyLjVzLTQ1LjYtMTUuOC00NS42LTQyLjV2LTc2LjZoLTI5LjF2NzYuMWMwLDQyLjEsMjkuNSw3MCw3NC42LDcwczc0LjktMjcuNyw3NC45LTcwdi03Ni4xaC0yOS4xdjc2LjZaIi8+CiAgPC9nPgo8L3N2Zz4=" alt="Nebius" /></div>
         <div class="slide-content stack">
           <h2 class="section-heading compact reveal">Sync Fixes IO, But Creates Idle GPUs</h2>
           <p class="subhead reveal delay-1">
@@ -3235,7 +3296,7 @@
       </section>
 
       <section class="slide async-light" id="slide-14">
-        <div class="brand" aria-label="Nebius"><img src="NEBIUS(RGB).svg" alt="Nebius" /></div>
+        <div class="brand" aria-label="Nebius"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0iTkVCSVVTIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDExMzMuOSAzMTEuOCI+CiAgPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDI5LjAuMSwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDIuMS4wIEJ1aWxkIDE5MikgIC0tPgogIDxkZWZzPgogICAgPHN0eWxlPgogICAgICAuc3QwIHsKICAgICAgICBmaWxsOiAjMDUyYjQyOwogICAgICB9CgogICAgICAuc3QxIHsKICAgICAgICBmaWxsOiAjZTBmZjRmOwogICAgICB9CiAgICA8L3N0eWxlPgogIDwvZGVmcz4KICA8cGF0aCBjbGFzcz0ic3QxIiBkPSJNMTA1NS44LDBINzhDMzQuOSwwLDAsMzUuMiwwLDc4LjZ2MTU0LjZjMCw0My40LDM0LjksNzguNiw3OCw3OC42aDk3Ny44YzQzLjEsMCw3OC0zNS4yLDc4LTc4LjZWNzguNmMwLTQzLjQtMzQuOS03OC42LTc4LTc4LjZaIi8+CiAgPGc+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMjAzLjksMTg3LjdoMGwtMzYuNi04NC41Yy02LTEzLjctMTUuOC0yMS40LTI5LjctMjEuNHMtMjMuNCwxMS4zLTIzLjQsMjMuM2MwLDAsMTcuNS0yLjQsMjYuOCwxOC45bDM2LjYsODQuNWM2LDEzLjcsMTUuOCwyMS40LDI5LjcsMjEuNHMyMy40LTExLjMsMjMuNC0yMy4zYzAsMC0xNy41LDIuNC0yNi44LTE4LjlaIi8+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNODUuMiwxNDAuM3Y4Ny41aDI5LjF2LTEyMi43cy0yOS4xLDEuOC0yOS4xLDM1LjJaIi8+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMjMwLjcsMjA2LjdzMjkuMS0xLjgsMjkuMS0zNS4ydi04Ny41aC0yOS4xdjEyMi43WiIvPgogICAgPHBvbHlnb24gY2xhc3M9InN0MCIgcG9pbnRzPSIyODkuNyA4My45IDI4OS43IDgzLjkgMjg5LjcgMjI3LjkgMjg5LjcgMjI3LjkgNDM5LjIgMjI3LjkgNDM5LjIgMjAwLjYgMzE5IDIwMC42IDMxOSAxNjkuMyA0MjYuMiAxNjkuMyA0MjYuMiAxNDIuMSAzMTkgMTQyLjEgMzE5IDExMS4xIDQzOS4yIDExMS4xIDQzOS4yIDgzLjkgMzE5IDgzLjkgMjg5LjcgODMuOSIvPgogICAgPHBhdGggY2xhc3M9InN0MCIgZD0iTTU5Ni44LDE1Mi45aDBjNy44LTUuMiwxNC40LTE1LjEsMTQuNC0yOS44LDAtMzMuNS0zMi4xLTM5LjEtNTcuMS0zOS4zaC04NC45djE0NGg5My43YzQzLjIsMCw1Ny4zLTE2LjUsNTcuMy00MC43cy0xNS41LTMxLjgtMjMuNC0zNC4yWk00OTguNSwxMTEuMWg2MC44YzEzLjUsMCwyMy44LDQuNywyMy44LDE2LjlzLTExLjgsMTQuNy0xOS44LDE0LjhoLTY0Ljh2LTMxLjdaTTU2My4yLDIwMC42aDBzLTY0LjgsMC02NC44LDB2LTMyLjNoNjQuNGMxMi42LDAsMjcsMi43LDI3LDE2LjRzLTEzLjEsMTUuOS0yNi42LDE1LjlaIi8+CiAgICA8cmVjdCBjbGFzcz0ic3QwIiB4PSI2NDYuNiIgeT0iODMuOSIgd2lkdGg9IjI5LjMiIGhlaWdodD0iMTQ0Ii8+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMTAzOCwxNTguN2gwczAsMCwwLDBjLTE0LjMtMTEuNS0yNi42LTEyLjgtNTAtMTUuMmwtMi4xLS4yYy0yLjktLjItNDMuMi0zLjYtNDYuMy0zLjktMjcuNi0yLjYtMjUuNi0xNS4xLTI1LjYtMTUuMSwwLTEzLjgsMjcuOS0xNC45LDI3LjktMTQuOSwyMy4xLTIuMyw2OC40LTEuNiw3MS4yLDE4LjhoMzJjLTIuOS00MC4zLTUyLjgtNDYuMS04NC44LTQ2LjUtMjEuMi41LTQ0LjQsMS44LTYyLjcsMTMuOC0yMC42LDEzLjYtMTguNiw0MC42LTUuNyw1Mi44LDUsNC40LDEyLjcsMTAuNCwyOC4zLDEzLjMsNy4yLDEuMywxOSwzLjEsMzUuMSw0LjIsMCwwLDI1LjgsMS42LDMxLjMsMiwuMywwLC41LDAsLjgsMGgwYzguNi43LDI2LjksMi4xLDI4LjQsMTUuOCwxLjcsMTUuMS0yNC40LDE5LjUtNTEuMSwxOS41LTExLjcsMC0yMy42LS41LTM2LTQtMTAuNC0zLTE2LjQtOS4xLTE3LjQtMTkuM2gtMzEuN2MwLDQzLjQsNDkuMyw1MC4xLDgzLjcsNTAuMSwyMy41LS42LDQ4LjktMi4yLDY5LjItMTUuMiwyMi40LTE0LjcsMjAuMS00My4yLDUuMy01NloiLz4KICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik04MjYuMywxNjAuNWMwLDI2LjctMTcsNDIuNS00NS44LDQyLjVzLTQ1LjYtMTUuOC00NS42LTQyLjV2LTc2LjZoLTI5LjF2NzYuMWMwLDQyLjEsMjkuNSw3MCw3NC42LDcwczc0LjktMjcuNyw3NC45LTcwdi03Ni4xaC0yOS4xdjc2LjZaIi8+CiAgPC9nPgo8L3N2Zz4=" alt="Nebius" /></div>
         <div class="slide-content async-layout">
           <div class="stack">
             <h2 class="section-heading compact reveal">Async Loop: Keep Both Sides Busy</h2>
@@ -3348,7 +3409,7 @@
       </section>
 
       <section class="slide" id="slide-14-recap">
-        <div class="brand" aria-label="Nebius"><img src="NEBIUS(RGB).svg" alt="Nebius" /></div>
+        <div class="brand" aria-label="Nebius"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0iTkVCSVVTIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDExMzMuOSAzMTEuOCI+CiAgPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDI5LjAuMSwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDIuMS4wIEJ1aWxkIDE5MikgIC0tPgogIDxkZWZzPgogICAgPHN0eWxlPgogICAgICAuc3QwIHsKICAgICAgICBmaWxsOiAjMDUyYjQyOwogICAgICB9CgogICAgICAuc3QxIHsKICAgICAgICBmaWxsOiAjZTBmZjRmOwogICAgICB9CiAgICA8L3N0eWxlPgogIDwvZGVmcz4KICA8cGF0aCBjbGFzcz0ic3QxIiBkPSJNMTA1NS44LDBINzhDMzQuOSwwLDAsMzUuMiwwLDc4LjZ2MTU0LjZjMCw0My40LDM0LjksNzguNiw3OCw3OC42aDk3Ny44YzQzLjEsMCw3OC0zNS4yLDc4LTc4LjZWNzguNmMwLTQzLjQtMzQuOS03OC42LTc4LTc4LjZaIi8+CiAgPGc+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMjAzLjksMTg3LjdoMGwtMzYuNi04NC41Yy02LTEzLjctMTUuOC0yMS40LTI5LjctMjEuNHMtMjMuNCwxMS4zLTIzLjQsMjMuM2MwLDAsMTcuNS0yLjQsMjYuOCwxOC45bDM2LjYsODQuNWM2LDEzLjcsMTUuOCwyMS40LDI5LjcsMjEuNHMyMy40LTExLjMsMjMuNC0yMy4zYzAsMC0xNy41LDIuNC0yNi44LTE4LjlaIi8+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNODUuMiwxNDAuM3Y4Ny41aDI5LjF2LTEyMi43cy0yOS4xLDEuOC0yOS4xLDM1LjJaIi8+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMjMwLjcsMjA2LjdzMjkuMS0xLjgsMjkuMS0zNS4ydi04Ny41aC0yOS4xdjEyMi43WiIvPgogICAgPHBvbHlnb24gY2xhc3M9InN0MCIgcG9pbnRzPSIyODkuNyA4My45IDI4OS43IDgzLjkgMjg5LjcgMjI3LjkgMjg5LjcgMjI3LjkgNDM5LjIgMjI3LjkgNDM5LjIgMjAwLjYgMzE5IDIwMC42IDMxOSAxNjkuMyA0MjYuMiAxNjkuMyA0MjYuMiAxNDIuMSAzMTkgMTQyLjEgMzE5IDExMS4xIDQzOS4yIDExMS4xIDQzOS4yIDgzLjkgMzE5IDgzLjkgMjg5LjcgODMuOSIvPgogICAgPHBhdGggY2xhc3M9InN0MCIgZD0iTTU5Ni44LDE1Mi45aDBjNy44LTUuMiwxNC40LTE1LjEsMTQuNC0yOS44LDAtMzMuNS0zMi4xLTM5LjEtNTcuMS0zOS4zaC04NC45djE0NGg5My43YzQzLjIsMCw1Ny4zLTE2LjUsNTcuMy00MC43cy0xNS41LTMxLjgtMjMuNC0zNC4yWk00OTguNSwxMTEuMWg2MC44YzEzLjUsMCwyMy44LDQuNywyMy44LDE2LjlzLTExLjgsMTQuNy0xOS44LDE0LjhoLTY0Ljh2LTMxLjdaTTU2My4yLDIwMC42aDBzLTY0LjgsMC02NC44LDB2LTMyLjNoNjQuNGMxMi42LDAsMjcsMi43LDI3LDE2LjRzLTEzLjEsMTUuOS0yNi42LDE1LjlaIi8+CiAgICA8cmVjdCBjbGFzcz0ic3QwIiB4PSI2NDYuNiIgeT0iODMuOSIgd2lkdGg9IjI5LjMiIGhlaWdodD0iMTQ0Ii8+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMTAzOCwxNTguN2gwczAsMCwwLDBjLTE0LjMtMTEuNS0yNi42LTEyLjgtNTAtMTUuMmwtMi4xLS4yYy0yLjktLjItNDMuMi0zLjYtNDYuMy0zLjktMjcuNi0yLjYtMjUuNi0xNS4xLTI1LjYtMTUuMSwwLTEzLjgsMjcuOS0xNC45LDI3LjktMTQuOSwyMy4xLTIuMyw2OC40LTEuNiw3MS4yLDE4LjhoMzJjLTIuOS00MC4zLTUyLjgtNDYuMS04NC44LTQ2LjUtMjEuMi41LTQ0LjQsMS44LTYyLjcsMTMuOC0yMC42LDEzLjYtMTguNiw0MC42LTUuNyw1Mi44LDUsNC40LDEyLjcsMTAuNCwyOC4zLDEzLjMsNy4yLDEuMywxOSwzLjEsMzUuMSw0LjIsMCwwLDI1LjgsMS42LDMxLjMsMiwuMywwLC41LDAsLjgsMGgwYzguNi43LDI2LjksMi4xLDI4LjQsMTUuOCwxLjcsMTUuMS0yNC40LDE5LjUtNTEuMSwxOS41LTExLjcsMC0yMy42LS41LTM2LTQtMTAuNC0zLTE2LjQtOS4xLTE3LjQtMTkuM2gtMzEuN2MwLDQzLjQsNDkuMyw1MC4xLDgzLjcsNTAuMSwyMy41LS42LDQ4LjktMi4yLDY5LjItMTUuMiwyMi40LTE0LjcsMjAuMS00My4yLDUuMy01NloiLz4KICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik04MjYuMywxNjAuNWMwLDI2LjctMTcsNDIuNS00NS44LDQyLjVzLTQ1LjYtMTUuOC00NS42LTQyLjV2LTc2LjZoLTI5LjF2NzYuMWMwLDQyLjEsMjkuNSw3MCw3NC42LDcwczc0LjktMjcuNyw3NC45LTcwdi03Ni4xaC0yOS4xdjc2LjZaIi8+CiAgPC9nPgo8L3N2Zz4=" alt="Nebius" /></div>
         <div class="slide-content ladder-recap-layout">
           <div class="stack">
             <h2 class="section-heading compact reveal">Naive -> Sync -> Async</h2>
@@ -3393,7 +3454,7 @@
       </section>
 
       <section class="slide" id="slide-15">
-        <div class="brand" aria-label="Nebius"><img src="NEBIUS(RGB).svg" alt="Nebius" /></div>
+        <div class="brand" aria-label="Nebius"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0iTkVCSVVTIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDExMzMuOSAzMTEuOCI+CiAgPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDI5LjAuMSwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDIuMS4wIEJ1aWxkIDE5MikgIC0tPgogIDxkZWZzPgogICAgPHN0eWxlPgogICAgICAuc3QwIHsKICAgICAgICBmaWxsOiAjMDUyYjQyOwogICAgICB9CgogICAgICAuc3QxIHsKICAgICAgICBmaWxsOiAjZTBmZjRmOwogICAgICB9CiAgICA8L3N0eWxlPgogIDwvZGVmcz4KICA8cGF0aCBjbGFzcz0ic3QxIiBkPSJNMTA1NS44LDBINzhDMzQuOSwwLDAsMzUuMiwwLDc4LjZ2MTU0LjZjMCw0My40LDM0LjksNzguNiw3OCw3OC42aDk3Ny44YzQzLjEsMCw3OC0zNS4yLDc4LTc4LjZWNzguNmMwLTQzLjQtMzQuOS03OC42LTc4LTc4LjZaIi8+CiAgPGc+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMjAzLjksMTg3LjdoMGwtMzYuNi04NC41Yy02LTEzLjctMTUuOC0yMS40LTI5LjctMjEuNHMtMjMuNCwxMS4zLTIzLjQsMjMuM2MwLDAsMTcuNS0yLjQsMjYuOCwxOC45bDM2LjYsODQuNWM2LDEzLjcsMTUuOCwyMS40LDI5LjcsMjEuNHMyMy40LTExLjMsMjMuNC0yMy4zYzAsMC0xNy41LDIuNC0yNi44LTE4LjlaIi8+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNODUuMiwxNDAuM3Y4Ny41aDI5LjF2LTEyMi43cy0yOS4xLDEuOC0yOS4xLDM1LjJaIi8+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMjMwLjcsMjA2LjdzMjkuMS0xLjgsMjkuMS0zNS4ydi04Ny41aC0yOS4xdjEyMi43WiIvPgogICAgPHBvbHlnb24gY2xhc3M9InN0MCIgcG9pbnRzPSIyODkuNyA4My45IDI4OS43IDgzLjkgMjg5LjcgMjI3LjkgMjg5LjcgMjI3LjkgNDM5LjIgMjI3LjkgNDM5LjIgMjAwLjYgMzE5IDIwMC42IDMxOSAxNjkuMyA0MjYuMiAxNjkuMyA0MjYuMiAxNDIuMSAzMTkgMTQyLjEgMzE5IDExMS4xIDQzOS4yIDExMS4xIDQzOS4yIDgzLjkgMzE5IDgzLjkgMjg5LjcgODMuOSIvPgogICAgPHBhdGggY2xhc3M9InN0MCIgZD0iTTU5Ni44LDE1Mi45aDBjNy44LTUuMiwxNC40LTE1LjEsMTQuNC0yOS44LDAtMzMuNS0zMi4xLTM5LjEtNTcuMS0zOS4zaC04NC45djE0NGg5My43YzQzLjIsMCw1Ny4zLTE2LjUsNTcuMy00MC43cy0xNS41LTMxLjgtMjMuNC0zNC4yWk00OTguNSwxMTEuMWg2MC44YzEzLjUsMCwyMy44LDQuNywyMy44LDE2LjlzLTExLjgsMTQuNy0xOS44LDE0LjhoLTY0Ljh2LTMxLjdaTTU2My4yLDIwMC42aDBzLTY0LjgsMC02NC44LDB2LTMyLjNoNjQuNGMxMi42LDAsMjcsMi43LDI3LDE2LjRzLTEzLjEsMTUuOS0yNi42LDE1LjlaIi8+CiAgICA8cmVjdCBjbGFzcz0ic3QwIiB4PSI2NDYuNiIgeT0iODMuOSIgd2lkdGg9IjI5LjMiIGhlaWdodD0iMTQ0Ii8+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMTAzOCwxNTguN2gwczAsMCwwLDBjLTE0LjMtMTEuNS0yNi42LTEyLjgtNTAtMTUuMmwtMi4xLS4yYy0yLjktLjItNDMuMi0zLjYtNDYuMy0zLjktMjcuNi0yLjYtMjUuNi0xNS4xLTI1LjYtMTUuMSwwLTEzLjgsMjcuOS0xNC45LDI3LjktMTQuOSwyMy4xLTIuMyw2OC40LTEuNiw3MS4yLDE4LjhoMzJjLTIuOS00MC4zLTUyLjgtNDYuMS04NC44LTQ2LjUtMjEuMi41LTQ0LjQsMS44LTYyLjcsMTMuOC0yMC42LDEzLjYtMTguNiw0MC42LTUuNyw1Mi44LDUsNC40LDEyLjcsMTAuNCwyOC4zLDEzLjMsNy4yLDEuMywxOSwzLjEsMzUuMSw0LjIsMCwwLDI1LjgsMS42LDMxLjMsMiwuMywwLC41LDAsLjgsMGgwYzguNi43LDI2LjksMi4xLDI4LjQsMTUuOCwxLjcsMTUuMS0yNC40LDE5LjUtNTEuMSwxOS41LTExLjcsMC0yMy42LS41LTM2LTQtMTAuNC0zLTE2LjQtOS4xLTE3LjQtMTkuM2gtMzEuN2MwLDQzLjQsNDkuMyw1MC4xLDgzLjcsNTAuMSwyMy41LS42LDQ4LjktMi4yLDY5LjItMTUuMiwyMi40LTE0LjcsMjAuMS00My4yLDUuMy01NloiLz4KICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik04MjYuMywxNjAuNWMwLDI2LjctMTcsNDIuNS00NS44LDQyLjVzLTQ1LjYtMTUuOC00NS42LTQyLjV2LTc2LjZoLTI5LjF2NzYuMWMwLDQyLjEsMjkuNSw3MCw3NC42LDcwczc0LjktMjcuNyw3NC45LTcwdi03Ni4xaC0yOS4xdjc2LjZaIi8+CiAgPC9nPgo8L3N2Zz4=" alt="Nebius" /></div>
         <div class="slide-content tradeoff-layout">
           <div class="stack">
             <h2 class="section-heading compact reveal">Sync vs Async Tradeoff</h2>
@@ -3458,46 +3519,46 @@
       </section>
 
       <section class="slide" id="slide-17">
-        <div class="brand" aria-label="Nebius"><img src="NEBIUS(RGB).svg" alt="Nebius" /></div>
+        <div class="brand" aria-label="Nebius"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0iTkVCSVVTIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDExMzMuOSAzMTEuOCI+CiAgPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDI5LjAuMSwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDIuMS4wIEJ1aWxkIDE5MikgIC0tPgogIDxkZWZzPgogICAgPHN0eWxlPgogICAgICAuc3QwIHsKICAgICAgICBmaWxsOiAjMDUyYjQyOwogICAgICB9CgogICAgICAuc3QxIHsKICAgICAgICBmaWxsOiAjZTBmZjRmOwogICAgICB9CiAgICA8L3N0eWxlPgogIDwvZGVmcz4KICA8cGF0aCBjbGFzcz0ic3QxIiBkPSJNMTA1NS44LDBINzhDMzQuOSwwLDAsMzUuMiwwLDc4LjZ2MTU0LjZjMCw0My40LDM0LjksNzguNiw3OCw3OC42aDk3Ny44YzQzLjEsMCw3OC0zNS4yLDc4LTc4LjZWNzguNmMwLTQzLjQtMzQuOS03OC42LTc4LTc4LjZaIi8+CiAgPGc+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMjAzLjksMTg3LjdoMGwtMzYuNi04NC41Yy02LTEzLjctMTUuOC0yMS40LTI5LjctMjEuNHMtMjMuNCwxMS4zLTIzLjQsMjMuM2MwLDAsMTcuNS0yLjQsMjYuOCwxOC45bDM2LjYsODQuNWM2LDEzLjcsMTUuOCwyMS40LDI5LjcsMjEuNHMyMy40LTExLjMsMjMuNC0yMy4zYzAsMC0xNy41LDIuNC0yNi44LTE4LjlaIi8+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNODUuMiwxNDAuM3Y4Ny41aDI5LjF2LTEyMi43cy0yOS4xLDEuOC0yOS4xLDM1LjJaIi8+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMjMwLjcsMjA2LjdzMjkuMS0xLjgsMjkuMS0zNS4ydi04Ny41aC0yOS4xdjEyMi43WiIvPgogICAgPHBvbHlnb24gY2xhc3M9InN0MCIgcG9pbnRzPSIyODkuNyA4My45IDI4OS43IDgzLjkgMjg5LjcgMjI3LjkgMjg5LjcgMjI3LjkgNDM5LjIgMjI3LjkgNDM5LjIgMjAwLjYgMzE5IDIwMC42IDMxOSAxNjkuMyA0MjYuMiAxNjkuMyA0MjYuMiAxNDIuMSAzMTkgMTQyLjEgMzE5IDExMS4xIDQzOS4yIDExMS4xIDQzOS4yIDgzLjkgMzE5IDgzLjkgMjg5LjcgODMuOSIvPgogICAgPHBhdGggY2xhc3M9InN0MCIgZD0iTTU5Ni44LDE1Mi45aDBjNy44LTUuMiwxNC40LTE1LjEsMTQuNC0yOS44LDAtMzMuNS0zMi4xLTM5LjEtNTcuMS0zOS4zaC04NC45djE0NGg5My43YzQzLjIsMCw1Ny4zLTE2LjUsNTcuMy00MC43cy0xNS41LTMxLjgtMjMuNC0zNC4yWk00OTguNSwxMTEuMWg2MC44YzEzLjUsMCwyMy44LDQuNywyMy44LDE2LjlzLTExLjgsMTQuNy0xOS44LDE0LjhoLTY0Ljh2LTMxLjdaTTU2My4yLDIwMC42aDBzLTY0LjgsMC02NC44LDB2LTMyLjNoNjQuNGMxMi42LDAsMjcsMi43LDI3LDE2LjRzLTEzLjEsMTUuOS0yNi42LDE1LjlaIi8+CiAgICA8cmVjdCBjbGFzcz0ic3QwIiB4PSI2NDYuNiIgeT0iODMuOSIgd2lkdGg9IjI5LjMiIGhlaWdodD0iMTQ0Ii8+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMTAzOCwxNTguN2gwczAsMCwwLDBjLTE0LjMtMTEuNS0yNi42LTEyLjgtNTAtMTUuMmwtMi4xLS4yYy0yLjktLjItNDMuMi0zLjYtNDYuMy0zLjktMjcuNi0yLjYtMjUuNi0xNS4xLTI1LjYtMTUuMSwwLTEzLjgsMjcuOS0xNC45LDI3LjktMTQuOSwyMy4xLTIuMyw2OC40LTEuNiw3MS4yLDE4LjhoMzJjLTIuOS00MC4zLTUyLjgtNDYuMS04NC44LTQ2LjUtMjEuMi41LTQ0LjQsMS44LTYyLjcsMTMuOC0yMC42LDEzLjYtMTguNiw0MC42LTUuNyw1Mi44LDUsNC40LDEyLjcsMTAuNCwyOC4zLDEzLjMsNy4yLDEuMywxOSwzLjEsMzUuMSw0LjIsMCwwLDI1LjgsMS42LDMxLjMsMiwuMywwLC41LDAsLjgsMGgwYzguNi43LDI2LjksMi4xLDI4LjQsMTUuOCwxLjcsMTUuMS0yNC40LDE5LjUtNTEuMSwxOS41LTExLjcsMC0yMy42LS41LTM2LTQtMTAuNC0zLTE2LjQtOS4xLTE3LjQtMTkuM2gtMzEuN2MwLDQzLjQsNDkuMyw1MC4xLDgzLjcsNTAuMSwyMy41LS42LDQ4LjktMi4yLDY5LjItMTUuMiwyMi40LTE0LjcsMjAuMS00My4yLDUuMy01NloiLz4KICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik04MjYuMywxNjAuNWMwLDI2LjctMTcsNDIuNS00NS44LDQyLjVzLTQ1LjYtMTUuOC00NS42LTQyLjV2LTc2LjZoLTI5LjF2NzYuMWMwLDQyLjEsMjkuNSw3MCw3NC42LDcwczc0LjktMjcuNyw3NC45LTcwdi03Ni4xaC0yOS4xdjc2LjZaIi8+CiAgPC9nPgo8L3N2Zz4=" alt="Nebius" /></div>
         <div class="slide-content resources-layout">
           <div class="stack">
             <h2 class="section-heading compact reveal">Where to Continue Learning</h2>
             <p class="subhead reveal delay-1">
               There are now real open-source and vLLM paths to study RL training systems.
             </p>
-            <a class="gist-qr-card reveal delay-2" href="https://gist.github.com/minotru/8bd5aebf1e1aec5a32f463553072a563" target="_blank" rel="noreferrer">
-              <img
-                src="https://api.qrserver.com/v1/create-qr-code/?size=360x360&amp;margin=12&amp;data=https%3A%2F%2Fgist.github.com%2Fminotru%2F8bd5aebf1e1aec5a32f463553072a563"
-                alt="QR code for the resource gist"
-              />
-              <strong>Resource gist</strong>
-              <span>gist.github.com/minotru/8bd5aebf1e1aec5a32f463553072a563</span>
-            </a>
+            <div class="resource-grid reveal delay-2">
+              <a class="resource-card" href="https://github.com/rllm-org/rllm" target="_blank" rel="noreferrer">
+                <strong>rLLM</strong>
+                <span>github.com/rllm-org/rllm</span>
+              </a>
+              <a class="resource-card" href="https://github.com/verl-project/verl" target="_blank" rel="noreferrer">
+                <strong>veRL</strong>
+                <span>github.com/verl-project/verl</span>
+              </a>
+              <a class="resource-card" href="https://docs.vllm.ai/en/stable/training/trl/" target="_blank" rel="noreferrer">
+                <strong>vLLM TRL</strong>
+                <span>docs.vllm.ai/en/stable/training/trl/</span>
+              </a>
+              <a class="resource-card" href="https://docs.vllm.ai/en/stable/training/weight_transfer/" target="_blank" rel="noreferrer">
+                <strong>vLLM weight transfer</strong>
+                <span>docs.vllm.ai/en/stable/training/weight_transfer/</span>
+              </a>
+            </div>
           </div>
-          <div class="resource-grid reveal delay-2">
-            <a class="resource-card" href="https://github.com/rllm-org/rllm" target="_blank" rel="noreferrer">
-              <strong>rLLM</strong>
-              <span>github.com/rllm-org/rllm</span>
-            </a>
-            <a class="resource-card" href="https://github.com/verl-project/verl" target="_blank" rel="noreferrer">
-              <strong>veRL</strong>
-              <span>github.com/verl-project/verl</span>
-            </a>
-            <a class="resource-card" href="https://docs.vllm.ai/en/stable/training/trl/" target="_blank" rel="noreferrer">
-              <strong>vLLM TRL</strong>
-              <span>docs.vllm.ai/en/stable/training/trl/</span>
-            </a>
-            <a class="resource-card" href="https://docs.vllm.ai/en/stable/training/weight_transfer/" target="_blank" rel="noreferrer">
-              <strong>vLLM weight transfer</strong>
-              <span>docs.vllm.ai/en/stable/training/weight_transfer/</span>
-            </a>
-          </div>
+          <a class="gist-qr-card reveal delay-2" href="https://gist.github.com/minotru/8bd5aebf1e1aec5a32f463553072a563" target="_blank" rel="noreferrer">
+            <img
+              src="https://api.qrserver.com/v1/create-qr-code/?size=360x360&amp;margin=12&amp;data=https%3A%2F%2Fgist.github.com%2Fminotru%2F8bd5aebf1e1aec5a32f463553072a563"
+              alt="QR code for the resource gist"
+            />
+            <strong>Resource gist</strong>
+            <span>gist.github.com/minotru/8bd5aebf1e1aec5a32f463553072a563</span>
+          </a>
         </div>
         <div class="page-num">17</div>
       </section>
 
       <section class="slide dark" id="slide-16">
-        <div class="brand" aria-label="Nebius"><img src="NEBIUS(RGB).svg" alt="Nebius" /></div>
+        <div class="brand" aria-label="Nebius"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0iTkVCSVVTIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDExMzMuOSAzMTEuOCI+CiAgPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDI5LjAuMSwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDIuMS4wIEJ1aWxkIDE5MikgIC0tPgogIDxkZWZzPgogICAgPHN0eWxlPgogICAgICAuc3QwIHsKICAgICAgICBmaWxsOiAjMDUyYjQyOwogICAgICB9CgogICAgICAuc3QxIHsKICAgICAgICBmaWxsOiAjZTBmZjRmOwogICAgICB9CiAgICA8L3N0eWxlPgogIDwvZGVmcz4KICA8cGF0aCBjbGFzcz0ic3QxIiBkPSJNMTA1NS44LDBINzhDMzQuOSwwLDAsMzUuMiwwLDc4LjZ2MTU0LjZjMCw0My40LDM0LjksNzguNiw3OCw3OC42aDk3Ny44YzQzLjEsMCw3OC0zNS4yLDc4LTc4LjZWNzguNmMwLTQzLjQtMzQuOS03OC42LTc4LTc4LjZaIi8+CiAgPGc+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMjAzLjksMTg3LjdoMGwtMzYuNi04NC41Yy02LTEzLjctMTUuOC0yMS40LTI5LjctMjEuNHMtMjMuNCwxMS4zLTIzLjQsMjMuM2MwLDAsMTcuNS0yLjQsMjYuOCwxOC45bDM2LjYsODQuNWM2LDEzLjcsMTUuOCwyMS40LDI5LjcsMjEuNHMyMy40LTExLjMsMjMuNC0yMy4zYzAsMC0xNy41LDIuNC0yNi44LTE4LjlaIi8+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNODUuMiwxNDAuM3Y4Ny41aDI5LjF2LTEyMi43cy0yOS4xLDEuOC0yOS4xLDM1LjJaIi8+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMjMwLjcsMjA2LjdzMjkuMS0xLjgsMjkuMS0zNS4ydi04Ny41aC0yOS4xdjEyMi43WiIvPgogICAgPHBvbHlnb24gY2xhc3M9InN0MCIgcG9pbnRzPSIyODkuNyA4My45IDI4OS43IDgzLjkgMjg5LjcgMjI3LjkgMjg5LjcgMjI3LjkgNDM5LjIgMjI3LjkgNDM5LjIgMjAwLjYgMzE5IDIwMC42IDMxOSAxNjkuMyA0MjYuMiAxNjkuMyA0MjYuMiAxNDIuMSAzMTkgMTQyLjEgMzE5IDExMS4xIDQzOS4yIDExMS4xIDQzOS4yIDgzLjkgMzE5IDgzLjkgMjg5LjcgODMuOSIvPgogICAgPHBhdGggY2xhc3M9InN0MCIgZD0iTTU5Ni44LDE1Mi45aDBjNy44LTUuMiwxNC40LTE1LjEsMTQuNC0yOS44LDAtMzMuNS0zMi4xLTM5LjEtNTcuMS0zOS4zaC04NC45djE0NGg5My43YzQzLjIsMCw1Ny4zLTE2LjUsNTcuMy00MC43cy0xNS41LTMxLjgtMjMuNC0zNC4yWk00OTguNSwxMTEuMWg2MC44YzEzLjUsMCwyMy44LDQuNywyMy44LDE2LjlzLTExLjgsMTQuNy0xOS44LDE0LjhoLTY0Ljh2LTMxLjdaTTU2My4yLDIwMC42aDBzLTY0LjgsMC02NC44LDB2LTMyLjNoNjQuNGMxMi42LDAsMjcsMi43LDI3LDE2LjRzLTEzLjEsMTUuOS0yNi42LDE1LjlaIi8+CiAgICA8cmVjdCBjbGFzcz0ic3QwIiB4PSI2NDYuNiIgeT0iODMuOSIgd2lkdGg9IjI5LjMiIGhlaWdodD0iMTQ0Ii8+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMTAzOCwxNTguN2gwczAsMCwwLDBjLTE0LjMtMTEuNS0yNi42LTEyLjgtNTAtMTUuMmwtMi4xLS4yYy0yLjktLjItNDMuMi0zLjYtNDYuMy0zLjktMjcuNi0yLjYtMjUuNi0xNS4xLTI1LjYtMTUuMSwwLTEzLjgsMjcuOS0xNC45LDI3LjktMTQuOSwyMy4xLTIuMyw2OC40LTEuNiw3MS4yLDE4LjhoMzJjLTIuOS00MC4zLTUyLjgtNDYuMS04NC44LTQ2LjUtMjEuMi41LTQ0LjQsMS44LTYyLjcsMTMuOC0yMC42LDEzLjYtMTguNiw0MC42LTUuNyw1Mi44LDUsNC40LDEyLjcsMTAuNCwyOC4zLDEzLjMsNy4yLDEuMywxOSwzLjEsMzUuMSw0LjIsMCwwLDI1LjgsMS42LDMxLjMsMiwuMywwLC41LDAsLjgsMGgwYzguNi43LDI2LjksMi4xLDI4LjQsMTUuOCwxLjcsMTUuMS0yNC40LDE5LjUtNTEuMSwxOS41LTExLjcsMC0yMy42LS41LTM2LTQtMTAuNC0zLTE2LjQtOS4xLTE3LjQtMTkuM2gtMzEuN2MwLDQzLjQsNDkuMyw1MC4xLDgzLjcsNTAuMSwyMy41LS42LDQ4LjktMi4yLDY5LjItMTUuMiwyMi40LTE0LjcsMjAuMS00My4yLDUuMy01NloiLz4KICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik04MjYuMywxNjAuNWMwLDI2LjctMTcsNDIuNS00NS44LDQyLjVzLTQ1LjYtMTUuOC00NS42LTQyLjV2LTc2LjZoLTI5LjF2NzYuMWMwLDQyLjEsMjkuNSw3MCw3NC42LDcwczc0LjktMjcuNyw3NC45LTcwdi03Ni4xaC0yOS4xdjc2LjZaIi8+CiAgPC9nPgo8L3N2Zz4=" alt="Nebius" /></div>
         <div class="slide-content nebius-rl-layout">
           <div class="stack">
             <h2 class="section-heading compact reveal">How We Do RL at Nebius&nbsp;AI&nbsp;R&amp;D</h2>
@@ -3545,7 +3606,7 @@
       </section>
 
       <section class="slide dark" id="slide-18">
-        <div class="brand" aria-label="Nebius"><img src="NEBIUS(RGB).svg" alt="Nebius" /></div>
+        <div class="brand" aria-label="Nebius"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0iTkVCSVVTIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDExMzMuOSAzMTEuOCI+CiAgPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDI5LjAuMSwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDIuMS4wIEJ1aWxkIDE5MikgIC0tPgogIDxkZWZzPgogICAgPHN0eWxlPgogICAgICAuc3QwIHsKICAgICAgICBmaWxsOiAjMDUyYjQyOwogICAgICB9CgogICAgICAuc3QxIHsKICAgICAgICBmaWxsOiAjZTBmZjRmOwogICAgICB9CiAgICA8L3N0eWxlPgogIDwvZGVmcz4KICA8cGF0aCBjbGFzcz0ic3QxIiBkPSJNMTA1NS44LDBINzhDMzQuOSwwLDAsMzUuMiwwLDc4LjZ2MTU0LjZjMCw0My40LDM0LjksNzguNiw3OCw3OC42aDk3Ny44YzQzLjEsMCw3OC0zNS4yLDc4LTc4LjZWNzguNmMwLTQzLjQtMzQuOS03OC42LTc4LTc4LjZaIi8+CiAgPGc+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMjAzLjksMTg3LjdoMGwtMzYuNi04NC41Yy02LTEzLjctMTUuOC0yMS40LTI5LjctMjEuNHMtMjMuNCwxMS4zLTIzLjQsMjMuM2MwLDAsMTcuNS0yLjQsMjYuOCwxOC45bDM2LjYsODQuNWM2LDEzLjcsMTUuOCwyMS40LDI5LjcsMjEuNHMyMy40LTExLjMsMjMuNC0yMy4zYzAsMC0xNy41LDIuNC0yNi44LTE4LjlaIi8+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNODUuMiwxNDAuM3Y4Ny41aDI5LjF2LTEyMi43cy0yOS4xLDEuOC0yOS4xLDM1LjJaIi8+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMjMwLjcsMjA2LjdzMjkuMS0xLjgsMjkuMS0zNS4ydi04Ny41aC0yOS4xdjEyMi43WiIvPgogICAgPHBvbHlnb24gY2xhc3M9InN0MCIgcG9pbnRzPSIyODkuNyA4My45IDI4OS43IDgzLjkgMjg5LjcgMjI3LjkgMjg5LjcgMjI3LjkgNDM5LjIgMjI3LjkgNDM5LjIgMjAwLjYgMzE5IDIwMC42IDMxOSAxNjkuMyA0MjYuMiAxNjkuMyA0MjYuMiAxNDIuMSAzMTkgMTQyLjEgMzE5IDExMS4xIDQzOS4yIDExMS4xIDQzOS4yIDgzLjkgMzE5IDgzLjkgMjg5LjcgODMuOSIvPgogICAgPHBhdGggY2xhc3M9InN0MCIgZD0iTTU5Ni44LDE1Mi45aDBjNy44LTUuMiwxNC40LTE1LjEsMTQuNC0yOS44LDAtMzMuNS0zMi4xLTM5LjEtNTcuMS0zOS4zaC04NC45djE0NGg5My43YzQzLjIsMCw1Ny4zLTE2LjUsNTcuMy00MC43cy0xNS41LTMxLjgtMjMuNC0zNC4yWk00OTguNSwxMTEuMWg2MC44YzEzLjUsMCwyMy44LDQuNywyMy44LDE2LjlzLTExLjgsMTQuNy0xOS44LDE0LjhoLTY0Ljh2LTMxLjdaTTU2My4yLDIwMC42aDBzLTY0LjgsMC02NC44LDB2LTMyLjNoNjQuNGMxMi42LDAsMjcsMi43LDI3LDE2LjRzLTEzLjEsMTUuOS0yNi42LDE1LjlaIi8+CiAgICA8cmVjdCBjbGFzcz0ic3QwIiB4PSI2NDYuNiIgeT0iODMuOSIgd2lkdGg9IjI5LjMiIGhlaWdodD0iMTQ0Ii8+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMTAzOCwxNTguN2gwczAsMCwwLDBjLTE0LjMtMTEuNS0yNi42LTEyLjgtNTAtMTUuMmwtMi4xLS4yYy0yLjktLjItNDMuMi0zLjYtNDYuMy0zLjktMjcuNi0yLjYtMjUuNi0xNS4xLTI1LjYtMTUuMSwwLTEzLjgsMjcuOS0xNC45LDI3LjktMTQuOSwyMy4xLTIuMyw2OC40LTEuNiw3MS4yLDE4LjhoMzJjLTIuOS00MC4zLTUyLjgtNDYuMS04NC44LTQ2LjUtMjEuMi41LTQ0LjQsMS44LTYyLjcsMTMuOC0yMC42LDEzLjYtMTguNiw0MC42LTUuNyw1Mi44LDUsNC40LDEyLjcsMTAuNCwyOC4zLDEzLjMsNy4yLDEuMywxOSwzLjEsMzUuMSw0LjIsMCwwLDI1LjgsMS42LDMxLjMsMiwuMywwLC41LDAsLjgsMGgwYzguNi43LDI2LjksMi4xLDI4LjQsMTUuOCwxLjcsMTUuMS0yNC40LDE5LjUtNTEuMSwxOS41LTExLjcsMC0yMy42LS41LTM2LTQtMTAuNC0zLTE2LjQtOS4xLTE3LjQtMTkuM2gtMzEuN2MwLDQzLjQsNDkuMyw1MC4xLDgzLjcsNTAuMSwyMy41LS42LDQ4LjktMi4yLDY5LjItMTUuMiwyMi40LTE0LjcsMjAuMS00My4yLDUuMy01NloiLz4KICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik04MjYuMywxNjAuNWMwLDI2LjctMTcsNDIuNS00NS44LDQyLjVzLTQ1LjYtMTUuOC00NS42LTQyLjV2LTc2LjZoLTI5LjF2NzYuMWMwLDQyLjEsMjkuNSw3MCw3NC42LDcwczc0LjktMjcuNyw3NC45LTcwdi03Ni4xaC0yOS4xdjc2LjZaIi8+CiAgPC9nPgo8L3N2Zz4=" alt="Nebius" /></div>
         <div class="slide-content closing-layout">
           <div class="stack">
             <h2 class="closing-title reveal">Token Factory RFT Beta</h2>
@@ -3567,8 +3628,52 @@
         <div class="page-num">18</div>
       </section>
 
+      <section class="slide dark" id="slide-token-factory-promo">
+        <div class="brand" aria-label="Nebius"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0iTkVCSVVTIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDExMzMuOSAzMTEuOCI+CiAgPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDI5LjAuMSwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDIuMS4wIEJ1aWxkIDE5MikgIC0tPgogIDxkZWZzPgogICAgPHN0eWxlPgogICAgICAuc3QwIHsKICAgICAgICBmaWxsOiAjMDUyYjQyOwogICAgICB9CgogICAgICAuc3QxIHsKICAgICAgICBmaWxsOiAjZTBmZjRmOwogICAgICB9CiAgICA8L3N0eWxlPgogIDwvZGVmcz4KICA8cGF0aCBjbGFzcz0ic3QxIiBkPSJNMTA1NS44LDBINzhDMzQuOSwwLDAsMzUuMiwwLDc4LjZ2MTU0LjZjMCw0My40LDM0LjksNzguNiw3OCw3OC42aDk3Ny44YzQzLjEsMCw3OC0zNS4yLDc4LTc4LjZWNzguNmMwLTQzLjQtMzQuOS03OC42LTc4LTc4LjZaIi8+CiAgPGc+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMjAzLjksMTg3LjdoMGwtMzYuNi04NC41Yy02LTEzLjctMTUuOC0yMS40LTI5LjctMjEuNHMtMjMuNCwxMS4zLTIzLjQsMjMuM2MwLDAsMTcuNS0yLjQsMjYuOCwxOC45bDM2LjYsODQuNWM2LDEzLjcsMTUuOCwyMS40LDI5LjcsMjEuNHMyMy40LTExLjMsMjMuNC0yMy4zYzAsMC0xNy41LDIuNC0yNi44LTE4LjlaIi8+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNODUuMiwxNDAuM3Y4Ny41aDI5LjF2LTEyMi43cy0yOS4xLDEuOC0yOS4xLDM1LjJaIi8+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMjMwLjcsMjA2LjdzMjkuMS0xLjgsMjkuMS0zNS4ydi04Ny41aC0yOS4xdjEyMi43WiIvPgogICAgPHBvbHlnb24gY2xhc3M9InN0MCIgcG9pbnRzPSIyODkuNyA4My45IDI4OS43IDgzLjkgMjg5LjcgMjI3LjkgMjg5LjcgMjI3LjkgNDM5LjIgMjI3LjkgNDM5LjIgMjAwLjYgMzE5IDIwMC42IDMxOSAxNjkuMyA0MjYuMiAxNjkuMyA0MjYuMiAxNDIuMSAzMTkgMTQyLjEgMzE5IDExMS4xIDQzOS4yIDExMS4xIDQzOS4yIDgzLjkgMzE5IDgzLjkgMjg5LjcgODMuOSIvPgogICAgPHBhdGggY2xhc3M9InN0MCIgZD0iTTU5Ni44LDE1Mi45aDBjNy44LTUuMiwxNC40LTE1LjEsMTQuNC0yOS44LDAtMzMuNS0zMi4xLTM5LjEtNTcuMS0zOS4zaC04NC45djE0NGg5My43YzQzLjIsMCw1Ny4zLTE2LjUsNTcuMy00MC43cy0xNS41LTMxLjgtMjMuNC0zNC4yWk00OTguNSwxMTEuMWg2MC44YzEzLjUsMCwyMy44LDQuNywyMy44LDE2LjlzLTExLjgsMTQuNy0xOS44LDE0LjhoLTY0Ljh2LTMxLjdaTTU2My4yLDIwMC42aDBzLTY0LjgsMC02NC44LDB2LTMyLjNoNjQuNGMxMi42LDAsMjcsMi43LDI3LDE2LjRzLTEzLjEsMTUuOS0yNi42LDE1LjlaIi8+CiAgICA8cmVjdCBjbGFzcz0ic3QwIiB4PSI2NDYuNiIgeT0iODMuOSIgd2lkdGg9IjI5LjMiIGhlaWdodD0iMTQ0Ii8+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMTAzOCwxNTguN2gwczAsMCwwLDBjLTE0LjMtMTEuNS0yNi42LTEyLjgtNTAtMTUuMmwtMi4xLS4yYy0yLjktLjItNDMuMi0zLjYtNDYuMy0zLjktMjcuNi0yLjYtMjUuNi0xNS4xLTI1LjYtMTUuMSwwLTEzLjgsMjcuOS0xNC45LDI3LjktMTQuOSwyMy4xLTIuMyw2OC40LTEuNiw3MS4yLDE4LjhoMzJjLTIuOS00MC4zLTUyLjgtNDYuMS04NC44LTQ2LjUtMjEuMi41LTQ0LjQsMS44LTYyLjcsMTMuOC0yMC42LDEzLjYtMTguNiw0MC42LTUuNyw1Mi44LDUsNC40LDEyLjcsMTAuNCwyOC4zLDEzLjMsNy4yLDEuMywxOSwzLjEsMzUuMSw0LjIsMCwwLDI1LjgsMS42LDMxLjMsMiwuMywwLC41LDAsLjgsMGgwYzguNi43LDI2LjksMi4xLDI4LjQsMTUuOCwxLjcsMTUuMS0yNC40LDE5LjUtNTEuMSwxOS41LTExLjcsMC0yMy42LS41LTM2LTQtMTAuNC0zLTE2LjQtOS4xLTE3LjQtMTkuM2gtMzEuN2MwLDQzLjQsNDkuMyw1MC4xLDgzLjcsNTAuMSwyMy41LS42LDQ4LjktMi4yLDY5LjItMTUuMiwyMi40LTE0LjcsMjAuMS00My4yLDUuMy01NloiLz4KICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik04MjYuMywxNjAuNWMwLDI2LjctMTcsNDIuNS00NS44LDQyLjVzLTQ1LjYtMTUuOC00NS42LTQyLjV2LTc2LjZoLTI5LjF2NzYuMWMwLDQyLjEsMjkuNSw3MCw3NC42LDcwczc0LjktMjcuNyw3NC45LTcwdi03Ni4xaC0yOS4xdjc2LjZaIi8+CiAgPC9nPgo8L3N2Zz4=" alt="Nebius" /></div>
+        <div class="slide-content promo-layout">
+          <div class="stack">
+            <h2 class="section-heading compact reveal delay-1">Token Factory: one platform for everything.</h2>
+            <p class="subhead reveal delay-2">
+              Inference, Fine-Tuning, DataLab, and Sandboxes in one platform.
+            </p>
+            <div class="platform-grid reveal delay-2">
+              <div class="platform-card">
+                <strong>Inference</strong>
+                <span>Serve open models at production scale.</span>
+              </div>
+              <div class="platform-card">
+                <strong>Fine-Tuning</strong>
+                <span>Run SFT and RFT on your data.</span>
+              </div>
+              <div class="platform-card">
+                <strong>DataLab</strong>
+                <span>Prepare, inspect, and iterate on datasets close to training.</span>
+              </div>
+              <div class="platform-card">
+                <strong>Sandboxes</strong>
+                <span>Run code safely in isolated environments.</span>
+              </div>
+            </div>
+          </div>
+          <a
+            class="gist-qr-card reveal delay-2"
+            href="https://nebius.com/promo-code?utm_promo_event_code=2026-05-27_vllm-meetup-telaviv&amp;utm_promo_code_type=Token_Factory&amp;utm_promo_activation_code=VLLM-TELAVIV-2026-05"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <img
+              src="https://api.qrserver.com/v1/create-qr-code/?size=360x360&amp;margin=12&amp;data=https%3A%2F%2Fnebius.com%2Fpromo-code%3Futm_promo_event_code%3D2026-05-27_vllm-meetup-telaviv%26utm_promo_code_type%3DToken_Factory%26utm_promo_activation_code%3DVLLM-TELAVIV-2026-05"
+              alt="QR code for Token Factory promo code"
+            />
+            <strong>Promo code</strong>
+            <span>Scan to activate</span>
+          </a>
+        </div>
+        <div class="page-num">19</div>
+      </section>
+
       <section class="slide lime-cut" id="slide-19">
-        <div class="brand" aria-label="Nebius"><img src="NEBIUS(RGB).svg" alt="Nebius" /></div>
+        <div class="brand" aria-label="Nebius"><img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0iTkVCSVVTIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZlcnNpb249IjEuMSIgdmlld0JveD0iMCAwIDExMzMuOSAzMTEuOCI+CiAgPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDI5LjAuMSwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDIuMS4wIEJ1aWxkIDE5MikgIC0tPgogIDxkZWZzPgogICAgPHN0eWxlPgogICAgICAuc3QwIHsKICAgICAgICBmaWxsOiAjMDUyYjQyOwogICAgICB9CgogICAgICAuc3QxIHsKICAgICAgICBmaWxsOiAjZTBmZjRmOwogICAgICB9CiAgICA8L3N0eWxlPgogIDwvZGVmcz4KICA8cGF0aCBjbGFzcz0ic3QxIiBkPSJNMTA1NS44LDBINzhDMzQuOSwwLDAsMzUuMiwwLDc4LjZ2MTU0LjZjMCw0My40LDM0LjksNzguNiw3OCw3OC42aDk3Ny44YzQzLjEsMCw3OC0zNS4yLDc4LTc4LjZWNzguNmMwLTQzLjQtMzQuOS03OC42LTc4LTc4LjZaIi8+CiAgPGc+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMjAzLjksMTg3LjdoMGwtMzYuNi04NC41Yy02LTEzLjctMTUuOC0yMS40LTI5LjctMjEuNHMtMjMuNCwxMS4zLTIzLjQsMjMuM2MwLDAsMTcuNS0yLjQsMjYuOCwxOC45bDM2LjYsODQuNWM2LDEzLjcsMTUuOCwyMS40LDI5LjcsMjEuNHMyMy40LTExLjMsMjMuNC0yMy4zYzAsMC0xNy41LDIuNC0yNi44LTE4LjlaIi8+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNODUuMiwxNDAuM3Y4Ny41aDI5LjF2LTEyMi43cy0yOS4xLDEuOC0yOS4xLDM1LjJaIi8+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMjMwLjcsMjA2LjdzMjkuMS0xLjgsMjkuMS0zNS4ydi04Ny41aC0yOS4xdjEyMi43WiIvPgogICAgPHBvbHlnb24gY2xhc3M9InN0MCIgcG9pbnRzPSIyODkuNyA4My45IDI4OS43IDgzLjkgMjg5LjcgMjI3LjkgMjg5LjcgMjI3LjkgNDM5LjIgMjI3LjkgNDM5LjIgMjAwLjYgMzE5IDIwMC42IDMxOSAxNjkuMyA0MjYuMiAxNjkuMyA0MjYuMiAxNDIuMSAzMTkgMTQyLjEgMzE5IDExMS4xIDQzOS4yIDExMS4xIDQzOS4yIDgzLjkgMzE5IDgzLjkgMjg5LjcgODMuOSIvPgogICAgPHBhdGggY2xhc3M9InN0MCIgZD0iTTU5Ni44LDE1Mi45aDBjNy44LTUuMiwxNC40LTE1LjEsMTQuNC0yOS44LDAtMzMuNS0zMi4xLTM5LjEtNTcuMS0zOS4zaC04NC45djE0NGg5My43YzQzLjIsMCw1Ny4zLTE2LjUsNTcuMy00MC43cy0xNS41LTMxLjgtMjMuNC0zNC4yWk00OTguNSwxMTEuMWg2MC44YzEzLjUsMCwyMy44LDQuNywyMy44LDE2LjlzLTExLjgsMTQuNy0xOS44LDE0LjhoLTY0Ljh2LTMxLjdaTTU2My4yLDIwMC42aDBzLTY0LjgsMC02NC44LDB2LTMyLjNoNjQuNGMxMi42LDAsMjcsMi43LDI3LDE2LjRzLTEzLjEsMTUuOS0yNi42LDE1LjlaIi8+CiAgICA8cmVjdCBjbGFzcz0ic3QwIiB4PSI2NDYuNiIgeT0iODMuOSIgd2lkdGg9IjI5LjMiIGhlaWdodD0iMTQ0Ii8+CiAgICA8cGF0aCBjbGFzcz0ic3QwIiBkPSJNMTAzOCwxNTguN2gwczAsMCwwLDBjLTE0LjMtMTEuNS0yNi42LTEyLjgtNTAtMTUuMmwtMi4xLS4yYy0yLjktLjItNDMuMi0zLjYtNDYuMy0zLjktMjcuNi0yLjYtMjUuNi0xNS4xLTI1LjYtMTUuMSwwLTEzLjgsMjcuOS0xNC45LDI3LjktMTQuOSwyMy4xLTIuMyw2OC40LTEuNiw3MS4yLDE4LjhoMzJjLTIuOS00MC4zLTUyLjgtNDYuMS04NC44LTQ2LjUtMjEuMi41LTQ0LjQsMS44LTYyLjcsMTMuOC0yMC42LDEzLjYtMTguNiw0MC42LTUuNyw1Mi44LDUsNC40LDEyLjcsMTAuNCwyOC4zLDEzLjMsNy4yLDEuMywxOSwzLjEsMzUuMSw0LjIsMCwwLDI1LjgsMS42LDMxLjMsMiwuMywwLC41LDAsLjgsMGgwYzguNi43LDI2LjksMi4xLDI4LjQsMTUuOCwxLjcsMTUuMS0yNC40LDE5LjUtNTEuMSwxOS41LTExLjcsMC0yMy42LS41LTM2LTQtMTAuNC0zLTE2LjQtOS4xLTE3LjQtMTkuM2gtMzEuN2MwLDQzLjQsNDkuMyw1MC4xLDgzLjcsNTAuMSwyMy41LS42LDQ4LjktMi4yLDY5LjItMTUuMiwyMi40LTE0LjcsMjAuMS00My4yLDUuMy01NloiLz4KICAgIDxwYXRoIGNsYXNzPSJzdDAiIGQ9Ik04MjYuMywxNjAuNWMwLDI2LjctMTcsNDIuNS00NS44LDQyLjVzLTQ1LjYtMTUuOC00NS42LTQyLjV2LTc2LjZoLTI5LjF2NzYuMWMwLDQyLjEsMjkuNSw3MCw3NC42LDcwczc0LjktMjcuNyw3NC45LTcwdi03Ni4xaC0yOS4xdjc2LjZaIi8+CiAgPC9nPgo8L3N2Zz4=" alt="Nebius" /></div>
         <div class="slide-content question-layout">
           <div class="question-left">
             <h2 class="thank-you-word reveal">Thank you!</h2>
